@@ -21,6 +21,12 @@ La fase successiva consiste nell'abbozzare la business logic. A questo punto i c
 
 Una volta completata la modellazione del caso d'uso, l'implementazione della **business logic** e della **UI** possono procedere in parallelo.
 
+### Regola: coverage della business logic
+
+Il coverage della business logic deve essere il più alto possibile. Lo sviluppo di un blocco di business logic non si considera terminato finché non esiste **almeno un test per ogni caso d'uso** che copre quel blocco.
+
+Questa regola vale per il percorso principale e per i casi eccezionali rilevanti — non si scrive codice di business logic senza un test che ne verifichi il comportamento atteso.
+
 ## Step opzionale: validazione con l'analista funzionale
 
 Al termine dello sviluppo del caso d'uso, è consigliabile condividere i risultati con l'analista funzionale per verificare la correttezza delle logiche introdotte. Questo passaggio permette di intercettare eventuali incomprensioni prima che raggiungano la produzione.
