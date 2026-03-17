@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.4](https://github.com/cagianx/bible/compare/v0.1.3...v0.1.4) (2026-03-17)
+
+
+### Documentation
+
+* split sviluppo into wizard with 3 steps ([e14cea9](https://github.com/cagianx/bible/commit/e14cea9b0b556b062af78d28e1545c35d81ddfcf))
+
 ## [0.1.3](https://github.com/cagianx/bible/compare/v0.1.2...v0.1.3) (2026-03-17)
 
 
