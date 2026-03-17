@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/cagianx/bible/compare/v0.1.1...v0.1.2) (2026-03-17)
+
+
+### Documentation
+
+* add principi page, fix frontmatter typo, rename ICasoD'Uso to IUseCase ([8bdc57a](https://github.com/cagianx/bible/commit/8bdc57a9138ae77607c149d32d779182728e1902))
+
 ## [0.1.1](https://github.com/cagianx/bible/compare/v0.1.0...v0.1.1) (2026-03-17)
 
 
