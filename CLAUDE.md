@@ -70,6 +70,8 @@ Si scrive in **italiano corretto e curato**. Gli inglesismi sono accettati solo 
 
 Il **glossario** (`docs/glossario.md`) va tenuto aggiornato ad ogni modifica che introduce, rimuove o rinomina un termine tecnico o di dominio. Va fatto prima del commit.
 
+Il **README.md** e la **homepage del sito** (`src/pages/index.tsx`) vanno tenuti aggiornati quando cambia la struttura o il contenuto della documentazione in modo significativo.
+
 ## Key constraints
 
 - `onBrokenLinks: 'throw'` — any internal link pointing to a non-existent page breaks the build. Always verify links after adding/removing docs.

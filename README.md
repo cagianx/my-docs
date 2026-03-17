@@ -1,24 +1,20 @@
 # Dev Bible
 
-Documentazione interna. Costruita con [Docusaurus](https://docusaurus.io/).
+A collection of principles, rules and processes for writing maintainable software. Not tied to a specific project or team — it describes a particular point of view on software development: opinionated, consistent, and grounded in decades of established practice.
 
-## Avvio rapido
+Topics covered: domain modeling, architecture (C# / Entity Framework / ASP.NET Core), testing, git workflow, logging, authentication, configuration, environments, and CI/CD pipeline.
+
+The documentation lives in the repository alongside the code. Same git history, same context for AI tools — so it never goes stale.
+
+## Run locally
 
 ```bash
 git clone https://github.com/cagianx/bible.git
 cd bible
-pnpm install
-pnpm start
+pnpm install && pnpm start
 ```
 
-Il sito sarà disponibile su http://localhost:3000.
+## Prerequisites
 
-## Comandi
-
-```bash
-pnpm start        # dev server con hot reload
-pnpm build        # build di produzione (valida anche i link)
-pnpm serve        # serve la build di produzione in locale
-pnpm typecheck    # type check TypeScript
-pnpm clear        # svuota la cache di Docusaurus
-```
+- Node.js >= 20
+- pnpm
