@@ -112,7 +112,7 @@ Il processo di deploy in sistemi senza downtime è sempre:
 
 **Quando la retrocompatibilità non è possibile** — rinomina che non può essere evitata, cambio di tipo, rimozione di colonna usata dal software corrente — si tratta di un **breaking change**. Richiede una strategia esplicita per minimizzare il downtime: tipicamente si introduce uno stato intermedio in cui entrambe le versioni del software possono coesistere, oppure si accetta una finestra di downtime pianificata e comunicata.
 
-Un breaking change non è una cosa che si scopre al deploy: emerge dall'analisi tecnica e viene gestito come tale fin dall'inizio. Vedi [`processi/analisi-tecnica`](../processi/analisi-tecnica.md).
+Un breaking change non è una cosa che si scopre al deploy: emerge dall'analisi tecnica e viene gestito come tale fin dall'inizio. Vedi [`processi/analisi-tecnica`](../processi/analisi-tecnica/02-perimetro.md).
 
 ### Quando applicare le migration
 
