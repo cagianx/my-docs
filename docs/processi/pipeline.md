@@ -20,16 +20,18 @@ Ad ogni push che corrisponde a un tag `vX.Y.Z`:
 3. **Build dell'immagine container**
 4. **Push dell'immagine** nel registry, taggata con la versione
 
-```
-push su main
-  └── build
-  └── test
+```mermaid
+flowchart TD
+    P[push su main] --> B[Build]
+    B --> T[Test]
+    T -->|fallisce| X[❌ Stop]
+    T -->|passa| OK[✅ Done]
 
-push di tag vX.Y.Z
-  └── build
-  └── test
-  └── build immagine container
-  └── push immagine → registry:vX.Y.Z
+    PT[push tag vX.Y.Z] --> B2[Build]
+    B2 --> T2[Test]
+    T2 -->|fallisce| X2[❌ Stop]
+    T2 -->|passa| BI[Build immagine]
+    BI --> PI[Push → registry:vX.Y.Z]
 ```
 
 ## Immagini e versioni

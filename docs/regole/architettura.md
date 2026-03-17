@@ -27,14 +27,12 @@ NomeSoluzione.Console/   # applicazione console, worker, job
 
 Le dipendenze hanno una direzione precisa e non si invertono:
 
-```
-Api / Console
-      │
-      ▼
-    Core   ◄──── Db
-      │
-      ▼
-    Tests
+```mermaid
+graph TD
+    A[Api / Console] --> C[Core]
+    D[Db] --> C
+    T[Tests] --> C
+    T --> D
 ```
 
 - **Core** non dipende da nessun altro progetto della solution. Contiene tutta la business logic e non sa nulla di database, HTTP o interfacce utente.

@@ -16,8 +16,15 @@ L'[analisi tecnica](../../glossario#analisi-tecnica) traduce l'[analisi funziona
 
 L'analisi tecnica è un wizard: ogni step produce output che alimenta il successivo.
 
-```
-Analisi funzionale → Perimetro → Modellazione → Contratti → Flussi → NFR → Piano → Handoff
+```mermaid
+flowchart LR
+    AF[Analisi\nFunzionale] --> P[Perimetro]
+    P --> M[Modellazione]
+    M --> C[Contratti]
+    C --> F[Flussi]
+    F --> N[NFR]
+    N --> PI[Piano]
+    PI --> H[Handoff]
 ```
 
 Ogni step ha un criterio di completamento esplicito. Non si passa al successivo finché il criterio non è soddisfatto.

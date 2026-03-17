@@ -8,8 +8,16 @@ Lo sviluppo inizia dove finisce l'analisi tecnica. A questo punto il dominio è 
 
 ## Il flusso
 
-```
-Dominio → Business Logic → Staging → Validazione
+```mermaid
+flowchart TD
+    D[Dominio] --> BL[Business Logic]
+    D --> UI[UI]
+    BL --> S[Staging]
+    UI --> S
+    S --> V[Validazione]
+
+    style UI fill:#e8e8e8,stroke:#aaa,color:#888
+    style D stroke-width:2px
 ```
 
 Dominio e business logic hanno un ordine preciso e una dipendenza: non si scrive business logic prima che il dominio sia stabile. Una volta stabile il dominio, business logic e UI possono procedere in parallelo — ma la UI è trattata separatamente.

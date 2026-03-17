@@ -8,7 +8,17 @@ sidebar_position: 7
 
 Le eccezioni, come dice il nome, sono per situazioni eccezionali: eventi imprevedibili, fuori dal controllo del sistema, ai quali si possono prendere solo contromisure limitate e generiche. Un timeout di rete, un disco pieno, una dipendenza esterna irraggiungibile.
 
-Per tutto ciò che è prevedibile e gestibile — validazioni, regole di business non soddisfatte, stati non validi, risorse non trovate — si usa il **Result pattern**.
+Per tutto ciò che è prevedibile e gestibile — validazioni, regole di business non soddisfatte, stati non validi, risorse non trovate — si usa il **[Result pattern](../../glossario#result-pattern)**.
+
+```mermaid
+flowchart TD
+    E[Errore o caso negativo] --> Q{È prevedibile\ne gestibile?}
+    Q -->|Sì| R[Result.Fail]
+    Q -->|No| X[Eccezione]
+    R --> C[Il chiamante gestisce\nesplicitamente]
+    X --> P[Propaga fino al\nconfine del sistema]
+    P --> L[Middleware logga\ne restituisce 500]
+```
 
 ## Result pattern
 
