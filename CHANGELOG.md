@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.8](https://github.com/cagianx/bible/compare/v0.1.7...v0.1.8) (2026-03-17)
+
+
+### Documentation
+
+* add docs intro page and writing style rules to CLAUDE.md ([cdd6811](https://github.com/cagianx/bible/commit/cdd681134714a4c804a3b7267fc5d5831499bac2))
+* apply Italian and technical review corrections ([674b71d](https://github.com/cagianx/bible/commit/674b71d37ff6c62328d8c658a304ef27b20b0525))
+
 ## [0.1.7](https://github.com/cagianx/bible/compare/v0.1.6...v0.1.7) (2026-03-17)
 
 
