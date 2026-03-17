@@ -147,3 +147,56 @@ L'analisi è pronta per lo sviluppo se un developer esterno al team può:
 - Allinea i criteri di accettazione tecnici con la Definition of Done di team
 
 Un buon handoff riduce tempi morti, rework e regressioni evitabili.
+
+---
+
+## FAQ
+
+**Chi fa l'analisi tecnica?**
+
+Dipende dalle competenze disponibili. Le modifiche al dominio richiedono sempre l'approvazione di qualcuno che sia sia esperto del dominio sia tecnicamente competente — può coincidere con lo sviluppatore, oppure essere un'altra figura o più persone che partecipano alla revisione. Stesso discorso per scelte architetturali o introduzione di librerie esterne: serve un parere tecnico qualificato. L'indipendenza è preferibile dove possibile, ma non è mai totale: il livello di coinvolgimento dipende da cosa si sta toccando e da chi ha le competenze per valutarlo.
+
+**Il documento deve seguire un template preciso?**
+
+L'importante è che sia esaustivo nei contenuti. La forma è un nice-to-have: l'IA può migliorare la struttura, aggiungere diagrammi Mermaid, rendere il documento più leggibile — il punto critico è che il pensiero ci sia. Un documento grezzo ma completo vale infinitamente più di uno ben formattato ma superficiale.
+
+Per task piccoli può sembrare eccessivo produrre documentazione formale — a volte c'è più analisi che codice. Va bene così: l'obiettivo è pensare prima di agire, non riempire pagine. Che poi si lasci traccia scritta è una scelta del team, ma la tradizione scritta è sempre preferibile al silenzio.
+
+**L'analisi tecnica si fa sempre?**
+
+No. Si fa per sviluppi rilevanti:
+
+- modifiche al modello dati — qualsiasi cambiamento allo schema del database
+- modifiche alle feature — qualsiasi aggiunta o variazione al comportamento esistente
+- modifiche infrastrutturali — ambienti, pipeline, dipendenze esterne
+
+Non richiede analisi tecnica: bug fix, correzioni di testo, refactoring interno che non altera comportamento né interfacce.
+
+**Se l'analisi rivela una complessità inattesa, chi decide come procedere?**
+
+È una questione di organizzazione interna del team: ridurre lo scope, tornare dall'analista funzionale o procedere comunque sono decisioni che dipendono dal contesto, dalle priorità e da chi ha la responsabilità del prodotto. L'analisi tecnica ha il compito di rendere visibile la complessità — la decisione su cosa farne spetta al team.
+
+**Le stime dei tempi fanno parte dell'analisi tecnica?**
+
+Sì, ma vanno fatte per componente separato, non come stima unica. La suddivisione naturale è:
+
+- **dominio e modellazione** — entity, migration, regole di business
+- **business logic** — casi d'uso e test di integrazione inclusi
+- **UI** — interfaccia utente
+- **sviluppi trasversali** — infrastruttura, configurazione, pipeline
+
+Tenerle separate permette a business logic e UI di procedere in parallelo nello stesso sprint, una volta che il dominio è stabile. Una stima aggregata nasconde queste dipendenze e rende impossibile pianificare il parallelismo.
+
+**Come si gestiscono i breaking change verso i team dipendenti?**
+
+Vanno portati all'attenzione di tutti il prima possibile — non alla fine, non al deploy. Non sono necessariamente una cattiva notizia: rimuovere una colonna deprecata da mesi è un breaking change atteso e pianificato. L'importante è che nessuno ne venga sorpreso. Il versioning farà il resto: un breaking change si traduce in un bump `MAJOR` che rende il cambiamento ufficiale e tracciabile. Vedi [`regole/versionamento`](../regole/versionamento.md).
+
+**L'analisi viene presentata formalmente al team?**
+
+Vivendo nel repository è già condivisa per definizione — chiunque può leggerla in qualsiasi momento. La condivisione attiva del know-how è una questione di organizzazione del team, non di processo formale.
+
+C'è però una conseguenza meno ovvia: l'IA che assiste lo sviluppo legge la documentazione preesistente. A parità di strumento e configurazione, tutta la conoscenza accumulata nelle analisi tecniche è già disponibile a ogni membro del team semplicemente lavorando nello stesso contesto. La documentazione non è solo memoria storica — è contesto attivo.
+
+**Se durante lo sviluppo emergono cose non previste, si aggiorna l'analisi?**
+
+Vale il buon senso: si valuta l'impatto. Una piccola deviazione non richiede di riscrivere tutto; una scoperta che cambia il modello o le interfacce merita un aggiornamento. L'IA abbassa il costo di questo lavoro — dato il documento esistente e le modifiche emerse, aggiornarlo è questione di minuti.
