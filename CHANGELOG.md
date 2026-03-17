@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.5](https://github.com/cagianx/bible/compare/v0.1.4...v0.1.5) (2026-03-17)
+
+
+### Documentation
+
+* add glossario with all domain and technical terms ([b50da9d](https://github.com/cagianx/bible/commit/b50da9dc14c2a899dfadab71d79bf78a0145d302))
+
 ## [0.1.4](https://github.com/cagianx/bible/compare/v0.1.3...v0.1.4) (2026-03-17)
 
 
