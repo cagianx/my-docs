@@ -62,6 +62,14 @@ No pride versioning. Version bumps must reflect actual change scope.
 
 The version in `package.json` is the single source of truth — it is shown in the site footer at runtime, so any deployed build is unambiguously traceable to its git tag.
 
+## Writing style
+
+La documentazione usa il **registro impersonale**: non "facciamo", "usiamo", "il nostro team" — ma "si fa", "si usa", "è preferibile". Non è documentazione di un team specifico: descrive un punto di vista particolare sullo sviluppo software, più o meno condivisibile, indipendente da chi lo legge.
+
+Si scrive in **italiano corretto e curato**. Gli inglesismi sono accettati solo quando sono microlingua tecnica consolidata (es. *commit*, *deploy*, *staging*, *trunk*, *feature flag*). Dove esiste una parola italiana equivalente precisa, si usa quella.
+
+Il **glossario** (`docs/glossario.md`) va tenuto aggiornato ad ogni modifica che introduce, rimuove o rinomina un termine tecnico o di dominio. Va fatto prima del commit.
+
 ## Key constraints
 
 - `onBrokenLinks: 'throw'` — any internal link pointing to a non-existent page breaks the build. Always verify links after adding/removing docs.
