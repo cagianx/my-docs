@@ -43,4 +43,4 @@ Se uno di questi punti non è soddisfatto, l'analisi non è completa.
 
 ## Collegamento allo sviluppo
 
-Una volta superata la checklist, lo sviluppo segue il processo descritto in [`processi/sviluppo`](../sviluppo.md): prima il dominio e i test di integrazione, poi la business logic, poi la UI.
+Una volta superata la checklist, lo sviluppo segue il processo descritto in [`processi/sviluppo`](../sviluppo/index.md): prima il dominio e i test di integrazione, poi la business logic, poi la UI.
