@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.6](https://github.com/cagianx/bible/compare/v0.1.5...v0.1.6) (2026-03-17)
+
+
+### Features
+
+* add custom logo, svg favicon and Cascadia Code font ([9fd38ca](https://github.com/cagianx/bible/commit/9fd38ca470d3fcea2172a668a68fababe9b45dae))
+
+
+### Documentation
+
+* add glossario anchors and link terms across all pages ([47e4114](https://github.com/cagianx/bible/commit/47e41142207b658428765eace9c0a704dfbc53c5))
+* reformat glossario as table ([30cbfd9](https://github.com/cagianx/bible/commit/30cbfd9b890ed1c8064926e698f57bed3144b6f2))
+
 ## [0.1.5](https://github.com/cagianx/bible/compare/v0.1.4...v0.1.5) (2026-03-17)
 
 
