@@ -40,7 +40,7 @@ graph TD
 - **Api e Console** dipendono da Core — orchestrano i casi d'uso, non li implementano.
 - **Tests** dipende da Core e da Db — verifica il comportamento reale, database incluso.
 
-Se un progetto di alto livello contiene logica di business, quella logica è nel posto sbagliato.
+Se un progetto di alto livello contiene business logic, quella logica è nel posto sbagliato.
 
 ## Core
 
@@ -66,7 +66,7 @@ Segue le regole descritte in [`regole/entity-framework`](entity-framework.md).
 
 La struttura del codice deve comunicare immediatamente cosa fa il sistema, non come è costruito tecnicamente.
 
-Aprire un progetto e vedere cartelle come `Controllers/`, `Services/`, `Repositories/` non dice nulla sul dominio. Aprire un progetto e vedere `Ordini/`, `Fatturazione/`, `Clienti/` dice tutto.
+Aprire un progetto e vedere cartelle come `Controllers/`, `Services/`, `Repositories/` non comunica nulla sul dominio specifico dell'applicazione. Aprire un progetto e vedere `Ordini/`, `Fatturazione/`, `Clienti/` dice tutto.
 
 Il nome di ogni modulo, cartella, classe e metodo deve rispondere alla domanda: **cosa fa?** Non "che tipo di oggetto è" — cosa fa nel contesto di questo sistema.
 
@@ -90,6 +90,6 @@ Questo vale a tutti i livelli: struttura dei progetti, cartelle, classi, metodi,
 
 ## Progetti di alto livello
 
-Api, Console e simili hanno un unico compito: **orchestrare**. Ricevono input dall'esterno, invocano il Core, restituiscono output. Non contengono logica di business.
+Api, Console e simili hanno un unico compito: **orchestrare**. Ricevono input dall'esterno, invocano il Core, restituiscono output. Non contengono business logic.
 
 Un progetto di alto livello che cresce troppo è un segnale che della logica è finita nel posto sbagliato.

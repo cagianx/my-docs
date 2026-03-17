@@ -130,7 +130,7 @@ I nomi delle entity, delle proprietà e delle navigation property seguono l'Ubiq
 
 ## Repository pattern: non serve
 
-Con Entity Framework il Repository pattern è ridondante. `DbSet<T>` è già un repository: espone query, filtraggio, aggiunta e rimozione di entità. `DbContext` è già una Unit of Work: traccia i cambiamenti e li persiste atomicamente con `SaveChanges()`.
+Con Entity Framework il Repository pattern è ridondante. `DbSet<T>` fornisce già le operazioni di lettura, scrittura e rimozione sulle entità; `DbContext` implementa già il pattern Unit of Work, tracciando le modifiche e persistendole atomicamente con `SaveChanges()`.
 
 Aggiungere un layer di repository sopra EF non aggiunge astrazione utile — aggiunge interfacce da mantenere, codice da scrivere e un indirezione che non porta valore. Il `DbContext` si inietta direttamente dove serve.
 

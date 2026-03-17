@@ -68,7 +68,7 @@ Un componente non deve dipendere da metodi che non usa.
 
 > I moduli di alto livello non devono dipendere da quelli di basso livello. Entrambi devono dipendere da astrazioni.
 
-La logica di business non deve conoscere i dettagli implementativi dell'infrastruttura.
+La business logic non deve conoscere i dettagli implementativi dell'infrastruttura.
 
 **Nel progetto:** Core non referenzia Entity Framework, non conosce PostgreSQL, non sa nulla di HTTP. Le dipendenze puntano verso il centro — verso il dominio — non verso l'esterno. Db dipende da Core, non il contrario. Il Core riceve l'utente autenticato come parametro esplicito: non legge l'`HttpContext`, non conosce ASP.NET Core. Vedi [`regole/architettura`](architettura.md) e [`regole/autenticazione`](autenticazione.md).
 

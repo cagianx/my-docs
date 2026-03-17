@@ -48,7 +48,7 @@ L'errore non è uno stato nascosto: è parte esplicita del contratto.
 
 **Le eccezioni si lasciano propagare.** Quando si verifica davvero un'eccezione, non si cattura per nasconderla o trasformarla in un Result generico. Si lascia propagare fino al confine del sistema (es. middleware ASP.NET Core), dove viene loggata e restituita come errore 500.
 
-**Il Core non lancia eccezioni di business.** Tutta la logica di business nel progetto Core comunica tramite Result. Le eccezioni che emergono dal Core sono per definizione impreviste.
+**Il Core non lancia eccezioni di business.** Tutta la business logic nel progetto Core comunica tramite Result. Le eccezioni che emergono dal Core sono per definizione impreviste.
 
 **I Result si compongono.** Operazioni che dipendono l'una dall'altra si concatenano controllando il risultato a ogni step, senza annidare try/catch.
 
