@@ -94,7 +94,7 @@ Schema di versioning `MAJOR.MINOR.PATCH`: MAJOR per breaking changes, MINOR per 
 
 ## Soft delete
 
-Tecnica per non eliminare fisicamente un record, ma marcarlo come eliminato tramite un campo (`DeletedAt`, `IsDeleted`). Preserva la storia e la compatibilità con dati storici. Va progettato fin dall'inizio se richiesto.
+Tecnica per non eliminare fisicamente un record, ma marcarlo come eliminato tramite un campo `DeletedAt` nullable. Se è `null` il record è attivo, se ha una data è eliminato. Un singolo campo, zero ambiguità — non si usano combinazioni di campi booleani e date (vedi il tip sulle [combinazioni inconsistenti](processi/analisi-tecnica/03-modellazione.md#principio-dati-duttili-in-fase-di-lettura)). Preserva la storia e la compatibilità con dati storici. Va progettato fin dall'inizio se richiesto.
 
 ## Spike
 

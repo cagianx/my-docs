@@ -74,7 +74,9 @@ Il **README.md** e la **homepage del sito** (`src/pages/index.tsx`) vanno tenuti
 
 ## Indice analitico
 
-Il file `docs/indice-analitico.md` è un indice alfabetico di tutti i concetti trattati nella documentazione, con link alle pagine dove sono approfonditi. **Usalo come punto di partenza per cercare contenuti nel sito** prima di esplorare i file manualmente. Va tenuto aggiornato ogni volta che si aggiunge, rimuove o sposta un concetto nella documentazione.
+Il file `docs/indice-analitico.md` è un indice alfabetico di tutti i concetti trattati nella documentazione, con link alle pagine dove sono approfonditi. **Usalo come punto di partenza per cercare contenuti nel sito** prima di esplorare i file manualmente.
+
+Sia l'indice analitico che il glossario (`docs/glossario.md`) vanno tenuti aggiornati **in automatico** ogni volta che si aggiunge, rimuove o sposta un concetto nella documentazione. Non aspettare che venga chiesto: se una modifica introduce un termine nuovo o sposta un concetto, aggiornare indice e glossario fa parte della modifica stessa.
 
 ## Key constraints
 
