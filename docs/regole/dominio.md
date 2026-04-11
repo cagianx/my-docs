@@ -32,9 +32,11 @@ Il glossario vive nella documentazione del progetto, non in un documento esterno
 
 ## Correttezza dei dati
 
-I dati nel dominio si danno per scontati come corretti. Scrivere codice difensivo che mette in dubbio la loro integrità è un segnale che il modello non è adeguato.
+I dati nel dominio si danno per scontati come corretti. **Se il dato è sul database, è corretto per definizione.** Scrivere codice difensivo che mette in dubbio la loro integrità è un segnale che il modello non è adeguato.
 
 Il dominio va modellato in modo che sia difficile — preferibilmente impossibile — inserire dati inconsistenti. A tal fine si privilegiano le funzionalità native del database: **chiavi esterne** e **constraint**. L'integrità si garantisce a livello strutturale, non applicativo.
+
+La fatica va spostata in fase di **scrittura**: validazioni, constraint, check, indici univoci devono garantire che ciò che arriva sul database sia già corretto. In fase di **lettura** non si valida, non si interpreta, non si gestiscono stati impossibili. Se in lettura si incontra un dato incoerente, è un bug — un'eccezione, non un caso gestibile con il [Result pattern](gestione-errori.md).
 
 ## Stabilità dei nomi e dei significati
 

@@ -53,12 +53,25 @@ Si configurano i sink in base all'ambiente: console in sviluppo, file o aggregat
 - operazioni sul dominio rilevanti per audit o diagnostica
 - chiamate a servizi esterni — con esito e tempo di risposta
 
+**Regola fondamentale sugli errori:** l'ultimo log prima del fallimento deve contenere **tutte le informazioni necessarie per un rapido troubleshooting**: id delle entità coinvolte, chiavi semantiche, utente, stack trace. Chi legge quel log deve poter ricostruire il contesto senza dover cercare altrove.
+
+Catturare un'eccezione per rilanciarla decorata con informazioni di contesto è una buona pratica:
+
+```csharp
+catch (Exception ex)
+{
+    throw new InvalidOperationException(
+        $"Errore nell'elaborazione dell'ordine {ordineId} per il cliente {clienteId}", ex);
+}
+```
+
 **Facoltativo (Debug/Trace):**
 - dettagli interni ai flussi, utili solo in fase di debug
 
 **Mai:**
 - dati personali, password, token, chiavi API
 - contenuto integrale di request/response senza sanitizzazione
+- log su database — usare sistemi di log centralizzato (.NET offre middleware dedicati per la cattura delle eccezioni)
 
 ## Log strutturati
 

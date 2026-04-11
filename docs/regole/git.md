@@ -34,6 +34,8 @@ La descrizione è in minuscolo, al presente, senza punto finale: `feat(auth): ad
 
 **Un commit, una cosa.** Non si mischiano refactoring e nuove feature nello stesso commit. Se stai aggiungendo una funzionalità e trovi un bug da correggere, sono due commit separati.
 
+**Quando separare un refactoring.** Il criterio è il rischio di regressione. Un refactoring che modifica un algoritmo esistente introduce più rischio di uno che estrae un'interfaccia. Più è alto il rischio e la quantità di codice modificata, più è importante isolare il commit di refactoring da quello della feature — così che una eventuale regressione sia immediatamente tracciabile.
+
 **Il messaggio descrive il perché, non il cosa.** `fix: prevent race condition in payment processing` è meglio di `fix: add mutex lock`. Il diff mostra già cosa è cambiato.
 
 **Non si committa codice che non compila.** La storia deve essere in uno stato funzionante a ogni commit, non solo alla fine.

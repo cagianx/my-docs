@@ -44,6 +44,14 @@ Quando il modello di dominio è scritto in Entity Framework Code First e i casi 
 
 Questo non sostituisce il ragionamento del developer sui casi limite, ma abbassa drasticamente il costo di bootstrapping — il test generato è un punto di partenza solido, non un template vuoto.
 
+## Testare la solidità del modello
+
+Un sistema è solido nel momento in cui resiste ai tentativi di romperlo. I test devono verificare non solo che le operazioni valide funzionino, ma che **le operazioni invalide vengano rifiutate**: constraint violati, inserimenti incoerenti, stati impossibili. Se la scrittura è il gate, i test devono certificare che il gate regge.
+
+Bisogna conoscere i modi in cui una cosa si può rompere — tendenzialmente dovrebbero essere zero. I test, oltre a fare documentazione, certificano il livello di solidità del sistema.
+
+Con l'IA, generare test che tentano di rompere il modello è semplice e veloce: dato lo schema EF e i constraint, l'IA può produrre batterie di test che verificano ogni vincolo strutturale.
+
 ## Coverage
 
 Il coverage è un indicatore, non un obiettivo. Un coverage alto su codice banale è rumore. Un coverage basso su business logic critica è un rischio.

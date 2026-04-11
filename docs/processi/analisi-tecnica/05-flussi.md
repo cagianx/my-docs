@@ -8,7 +8,7 @@ I flussi traducono i [casi d'uso](../../glossario#caso-duso) in sequenze concret
 
 ## Quanti flussi dettagliare
 
-Non si dettagliano tutti i flussi — si selezionano i 3-5 più critici: quelli più frequenti, quelli con più dipendenze, quelli dove un errore ha le conseguenze più gravi.
+Non si dettagliano tutti i flussi — si selezionano i 3-5 più critici. Il criterio di selezione è l'**impatto**: quanti danni crea al cliente un errore in quel flusso, e quanto costa sistemarlo. I flussi dove un bug produce dati corrotti, operazioni duplicate o perdita di denaro hanno la priorità.
 
 I flussi banali non richiedono diagrammi. Un flusso merita attenzione quando:
 - coinvolge più moduli o servizi esterni
@@ -27,6 +27,12 @@ I flussi banali non richiedono diagrammi. Un flusso merita attenzione quando:
 **Gestione degli errori** — ogni punto di fallimento possibile e la risposta del sistema. Si usa il [Result pattern](../../glossario#result-pattern) per propagare gli errori in modo esplicito. Vedi [`regole/gestione-errori`](../../regole/gestione-errori.md).
 
 **Compensazioni** — se un'operazione parzialmente completata deve essere annullata, come avviene? Chi ne è responsabile?
+
+:::tip[Transazionalità con sistemi esterni]
+
+Quando un flusso coinvolge sistemi esterni, la transazione database non basta. L'importante è sapere cosa succede quando va male, senza lasciare nel database mezze elaborazioni. La soluzione più semplice è una **coda con retry automatici**. I sistemi esterni si rompono — a differenza del database, non ci si aspetta che siano always-on — e la strategia di gestione va progettata esplicitamente.
+
+:::
 
 ## Formato
 

@@ -25,7 +25,9 @@ Per ogni endpoint, evento o integrazione:
 
 Le operazioni critiche — pagamenti, invio di ordini, operazioni che producono effetti collaterali — devono essere [idempotenti](../../glossario#idempotenza). Il chiamante deve poter ripetere la stessa richiesta in caso di timeout o errore di rete senza produrre effetti duplicati.
 
-L'idempotenza si garantisce tipicamente tramite una chiave idempotency fornita dal chiamante:
+La prima forma di protezione sono gli **indici univoci sul dominio**: se l'operazione produce un'entità con una chiave naturale univoca, il database stesso impedisce la duplicazione senza bisogno di logica applicativa aggiuntiva.
+
+Quando la chiave naturale non è sufficiente, l'idempotenza si garantisce tramite una chiave idempotency fornita dal chiamante:
 
 ```
 POST /ordini
