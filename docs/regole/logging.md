@@ -1,5 +1,6 @@
 ---
 sidebar_position: 8
+description: Log strutturati con ILogger, livelli appropriati, troubleshooting e cosa non loggare mai.
 ---
 
 # Logging e Osservabilità

@@ -1,6 +1,7 @@
 ---
 slug: /
 sidebar_position: 1
+description: Raccolta di principi, regole e processi per lo sviluppo di software manutenibile, testabile e comprensibile nel tempo.
 ---
 
 # Dev Bible

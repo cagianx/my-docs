@@ -1,5 +1,6 @@
 ---
 sidebar_position: 0
+description: Unix Philosophy e principi SOLID applicati concretamente all'architettura software.
 ---
 
 # Principi

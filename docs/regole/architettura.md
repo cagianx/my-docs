@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: Struttura della solution, direzione delle dipendenze e Screaming Architecture.
 ---
 
 # Architettura

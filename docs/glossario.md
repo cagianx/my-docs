@@ -1,5 +1,6 @@
 ---
 sidebar_position: 99
+description: Definizioni dei termini tecnici e di dominio usati nella documentazione.
 ---
 
 # Glossario

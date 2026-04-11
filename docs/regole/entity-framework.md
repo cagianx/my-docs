@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: PostgreSQL, Code First, Fluent API, migration, Unit of Work e perché non serve il Repository pattern.
 ---
 
 # Entity Framework e Modello di Dominio

@@ -1,5 +1,6 @@
 ---
 sidebar_position: 0
+description: Processo in 8 step per tradurre requisiti funzionali in soluzioni implementabili e testabili.
 ---
 
 # Analisi Tecnica

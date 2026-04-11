@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+description: Dati duttili in lettura, scrittura ipercontrollata, constraint strutturali e modellazione a lungo termine.
 ---
 
 # Step 3 — Modellazione dei Dati

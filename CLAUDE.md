@@ -78,6 +78,14 @@ Il file `docs/indice-analitico.md` è un indice alfabetico di tutti i concetti t
 
 Sia l'indice analitico che il glossario (`docs/glossario.md`) vanno tenuti aggiornati **in automatico** ogni volta che si aggiunge, rimuove o sposta un concetto nella documentazione. Non aspettare che venga chiesto: se una modifica introduce un termine nuovo o sposta un concetto, aggiornare indice e glossario fa parte della modifica stessa.
 
+## SEO
+
+Il sito è pubblico e indicizzato. Quando si aggiungono nuove pagine o si modificano quelle esistenti, mantenere aggiornati:
+
+- **`description` nel frontmatter** di ogni pagina — usata dai motori di ricerca e nelle anteprime social. Ogni nuova pagina deve avere una description.
+- **`docusaurus.config.ts`** — metadata globali del sito (headTags, tagline). Aggiornare se cambia lo scopo o il contenuto del sito.
+- **`static/robots.txt`** — già configurato con link alla sitemap. Aggiornare solo se si vuole escludere sezioni specifiche dal crawling.
+
 ## Key constraints
 
 - `onBrokenLinks: 'throw'` — any internal link pointing to a non-existent page breaks the build. Always verify links after adding/removing docs.

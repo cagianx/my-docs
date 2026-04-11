@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+description: Conventional Commits, trunk-based development, feature flag e regole su commit, branch e pull request.
 ---
 
 # Git

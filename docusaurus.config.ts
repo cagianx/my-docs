@@ -9,7 +9,7 @@ const {version} = require('./package.json');
 
 const config: Config = {
   title: 'Dev Bible',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Regole, principi e processi per lo sviluppo software',
   favicon: 'img/logo.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -30,9 +30,35 @@ const config: Config = {
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'it',
+    locales: ['it'],
   },
+
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'description',
+        content:
+          'Dev Bible — raccolta di regole, principi e processi per lo sviluppo di software manutenibile, testabile e comprensibile nel tempo.',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'keywords',
+        content:
+          'sviluppo software, architettura, testing, domain driven design, entity framework, best practices, documentazione tecnica',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        property: 'og:type',
+        content: 'website',
+      },
+    },
+  ],
 
   markdown: {
     mermaid: true,
@@ -80,7 +106,7 @@ const config: Config = {
     navbar: {
       title: 'Dev Bible',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Dev Bible',
         src: 'img/logo.svg',
       },
       items: [

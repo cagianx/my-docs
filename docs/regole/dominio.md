@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+description: Ubiquitous Language, correttezza dei dati e stabilità del dominio nel lungo termine.
 ---
 
 # Regole sul Dominio

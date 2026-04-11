@@ -1,5 +1,6 @@
 ---
 sidebar_position: 7
+description: Quando usare eccezioni e quando il Result pattern per gestire errori prevedibili e imprevedibili.
 ---
 
 # Gestione degli Errori
