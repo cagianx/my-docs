@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.13](https://github.com/cagianx/bible/compare/v0.1.12...v0.1.13) (2026-04-12)
+
+
+### Documentation
+
+* 7 nuove sezioni csharp — DI, HttpClient, validation, background services, caching, resilience, records ([29c6f75](https://github.com/cagianx/bible/commit/29c6f7572fbe4b103e9bd86efce7bd4afb630241))
+* sezione async/await C# — throughput web api, CancellationToken, anti-pattern ([ca0455a](https://github.com/cagianx/bible/commit/ca0455aa9c118aa1a05b4aea64269c27ed948d8a))
+* sezione versionamento — semver, pride versioning, strategie (HA, JetBrains, Angular, .NET) ([075815a](https://github.com/cagianx/bible/commit/075815a2762c7b9d8297842e016be1569c82e754))
+
 ## [0.1.12](https://github.com/cagianx/bible/compare/v0.1.11...v0.1.12) (2026-04-11)
 
 
