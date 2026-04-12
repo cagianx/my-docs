@@ -32,3 +32,11 @@ Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core
 21. [Resilienza](integrazione/21-resilience.md) — retry, circuit breaker, timeout con `Microsoft.Extensions.Http.Resilience`
 22. [Records e immutabilità](linguaggio/22-records.md) — `record`, `with` expression, DTO e value object
 
+### Entity Framework
+- [Code First — Setup e migration](entity-framework/01-code-first.md) — DbContext, registrazione, Fluent API, migration CLI
+- [IQueryable vs List](entity-framework/02-queryable-vs-list.md) — esecuzione differita, N+1, AsNoTracking
+- [LINQ con Entity Framework](entity-framework/03-linq.md) — proiezioni, paginazione, Include, SQL grezzo
+
+### Test di integrazione
+- [Setup — database usa e getta](test-integrazione/01-setup.md) — classe base NUnit, PostgreSQL per test, FluentAssertions
+

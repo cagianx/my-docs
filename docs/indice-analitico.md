@@ -75,7 +75,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 - **Eccezioni** — [regole/gestione-errori](regole/gestione-errori.md) · [regole/logging](regole/logging.md)
 - **Eccezioni (decorazione con contesto)** — [regole/logging](regole/logging.md)
-- **Entity Framework** — [regole/entity-framework](regole/entity-framework.md)
+- **Entity Framework** — [regole/entity-framework](regole/entity-framework.md) · [csharp/entity-framework](tecnologie/csharp/entity-framework/01-code-first.md)
 - **Exception filter** — [csharp/13-exception-filter](tecnologie/csharp/pipeline/13-exception-filter.md) · [glossario](glossario#exception-filter)
 - **Enum (vs stringa libera)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Environment variables** — [regole/configurazione](regole/configurazione.md) · [regole/autenticazione](regole/autenticazione.md)
@@ -83,6 +83,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## F
 
 - **Feature flag** — [glossario](glossario#feature-flag) · [regole/git](regole/git.md)
+- **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-setup.md)
 - **FluentValidation** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md) · [glossario](glossario#fluentvalidation)
 - **Fluent API** — [glossario](glossario#fluent-api) · [regole/entity-framework](regole/entity-framework.md)
 - **Flussi critici** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
@@ -102,6 +103,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **IA (generazione test)** — [regole/testing](regole/testing.md) · [regole/entity-framework](regole/entity-framework.md)
 - **Idempotenza** — [glossario](glossario#idempotenza) · [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 - **IHttpClientFactory** — [csharp/17-httpclient](tecnologie/csharp/integrazione/17-httpclient.md) · [glossario](glossario#ihttpclientfactory)
+- **IQueryable\<T\>** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#iqueryablet)
 - **ILogger\<T\>** — [regole/logging](regole/logging.md) · [regole/principi](regole/principi.md)
 - **Indici (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Indici univoci (idempotenza)** — [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md)
@@ -116,6 +118,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## L
 
+- **LINQ (con Entity Framework)** — [csharp/entity-framework/03-linq](tecnologie/csharp/entity-framework/03-linq.md)
 - **Liskov Substitution** — [regole/principi](regole/principi.md)
 - **Log strutturati** — [regole/logging](regole/logging.md)
 - **Logging** — [regole/logging](regole/logging.md)
@@ -130,6 +133,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## N
 
+- **N+1 (problema)** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#n1-problema)
+- **NUnit** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-setup.md)
 - **NFR (requisiti non funzionali)** — [glossario](glossario#nfr) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 
 ## O
@@ -182,7 +187,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## T
 
-- **Test di integrazione** — [regole/testing](regole/testing.md) · [sviluppo/01](processi/sviluppo/01-dominio.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Test di integrazione** — [regole/testing](regole/testing.md) · [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-setup.md) · [sviluppo/01](processi/sviluppo/01-dominio.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Test end-to-end** — [regole/testing](regole/testing.md) · [sviluppo/03](processi/sviluppo/03-validazione.md)
 - **Test unitari** — [regole/testing](regole/testing.md)
 - **Transazionalità (sistemi esterni)** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)

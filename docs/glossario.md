@@ -109,6 +109,10 @@ Metodo di configurazione EF tramite classi `IEntityTypeConfiguration<T>`. Prefer
 
 Interfaccia ASP.NET Core per creare istanze `HttpClient` con gestione corretta del ciclo di vita degli handler HTTP. Evita socket exhaustion e DNS stale. Si usa tramite typed client o named client. Vedi [`tecnologie/csharp/integrazione/17-httpclient`](tecnologie/csharp/integrazione/17-httpclient.md).
 
+## IQueryable\<T\>
+
+Interfaccia che rappresenta una query non ancora eseguita su un database. EF traduce le espressioni LINQ in SQL e le esegue solo alla materializzazione (`.ToList()`, `.FirstOrDefaultAsync()`, ecc.). Restituire `IQueryable` da un metodo è una astrazione leaky: la query viene eseguita fuori dal controllo del metodo. Vedi [`tecnologie/csharp/entity-framework/02-queryable-vs-list`](tecnologie/csharp/entity-framework/02-queryable-vs-list.md).
+
 ## Idempotenza
 
 Proprietà di un'operazione che produce lo stesso risultato indipendentemente da quante volte viene eseguita con gli stessi input. Obbligatoria per operazioni critiche per gestire retry e timeout. Vedi [`processi/analisi-tecnica/04-contratti`](processi/analisi-tecnica/04-contratti.md).
@@ -128,6 +132,10 @@ Componente della pipeline HTTP di ASP.NET Core che elabora ogni request e respon
 ## Migration
 
 File generato da EF che descrive una modifica incrementale allo schema del database. Il nome deve essere descrittivo della decisione di dominio. Le migration non si modificano dopo il push su `main`. Vedi [`regole/entity-framework`](regole/entity-framework.md).
+
+## N+1 (problema)
+
+Anti-pattern di accesso ai dati in cui si esegue una query per ottenere N record e poi N query aggiuntive per caricare dati correlati. Si risolve con `Include` per il caricamento eager o con proiezioni `Select` che portano solo i dati necessari in un'unica query. Vedi [`tecnologie/csharp/entity-framework/02-queryable-vs-list`](tecnologie/csharp/entity-framework/02-queryable-vs-list.md).
 
 ## NFR
 
