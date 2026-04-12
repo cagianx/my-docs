@@ -5,6 +5,10 @@ description: Definizioni dei termini tecnici e di dominio usati nella documentaz
 
 # Glossario
 
+## Async / Await
+
+Modello di programmazione asincrona in C# basato su `Task<T>` e le keyword `async`/`await`. Permette di liberare il thread durante operazioni I/O-bound (database, HTTP, file system), aumentando il throughput delle Web API senza aumentare il numero di thread. Vedi [`tecnologie/csharp/15-async`](tecnologie/csharp/15-async.md).
+
 ## ACID
 
 Proprietà che garantiscono l'affidabilità delle transazioni database: Atomicità, Consistenza, Isolamento, Durabilità. Entity Framework eredita queste garanzie tramite `SaveChanges()`. Vedi [`regole/entity-framework`](regole/entity-framework.md).

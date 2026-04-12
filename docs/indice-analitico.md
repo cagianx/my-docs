@@ -9,6 +9,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## A
 
 - **Action filter** — [csharp/11-action-filter](tecnologie/csharp/11-action-filter.md)
+- **Async / Await** — [csharp/15-async](tecnologie/csharp/15-async.md) · [glossario](glossario#async--await)
+- **Async all the way down** — [csharp/15-async](tecnologie/csharp/15-async.md)
 - **ACID** — [glossario](glossario#acid)
 - **Ambienti (local, staging, produzione)** — [regole/ambienti](regole/ambienti.md)
 - **Analisi funzionale** — [analisi-tecnica/01](processi/analisi-tecnica/01-analisi-funzionale.md) · [glossario](glossario#analisi-funzionale)
@@ -33,6 +35,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 - **Caso d'uso** — [glossario](glossario#caso-duso) · [analisi-tecnica/01](processi/analisi-tecnica/01-analisi-funzionale.md)
 - **Channel\<T\>** — [csharp/08-code-native](tecnologie/csharp/08-code-native.md)
+- **CancellationToken** — [csharp/15-async](tecnologie/csharp/15-async.md)
 - **CI/CD** — [processi/pipeline](processi/pipeline.md) · [regole/testing](regole/testing.md)
 - **ConcurrentQueue\<T\>** — [csharp/08-code-native](tecnologie/csharp/08-code-native.md)
 - **Clustered index** — [glossario](glossario#clustered-index) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)

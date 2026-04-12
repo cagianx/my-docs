@@ -23,4 +23,5 @@ Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core
 12. [Authorization filter](12-authorization-filter.md) — `IAuthorizationFilter`, API key, tenant
 13. [Exception filter](13-exception-filter.md) — `IExceptionFilter`, `IAsyncExceptionFilter`
 14. [Problem Details (RFC 9457)](14-problem-details.md) — errori strutturati, `ProblemDetails`, `ValidationProblemDetails`
+15. [Async / Await](15-async.md) — throughput nelle Web API, `CancellationToken`, anti-pattern
 
