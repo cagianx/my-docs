@@ -60,7 +60,7 @@ public class TestEnvironment
 
 ## Integrazione con la classe base
 
-La classe base descritta in [01-pattern](01-pattern.md) espone `MasterConnectionString` come proprietà virtuale. Per usare Testcontainers basta estenderla e sovrascrivere quella proprietà — tutto il resto (template, clone, scope DI) rimane invariato.
+La classe base descritta in [01-pattern](01-pattern.mdx) espone `MasterConnectionString` come proprietà virtuale. Per usare Testcontainers basta estenderla e sovrascrivere quella proprietà — tutto il resto (template, clone, scope DI) rimane invariato.
 
 ```csharp
 public abstract class ContainerIntegrationTestBase : IntegrationTestBase

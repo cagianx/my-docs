@@ -83,7 +83,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## F
 
 - **Feature flag** — [glossario](glossario#feature-flag) · [regole/git](regole/git.md)
-- **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.md)
+- **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **FluentValidation** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md) · [glossario](glossario#fluentvalidation)
 - **Fluent API** — [glossario](glossario#fluent-api) · [regole/entity-framework](regole/entity-framework.md)
 - **Flussi critici** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
@@ -134,7 +134,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## N
 
 - **N+1 (problema)** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#n1-problema)
-- **NUnit** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.md)
+- **NUnit** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **NFR (requisiti non funzionali)** — [glossario](glossario#nfr) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 
 ## O
@@ -187,7 +187,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## T
 
-- **Test di integrazione** — [regole/testing](regole/testing.md) · [csharp/test-integrazione](tecnologie/csharp/test-integrazione/01-pattern.md)
+- **Test di integrazione** — [regole/testing](regole/testing.md) · [csharp/test-integrazione](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **Testcontainers** — [csharp/test-integrazione/03-testcontainers](tecnologie/csharp/test-integrazione/03-testcontainers.md) · [sviluppo/01](processi/sviluppo/01-dominio.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Test end-to-end** — [regole/testing](regole/testing.md) · [sviluppo/03](processi/sviluppo/03-validazione.md)
 - **Test unitari** — [regole/testing](regole/testing.md)
