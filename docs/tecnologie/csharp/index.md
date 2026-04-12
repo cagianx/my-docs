@@ -37,6 +37,9 @@ Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core
 - [IQueryable vs List](entity-framework/02-queryable-vs-list.md) — esecuzione differita, N+1, AsNoTracking
 - [LINQ con Entity Framework](entity-framework/03-linq.md) — proiezioni, paginazione, Include, SQL grezzo
 
+### Test unitari
+- [A cosa servono](test-unitari/01-scopo.md) — logica pura, monitoraggio librerie di terze parti, verifica di comportamenti puntuali
+
 ### Test di integrazione
 - [Pattern: template e scope](test-integrazione/01-pattern.mdx) — classe base NUnit, clone da template, scope DI per test
 - [Scrivere un test](test-integrazione/02-scrivere-test.md) — `Get<T>()`, `SeedAsync`, FluentAssertions, parallelismo

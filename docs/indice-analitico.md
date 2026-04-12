@@ -190,7 +190,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Test di integrazione** — [regole/testing](regole/testing.md) · [csharp/test-integrazione](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **Testcontainers** — [csharp/test-integrazione/03-testcontainers](tecnologie/csharp/test-integrazione/03-testcontainers.md) · [sviluppo/01](processi/sviluppo/01-dominio.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Test end-to-end** — [regole/testing](regole/testing.md) · [sviluppo/03](processi/sviluppo/03-validazione.md)
-- **Test unitari** — [regole/testing](regole/testing.md)
+- **Test unitari** — [regole/testing](regole/testing.md) · [csharp/test-unitari/01-scopo](tecnologie/csharp/test-unitari/01-scopo.md)
 - **Transazionalità (sistemi esterni)** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Trunk-based development** — [glossario](glossario#trunk-based-development) · [regole/git](regole/git.md)
 - **Troubleshooting (log)** — [regole/logging](regole/logging.md)
