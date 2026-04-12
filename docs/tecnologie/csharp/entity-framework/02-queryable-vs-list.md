@@ -88,6 +88,21 @@ var prodotti = await _db.Prodotti
 
 `AsNoTracking()` riduce l'allocazione di memoria e il tempo di elaborazione. Va usato sistematicamente per tutte le query che non richiedono modifiche alle entità caricate.
 
+Con `Select`, `AsNoTracking` è ridondante: EF non traccia mai i risultati proiettati, perché non sono entity. Chiamarlo non causa errori, ma non fa nulla.
+
+```csharp
+// ❌ AsNoTracking inutile — Select non produce entity tracciate
+var dto = await _db.Ordini
+    .AsNoTracking()
+    .Select(o => new OrdineDto(o.Id, o.Numero))
+    .ToListAsync(ct);
+
+// ✅ Basta Select
+var dto = await _db.Ordini
+    .Select(o => new OrdineDto(o.Id, o.Numero))
+    .ToListAsync(ct);
+```
+
 `AsNoTrackingWithIdentityResolution()` è utile quando la query include `Include` e potrebbero esserci entità duplicate nel grafo: mantiene un'identità consistente senza tracking completo.
 
 ## IQueryable come parametro o ritorno
