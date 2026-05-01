@@ -18,3 +18,7 @@ pnpm install && pnpm start
 
 - Node.js >= 20
 - pnpm
+
+## License
+
+This work is licensed under [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/) — you are free to share and adapt it, as long as you give credit and release derivatives under the same license.

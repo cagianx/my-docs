@@ -142,6 +142,10 @@ const config: Config = {
               label: 'GitHub',
               href: 'https://github.com/cagianx/bible',
             },
+            {
+              label: 'License (CC BY-SA 4.0)',
+              href: 'https://creativecommons.org/licenses/by-sa/4.0/',
+            },
           ],
         },
       ],
