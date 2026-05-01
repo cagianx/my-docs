@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.16](https://github.com/cagianx/bible/compare/v0.1.15...v0.1.16) (2026-05-01)
+
+
+### Documentation
+
+* sezione struttura-soluzione e riallineamento architettura C# ([002bf8a](https://github.com/cagianx/bible/commit/002bf8a74bfa38caa877420efae281b65ce31f1d))
+
 ## [0.1.15](https://github.com/cagianx/bible/compare/v0.1.14...v0.1.15) (2026-04-13)
 
 ## [0.1.14](https://github.com/cagianx/bible/compare/v0.1.13...v0.1.14) (2026-04-12)
