@@ -61,7 +61,7 @@ public class OrdineConfiguration : IEntityTypeConfiguration<Ordine>
 {
     public void Configure(EntityTypeBuilder<Ordine> builder)
     {
-        builder.ToTable("ordini");
+        builder.ToTable(nameof(Ordine));
 
         builder.HasKey(o => o.Id);
 
@@ -82,6 +82,39 @@ public class OrdineConfiguration : IEntityTypeConfiguration<Ordine>
     }
 }
 ```
+
+## Convenzioni di naming
+
+La nomenclatura tra codice C# e schema database segue una convenzione precisa, derivata dall'uso che si fa di ciascun elemento.
+
+| Elemento                | Forma     | Esempio                |
+| ----------------------- | --------- | ---------------------- |
+| Entity class            | Singolare | `Ordine`, `Cliente`    |
+| Tabella nel database    | Singolare | `Ordine`, `Cliente`    |
+| `DbSet<T>` nel contesto | Plurale   | `Ordini`, `Clienti`    |
+| Colonne                 | PascalCase, dal nome della property | `Numero`, `DataCreazione` |
+
+L'entità è singolare perché rappresenta **un'istanza** del concetto: una riga della tabella è un singolo `Ordine`, non un insieme. La tabella segue la stessa convenzione: contiene istanze del concetto, ma il nome del contenitore non si pluralizza per sentito dire — la tabella `Ordine` contiene tanti ordini, esattamente come `List<Ordine>` ne contiene tanti senza chiamarsi `Ordini`.
+
+Il `DbSet<T>` invece è una collezione che si itera e si interroga: si scrive `_db.Ordini.Where(...)` perché si sta operando sull'insieme. Il plurale è la forma naturale in C# per le collezioni.
+
+### Mai stringhe magiche per nomi di entità e colonne
+
+I nomi di tabelle e colonne in `IEntityTypeConfiguration<T>` si scrivono con `nameof(...)`, mai con stringhe letterali:
+
+```csharp
+// ✅ Refactor-safe — rinominare la classe Ordine aggiorna anche la mappatura
+builder.ToTable(nameof(Ordine));
+builder.Property(o => o.Stato).HasColumnName(nameof(Ordine.Stato));
+
+// ❌ String drift — la rinomina della classe lascia indietro la mappatura
+builder.ToTable("Ordine");
+builder.Property(o => o.Stato).HasColumnName("Stato");
+```
+
+`nameof()` viene risolto a tempo di compilazione: rinominare l'entità con un refactor IDE aggiorna automaticamente anche le configurazioni EF, e la migration successiva produce un `RENAME TABLE` corretto. Una stringa letterale non si rinomina insieme alla classe — il codice continua a compilare, ma punta a una tabella che non esiste più, o peggio, ne crea una nuova lasciando orfana quella vecchia.
+
+La stessa regola vale per i nomi delle colonne quando si dichiara `HasColumnName(...)`. Per default EF usa il nome della property, quindi `HasColumnName` si scrive solo quando serve forzare un nome diverso — e in quel caso il nome di partenza resta comunque legato alla property tramite `nameof(Entity.Property)`.
 
 ## Workflow delle migration
 

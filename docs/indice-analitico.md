@@ -51,6 +51,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Compensazioni** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Configurazione** — [regole/configurazione](regole/configurazione.md)
 - **Constraint (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/entity-framework](regole/entity-framework.md) · [regole/dominio](regole/dominio.md)
+- **Check constraint (da enum)** — [csharp/entity-framework/04-enum](tecnologie/csharp/entity-framework/04-enum.md)
 - **Container** — [regole/ambienti](regole/ambienti.md)
 - **Contratti** — [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md) · [glossario](glossario#contratto)
 - **Conventional Commits** — [glossario](glossario#conventional-commits) · [regole/git](regole/git.md)
@@ -79,6 +80,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Entity Framework** — [regole/entity-framework](regole/entity-framework.md) · [csharp/entity-framework](tecnologie/csharp/entity-framework/01-code-first.md)
 - **Exception filter** — [csharp/13-exception-filter](tecnologie/csharp/pipeline/13-exception-filter.md) · [glossario](glossario#exception-filter)
 - **Enum (vs stringa libera)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **Enum (persistenza con EF)** — [csharp/entity-framework/04-enum](tecnologie/csharp/entity-framework/04-enum.md)
 - **Environment variables** — [regole/configurazione](regole/configurazione.md) · [regole/autenticazione](regole/autenticazione.md)
 
 ## F
@@ -139,6 +141,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## N
 
 - **N+1 (problema)** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#n1-problema)
+- **`nameof()` (mapping EF)** — [csharp/entity-framework/01-code-first](tecnologie/csharp/entity-framework/01-code-first.md#convenzioni-di-naming)
+- **Naming (tabelle, DbSet, colonne)** — [csharp/entity-framework/01-code-first](tecnologie/csharp/entity-framework/01-code-first.md#convenzioni-di-naming)
 - **NUnit** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **NFR (requisiti non funzionali)** — [glossario](glossario#nfr) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 
