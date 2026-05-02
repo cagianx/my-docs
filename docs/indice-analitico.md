@@ -104,6 +104,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Integrazioni (progetti)** — [csharp/struttura-soluzione/06](tecnologie/csharp/struttura-soluzione/06-integrazioni.md)
 
 - **IA (generazione test)** — [regole/testing](regole/testing.md) · [regole/entity-framework](regole/entity-framework.md)
+- **IA (uso del bible come knowledge base)** — [uso-con-ia](uso-con-ia.md)
 - **Idempotenza** — [glossario](glossario#idempotenza) · [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 - **IHttpClientFactory** — [csharp/17-httpclient](tecnologie/csharp/integrazione/17-httpclient.md) · [glossario](glossario#ihttpclientfactory)
 - **IQueryable\<T\>** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#iqueryablet)
@@ -176,6 +177,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## S
 
 - **SaveChanges** — [regole/entity-framework](regole/entity-framework.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Sottomodulo git (bible)** — [uso-con-ia](uso-con-ia.md)
 - **Screaming Architecture** — [glossario](glossario#screaming-architecture) · [regole/architettura](regole/architettura.md) · [csharp/struttura-soluzione/03](tecnologie/csharp/struttura-soluzione/03-organizzazione-core.md)
 - **Scrittura difficile, lettura facile** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/dominio](regole/dominio.md)
 - **Secrets** — [regole/configurazione](regole/configurazione.md) · [regole/autenticazione](regole/autenticazione.md)
@@ -204,7 +206,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## U
 
-- **Ubiquitous Language** — [glossario](glossario#ubiquitous-language) · [regole/dominio](regole/dominio.md) · [regole/entity-framework](regole/entity-framework.md)
+- **Ubiquitous Language** — [glossario](glossario#ubiquitous-language) · [regole/dominio](regole/dominio.md) · [regole/entity-framework](regole/entity-framework.md) · [uso-con-ia](uso-con-ia.md)
 - **Unit of Work** — [glossario](glossario#unit-of-work) · [regole/entity-framework](regole/entity-framework.md) · [csharp/struttura-soluzione/04](tecnologie/csharp/struttura-soluzione/04-usecases.md)
 - **Unix Philosophy** — [regole/principi](regole/principi.md)
 - **UseCases (livello)** — [csharp/struttura-soluzione/04](tecnologie/csharp/struttura-soluzione/04-usecases.md)

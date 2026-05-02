@@ -20,8 +20,12 @@ La documentazione vive nel repository perché non esiste documentazione utile ch
 
 **[Glossario](glossario.md)** — i termini tecnici e di dominio usati nella documentazione e nel codice.
 
+**[Uso con IA](uso-con-ia.md)** — come integrare questa guida in un progetto come knowledge base per gli agenti IA.
+
 ## Da dove iniziare
 
 Per capire la filosofia di fondo: [Principi](regole/principi.md).
 
 Per iniziare uno sviluppo: [Analisi Tecnica](processi/analisi-tecnica/index.md) → [Sviluppo](processi/sviluppo/index.md).
+
+Per integrare il bible in un progetto reale: [Uso con IA](uso-con-ia.md).
