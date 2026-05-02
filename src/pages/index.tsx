@@ -8,10 +8,28 @@ import styles from './index.module.css';
 
 const sections = [
   {
-    title: 'Regole',
+    title: 'Principi',
     description:
-      'Principi permanenti che governano il sistema: dominio, architettura, testing, git, logging, autenticazione, configurazione e versionamento.',
+      'Le idee che precedono le regole: Unix, SOLID, scrittura difficile e lettura facile. La filosofia di fondo da cui derivano le scelte tecniche.',
+    to: '/docs/regole/principi',
+  },
+  {
+    title: 'Dominio e architettura',
+    description:
+      'Modellazione del dominio applicativo, struttura delle solution, separazione di responsabilità e vincoli architetturali.',
     to: '/docs/regole/dominio',
+  },
+  {
+    title: 'Testing',
+    description:
+      'Test unitari e di integrazione, generazione assistita dall\'IA, monitoraggio della copertura, database usa e getta.',
+    to: '/docs/regole/testing',
+  },
+  {
+    title: 'Git e versionamento',
+    description:
+      'Convenzioni di commit e branch, Semantic Versioning, ciclo di rilascio tracciabile, niente pride versioning.',
+    to: '/docs/regole/git',
   },
   {
     title: 'Processi',
@@ -20,21 +38,21 @@ const sections = [
     to: '/docs/processi/analisi-tecnica',
   },
   {
-    title: 'Glossario',
+    title: 'Tecnologie',
     description:
-      'Termini tecnici e di dominio usati nella documentazione e nel codice. Un linguaggio condiviso, senza sinonimi né traduzioni casuali.',
-    to: '/docs/glossario',
+      'Convenzioni specifiche per stack: C# con Entity Framework e ASP.NET Core, Angular per il frontend.',
+    to: '/docs/tecnologie/',
   },
   {
-    title: 'Indice analitico',
+    title: 'Glossario e indice',
     description:
-      'Punto di partenza per cercare concetti nella documentazione. Mappa ogni argomento alla pagina dove è trattato per esteso.',
-    to: '/docs/indice-analitico',
+      'Termini tecnici e di dominio in un linguaggio condiviso. Indice analitico come punto di partenza per cercare concetti.',
+    to: '/docs/glossario',
   },
   {
     title: 'Uso con IA',
     description:
-      'Come integrare questa guida in un progetto reale come knowledge base per agenti IA: sottomodulo git, riferimenti puntuali, glossario condiviso.',
+      'Integrare questa guida in un progetto reale come knowledge base per agenti IA: sottomodulo git, riferimenti puntuali, glossario condiviso.',
     to: '/docs/uso-con-ia',
   },
 ];
