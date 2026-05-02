@@ -18,8 +18,8 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://cagianx.github.io',
-  baseUrl: process.env.BASE_URL ?? '/bible/',
+  url: 'https://docs.cagianx.it',
+  baseUrl: '/',
 
   organizationName: 'cagianx',
   projectName: 'bible',

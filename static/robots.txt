@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cagianx.github.io/bible/sitemap.xml
+Sitemap: https://docs.cagianx.it/sitemap.xml
