@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.25](https://github.com/cagianx/my-docs/compare/v0.1.24...v0.1.25) (2026-05-04)
+
 ## [0.1.24](https://github.com/cagianx/my-docs/compare/v0.1.23...v0.1.24) (2026-05-02)
 
 ## [0.1.23](https://github.com/cagianx/my-docs/compare/v0.1.22...v0.1.23) (2026-05-02)
