@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0](https://github.com/cagianx/my-docs/compare/v0.1.25...v1.0.0) (2026-05-19)
+
+
+### Features
+
+* apply brutalist tech theme ([5110be0](https://github.com/cagianx/my-docs/commit/5110be0a1c1870172f10c4cea9e1a7154d2f828c))
+* brutalist homepage and theme refinements ([e385d90](https://github.com/cagianx/my-docs/commit/e385d90cb9af3a7fbb908e75e976d6bcc41d92be))
+* refine sidebar spacing and nested indentation ([fe1c742](https://github.com/cagianx/my-docs/commit/fe1c7427e6c78affefb8b3308bc7c5de9134ddab))
+
 ## [0.1.25](https://github.com/cagianx/my-docs/compare/v0.1.24...v0.1.25) (2026-05-04)
 
 ## [0.1.24](https://github.com/cagianx/my-docs/compare/v0.1.23...v0.1.24) (2026-05-02)
