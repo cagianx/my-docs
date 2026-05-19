@@ -184,8 +184,15 @@ html, body {
 }
 .menu__link {
   color: var(--ifm-menu-color);
-  padding: 5px 12px 5px 14px;
+  padding: 8px 12px 8px 20px;   /* più aria verticale + indent base */
 }
+
+/* indentazione progressiva per i livelli annidati */
+.menu__list .menu__list { padding-left: 14px; }
+.menu__list .menu__list .menu__list { padding-left: 14px; }
+
+/* gap tra le sezioni di primo livello */
+.theme-doc-sidebar-menu > .menu__list-item { margin-bottom: 4px; }
 .menu__link:hover {
   background: rgba(255,255,255,0.02);
   color: var(--ifm-color-content);
