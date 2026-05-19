@@ -448,7 +448,7 @@ hr {
   font-variant-numeric: tabular-nums;
 }
 
-/* ───────── Hero homepage (se usi il template default) ───────── */
+/* ───────── Hero homepage (se usi il template default Docusaurus) ───────── */
 .hero {
   background: transparent;
   border-bottom: 1px solid var(--md-border);
@@ -465,6 +465,197 @@ hr {
   font-size: 1.05rem;
   max-width: 680px;
   margin-top: 14px;
+}
+
+/* ───────── Homepage custom (src/pages/index.js) ─────────
+   Stili che riproducono fedelmente l'hero brutalist + griglia di card
+   del prototipo. Servono SOLO se sostituisci src/pages/index.js
+   con quello fornito nell'handoff. */
+.mydocs-home {
+  padding: 0;
+}
+
+.mydocs-hero {
+  padding: 64px 48px 32px;
+  border-bottom: 1px solid var(--md-border);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+.mydocs-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  flex-wrap: wrap;
+}
+.mydocs-pill {
+  border: 1px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  padding: 3px 9px;
+}
+.mydocs-hero-title {
+  font-size: clamp(56px, 9vw, 128px);
+  line-height: 0.95;
+  margin: 8px 0 0;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--ifm-color-content);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.mydocs-cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.7em;
+  background: var(--ifm-color-primary);
+  animation: mydocs-blink 1.1s steps(2, end) infinite;
+}
+@keyframes mydocs-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+.mydocs-hero-sub {
+  max-width: 720px;
+  color: var(--ifm-color-content);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin: 0;
+}
+.mydocs-hero-sub strong {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+.mydocs-hero-sub.mydocs-dim {
+  color: var(--ifm-color-content-secondary);
+}
+.mydocs-hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.mydocs-section {
+  padding: 48px;
+  border-bottom: 1px solid var(--md-border);
+}
+.mydocs-section:last-child {
+  border-bottom: none;
+}
+.mydocs-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.mydocs-section-lbl {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ifm-color-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.mydocs-section-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+/* niente auto-numbering sull'h2 della homepage */
+.mydocs-section-title::before { content: none !important; }
+.mydocs-section-right {
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.mydocs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--md-border);
+  border-left: 1px solid var(--md-border);
+}
+.mydocs-card {
+  border-right: 1px solid var(--md-border);
+  border-bottom: 1px solid var(--md-border);
+  background: var(--ifm-background-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none !important;
+  color: var(--ifm-color-content) !important;
+  position: relative;
+  transition: none;
+}
+.mydocs-card:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-background-color);
+  text-decoration: none !important;
+}
+/* preserva il colore del testo (Docusaurus farebbe color: primary su a:hover) */
+.mydocs-card:hover .mydocs-card-title { color: var(--ifm-color-content); }
+.mydocs-card:hover .mydocs-card-desc,
+.mydocs-card:hover .mydocs-card-path { color: var(--ifm-color-content-secondary); }
+/* SOLO index e arrow si illuminano in arancione */
+.mydocs-card:hover .mydocs-card-idx,
+.mydocs-card:hover .mydocs-card-arrow {
+  color: var(--ifm-color-primary);
+}
+.mydocs-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.mydocs-card-idx {
+  font-size: 0.78rem;
+  color: var(--ifm-color-content-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.mydocs-card-arrow {
+  color: var(--ifm-color-content-secondary);
+  transition: none;
+}
+.mydocs-card:hover .mydocs-card-arrow {
+  transform: translateX(4px);
+}
+.mydocs-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.mydocs-card-desc {
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+.mydocs-card-path {
+  font-size: 0.75rem;
+  color: var(--ifm-color-content-secondary);
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed var(--md-border);
+}
+
+@media (max-width: 1100px) {
+  .mydocs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .mydocs-grid { grid-template-columns: 1fr; }
+  .mydocs-hero, .mydocs-section { padding: 32px 20px; }
 }
 
 /* search (DocSearch) — sharp edges */

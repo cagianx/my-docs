@@ -2,96 +2,125 @@ import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Heading from '@theme/Heading';
+import {version} from '@site/package.json';
 
-import styles from './index.module.css';
-
-const sections = [
+const CATEGORIES = [
   {
+    idx: '01',
     title: 'Principi',
-    description:
-      'Le idee che precedono le regole: Unix, SOLID, scrittura difficile e lettura facile. La filosofia di fondo da cui derivano le scelte tecniche.',
-    to: '/docs/regole/principi',
+    path: '/docs/regole/principi',
+    desc: 'Le idee che precedono le regole: Unix, SOLID, scrittura difficile e lettura facile. La filosofia di fondo da cui derivano le scelte tecniche.',
   },
   {
+    idx: '02',
     title: 'Dominio e architettura',
-    description:
-      'Modellazione del dominio applicativo, struttura delle solution, separazione di responsabilità e vincoli architetturali.',
-    to: '/docs/regole/dominio',
+    path: '/docs/regole/dominio',
+    desc: 'Modellazione del dominio applicativo, struttura delle solution, separazione di responsabilità e vincoli architetturali.',
   },
   {
+    idx: '03',
     title: 'Testing',
-    description:
-      'Test unitari e di integrazione, generazione assistita dall\'IA, monitoraggio della copertura, database usa e getta.',
-    to: '/docs/regole/testing',
+    path: '/docs/regole/testing',
+    desc: "Test unitari e di integrazione, generazione assistita dall'IA, monitoraggio della copertura, database usa e getta.",
   },
   {
+    idx: '04',
     title: 'Git e versionamento',
-    description:
-      'Convenzioni di commit e branch, Semantic Versioning, ciclo di rilascio tracciabile, niente pride versioning.',
-    to: '/docs/regole/git',
+    path: '/docs/regole/git',
+    desc: 'Convenzioni di commit e branch, Semantic Versioning, ciclo di rilascio tracciabile, niente pride versioning.',
   },
   {
+    idx: '05',
     title: 'Processi',
-    description:
-      'Come si lavora: dall\'analisi tecnica allo sviluppo, dalla pipeline CI/CD al ciclo di rilascio.',
-    to: '/docs/processi/analisi-tecnica',
+    path: '/docs/processi/analisi-tecnica',
+    desc: "Come si lavora: dall'analisi tecnica allo sviluppo, dalla pipeline CI/CD al ciclo di rilascio.",
   },
   {
+    idx: '06',
     title: 'Tecnologie',
-    description:
-      'Convenzioni specifiche per stack: C# con Entity Framework e ASP.NET Core, Angular per il frontend.',
-    to: '/docs/tecnologie/',
+    path: '/docs/tecnologie/',
+    desc: 'Convenzioni specifiche per stack: C# con Entity Framework e ASP.NET Core, Angular per il frontend.',
   },
   {
+    idx: '07',
     title: 'Glossario e indice',
-    description:
-      'Termini tecnici e di dominio in un linguaggio condiviso. Indice analitico come punto di partenza per cercare concetti.',
-    to: '/docs/glossario',
+    path: '/docs/glossario',
+    desc: 'Termini tecnici e di dominio in un linguaggio condiviso. Indice analitico come punto di partenza per cercare concetti.',
   },
   {
+    idx: '08',
     title: 'Uso con IA',
-    description:
-      'Integrare questa guida in un progetto reale come knowledge base per agenti IA: sottomodulo git, riferimenti puntuali, glossario condiviso.',
-    to: '/docs/uso-con-ia',
+    path: '/docs/uso-con-ia',
+    desc: 'Integrare questa guida in un progetto reale come knowledge base per agenti IA: sottomodulo git, riferimenti puntuali, glossario condiviso.',
   },
 ];
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout title={siteConfig.title}>
-      <main>
-        <div className={styles.heroBanner}>
-          <div className="container">
-            <Heading as="h1">{siteConfig.title}</Heading>
-            <p className={styles.subtitle}>
-              Una posizione sullo sviluppo software. Regole, principi e processi
-              per scrivere codice che si lascia leggere, modificare e mantenere
-              nel tempo.
-            </p>
-            <p className={styles.subtitle}>
-              Non verità universali: una prospettiva argomentata, più o meno
-              condivisibile, indipendente da chi la legge.
-            </p>
-            <div className={styles.cta}>
-              <Link className="button button--primary button--lg" to="/docs/">
-                Vai alla documentazione
-              </Link>
+    <Layout
+      title={siteConfig.title}
+      description="MyDocs — raccolta di regole, principi e processi per lo sviluppo software.">
+      <main className="mydocs-home">
+        <section className="mydocs-hero">
+          <div className="mydocs-hero-meta">
+            <span className="mydocs-pill">Docs</span>
+            <span>v{version}</span>
+            <span>·</span>
+            <span>CC BY-SA 4.0</span>
+          </div>
+
+          <h1 className="mydocs-hero-title">
+            MyDocs<span className="mydocs-cursor" aria-hidden="true" />
+          </h1>
+
+          <p className="mydocs-hero-sub">
+            Una posizione sullo sviluppo software.{' '}
+            <strong>Regole, principi e processi</strong> per scrivere codice che
+            si lascia leggere, modificare e mantenere nel tempo.
+          </p>
+          <p className="mydocs-hero-sub mydocs-dim">
+            // Non verità universali: una prospettiva argomentata, più o meno
+            condivisibile, indipendente da chi la legge.
+          </p>
+
+          <div className="mydocs-hero-cta">
+            <Link className="button button--primary" to="/docs/">
+              Vai alla documentazione →
+            </Link>
+            <Link
+              className="button"
+              href="https://github.com/cagianx/my-docs">
+              GitHub ↗
+            </Link>
+          </div>
+        </section>
+
+        <section className="mydocs-section">
+          <div className="mydocs-section-head">
+            <div>
+              <div className="mydocs-section-lbl">// index</div>
+              <h2 className="mydocs-section-title">Argomenti</h2>
+            </div>
+            <div className="mydocs-section-right">
+              {CATEGORIES.length} sezioni
             </div>
           </div>
-        </div>
 
-        <div className="container">
-          <div className={styles.sections}>
-            {sections.map(({title, description, to}) => (
-              <Link key={title} to={to} className={styles.card}>
-                <Heading as="h2">{title}</Heading>
-                <p>{description}</p>
+          <div className="mydocs-grid">
+            {CATEGORIES.map((c) => (
+              <Link to={c.path} key={c.idx} className="mydocs-card">
+                <div className="mydocs-card-top">
+                  <span className="mydocs-card-idx">{c.idx} /</span>
+                  <span className="mydocs-card-arrow">→</span>
+                </div>
+                <div className="mydocs-card-title">{c.title}</div>
+                <div className="mydocs-card-desc">{c.desc}</div>
+                <div className="mydocs-card-path">{c.path}</div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       </main>
     </Layout>
   );
