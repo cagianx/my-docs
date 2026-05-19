@@ -1,4 +1,7 @@
 {
-  "label": "Regole",
-  "position": 2
+  "label": "// Regole",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "link": null
 }

@@ -1,34 +1,522 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * MyDocs — brutalist tech theme for Docusaurus 3.x
+ * Drop this file into: src/css/custom.css
+ *
+ * - Force dark mode only (vedi sotto, opzionale)
+ * - Tutto monospaced (JetBrains Mono via google fonts)
+ * - Nero + arancione, bordi netti, griglia di sfondo, niente raggi
+ * - Status bar simulata sotto al footer (vedi src/theme/Root.js)
  */
 
-@import '@fontsource/cascadia-code/400.css';
-@import '@fontsource/cascadia-code/700.css';
+/* ───────── Fonts ───────── */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-/* You can override the default Infima variables here. */
+/* ───────── Token override (Infima) ───────── */
 :root {
-  --ifm-font-family-monospace: 'Cascadia Code', monospace;
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* brand */
+  --ifm-color-primary: #ff6a1a;
+  --ifm-color-primary-dark:    #f25a05;
+  --ifm-color-primary-darker:  #db5104;
+  --ifm-color-primary-darkest: #b44204;
+  --ifm-color-primary-light:   #ff7d38;
+  --ifm-color-primary-lighter: #ff8a4d;
+  --ifm-color-primary-lightest:#ffa470;
+
+  /* type */
+  --ifm-font-family-base: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --ifm-font-size-base: 14px;
+  --ifm-line-height-base: 1.65;
+  --ifm-h1-font-size: 2.4rem;
+  --ifm-h2-font-size: 1.45rem;
+  --ifm-h3-font-size: 1.1rem;
+  --ifm-heading-font-weight: 700;
+  --ifm-heading-line-height: 1.1;
+
+  /* spazi e raggi */
+  --ifm-global-radius: 0;          /* niente raggi: brutalist */
+  --ifm-button-border-radius: 0;
+  --ifm-card-border-radius: 0;
+  --ifm-alert-border-radius: 0;
+  --ifm-pre-border-radius: 0;
+  --ifm-code-border-radius: 0;
+
+  /* code */
+  --ifm-code-font-size: 88%;
+  --ifm-code-background: rgba(255,255,255,0.06);
+  --docusaurus-highlighted-code-line-bg: rgba(255,106,26,0.12);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* dark theme — il tema "tech" gira solo qui */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-background-color:        #0a0a0a;
+  --ifm-background-surface-color:#0a0a0a;
+  --ifm-color-content:           #f5f5f0;
+  --ifm-color-content-secondary: #8a8a82;
+  --ifm-toc-border-color:        #262622;
+  --ifm-color-emphasis-100:      #121211;
+  --ifm-color-emphasis-200:      #1a1a18;
+  --ifm-color-emphasis-300:      #262622;
+  --ifm-color-emphasis-400:      #3a3a34;
+  --ifm-color-emphasis-500:      #4a4a44;
+  --ifm-color-emphasis-600:      #6a6a64;
+  --ifm-color-emphasis-700:      #8a8a82;
+  --ifm-navbar-background-color: rgba(10,10,10,0.85);
+  --ifm-footer-background-color: #050505;
+  --ifm-menu-color:              #8a8a82;
+  --ifm-menu-color-active:       #ff6a1a;
+  --ifm-menu-color-background-active: rgba(255,106,26,0.06);
+  --ifm-link-color: #ff6a1a;
+
+  /* tokens custom usati sotto */
+  --md-grid-line: rgba(255,255,255,0.035);
+  --md-grid-size: 48px;
+  --md-border: #262622;
+  --md-border-strong: #3a3a34;
 }
+
+/* ───────── Globale: griglia di sfondo + smoothing ───────── */
+html, body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+[data-theme='dark'] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right,  var(--md-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--md-grid-line) 1px, transparent 1px);
+  background-size: var(--md-grid-size) var(--md-grid-size);
+}
+.main-wrapper, .footer { position: relative; z-index: 1; }
+/* navbar: sticky in cima (Docusaurus default), z-index sopra la griglia */
+.navbar { position: sticky; top: 0; z-index: 100; }
+
+/* selezione testo */
+::selection { background: var(--ifm-color-primary); color: #0a0a0a; }
+
+/* ───────── Heading caps + idx accent ───────── */
+.markdown h1,
+.markdown h2 {
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.markdown h2 {
+  border-bottom: 1px solid var(--md-border);
+  padding-bottom: 10px;
+  margin-top: 2.4em;
+}
+.markdown h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ───────── Auto-numbering H2 (01., 02., 03., …) ─────────
+   Riproduce il prefisso arancione del prototipo. Si resetta a ogni pagina
+   perché .markdown è il wrapper per-pagina di Docusaurus. */
+.markdown { counter-reset: doc-section; }
+.markdown h2 { counter-increment: doc-section; }
+.markdown h2::before {
+  content: counter(doc-section, decimal-leading-zero) ". ";
+  color: var(--ifm-color-primary);
+  font-weight: 500;
+  margin-right: 4px;
+  font-feature-settings: "tnum";
+}
+
+/* prompt $ sui titoli (toglierlo se non piace) */
+/*
+.markdown h1::before { content: "$ "; color: var(--ifm-color-primary); font-weight: 500; }
+*/
+
+/* ───────── Navbar ───────── */
+.navbar {
+  border-bottom: 1px solid var(--md-border);
+  height: 56px;
+  backdrop-filter: blur(8px);
+}
+.navbar__title {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.navbar__title::before { content: "["; color: var(--ifm-color-primary); margin-right: 2px; }
+.navbar__title::after  { content: "]"; color: var(--ifm-color-primary); margin-left: 2px; }
+
+.navbar__link {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+  border: 1px solid transparent;
+  padding: 4px 10px;
+}
+.navbar__link:hover {
+  border-color: var(--md-border);
+  color: var(--ifm-color-content);
+  background: transparent;
+}
+.navbar__link--active {
+  color: var(--ifm-color-primary) !important;
+  border-color: var(--ifm-color-primary);
+}
+
+/* ───────── Sidebar (menu) ───────── */
+.menu {
+  font-size: 0.875rem;
+  padding: 1rem 0;
+  /* sfondo solido sul nav menu — copre la griglia di body::before
+     senza interferire col sidebar-logo o altri elementi del container */
+  background: var(--ifm-background-color);
+}
+/* NOTA: NON azzerare .menu__list — l'indent dei livelli annidati dipende da quello. */
+
+.menu__list-item-collapsible,
+.menu__link {
+  border-radius: 0;
+  border-left: 2px solid transparent;
+  text-transform: none;
+  margin-left: -1px;
+  position: relative;
+}
+.menu__link {
+  color: var(--ifm-menu-color);
+  padding: 5px 12px 5px 14px;
+}
+.menu__link:hover {
+  background: rgba(255,255,255,0.02);
+  color: var(--ifm-color-content);
+}
+.menu__link--active:not(.menu__link--sublist) {
+  color: var(--ifm-color-primary);
+  border-left-color: var(--ifm-color-primary);
+  background: rgba(255,106,26,0.06);
+  font-weight: 500;
+}
+
+/* ───────── Sidebar ASCII markers (Docusaurus 3.x) ─────────
+   Tassonomia delle voci sidebar:
+
+   1. Voce-documento (link foglia)        → .menu__link (no sublist)
+      → marker "·", attivo "◆ arancione"
+   2. Categoria collapsible (con caret)   → .menu__link--sublist.menu__link--sublist-caret
+      → caret nativo nascosto, marker "▾" (aperta) / "▸" (chiusa)
+   3. Categoria non-collapsible (no caret)→ .menu__link--sublist (senza --sublist-caret)
+      → nessun marker (è una pura etichetta di gruppo)
+*/
+
+/* nascondi il caret nativo che Docusaurus disegna via background-image */
+.menu__link--sublist-caret::after,
+.menu__caret { display: none !important; }
+
+/* 1. voci-documento → · / ◆ */
+.menu__link:not(.menu__link--sublist)::before {
+  content: "·";
+  display: inline-block;
+  width: 14px;
+  margin-left: -4px;
+  color: var(--ifm-color-content-secondary);
+  text-align: left;
+}
+.menu__link--active:not(.menu__link--sublist)::before {
+  content: "◆";
+  color: var(--ifm-color-primary);
+}
+
+/* 2. categorie collapsible → ▾ / ▸ */
+.menu__link--sublist-caret::before {
+  content: "▾";
+  display: inline-block;
+  width: 14px;
+  margin-left: -4px;
+  color: var(--ifm-color-primary);
+  font-family: var(--ifm-font-family-monospace);
+  text-align: left;
+}
+/* stato chiuso: Docusaurus mette aria-expanded="false" sul link.
+   Fallback su .menu__list-item--collapsed per versioni precedenti. */
+.menu__link--sublist-caret[aria-expanded="false"]::before,
+.menu__list-item--collapsed > .menu__list-item-collapsible > .menu__link--sublist-caret::before,
+.menu__list-item-collapsible--collapsed > .menu__link--sublist-caret::before {
+  content: "▸";
+}
+
+/* stile uniforme per le righe-categoria */
+.menu__link--sublist {
+  color: var(--ifm-color-content);
+  font-weight: 600;
+}
+/* solo le sezioni "// …" (non-collapsible) sono maiuscole + più piccole */
+.menu__link--sublist:not(.menu__link--sublist-caret) {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+  color: var(--ifm-color-content-secondary);
+  font-weight: 700;
+  cursor: default;
+}
+
+/* ───────── Right TOC ───────── */
+.table-of-contents {
+  font-size: 0.78rem;
+  border-left: 1px solid var(--md-border);
+  padding-left: 12px;
+  counter-reset: toc-h2;
+}
+.table-of-contents__link {
+  color: var(--ifm-color-content-secondary);
+  text-transform: none;
+}
+.table-of-contents__link:hover { color: var(--ifm-color-content); }
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary) !important;
+  font-weight: 500;
+}
+
+/* Auto-numbering del TOC: 1., 2., 3., … per H2 e 1.1, 1.2, … per H3 */
+.table-of-contents > li {
+  counter-increment: toc-h2;
+  counter-reset: toc-h3;
+}
+.table-of-contents > li > a::before {
+  content: counter(toc-h2) ". ";
+  margin-right: 4px;
+  font-feature-settings: "tnum";
+}
+.table-of-contents > li > ul > li {
+  counter-increment: toc-h3;
+}
+.table-of-contents > li > ul > li > a::before {
+  content: counter(toc-h2) "." counter(toc-h3) " ";
+  margin-right: 4px;
+  font-feature-settings: "tnum";
+}
+
+/* "On this page" */
+.theme-doc-toc-desktop > .table-of-contents::before {
+  content: "// On this page";
+  display: block;
+  color: var(--ifm-color-content-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--md-border);
+  margin-bottom: 12px;
+  margin-left: -12px; padding-left: 0;
+}
+
+/* ───────── Breadcrumb ───────── */
+.breadcrumbs__item {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+}
+.breadcrumbs__link {
+  background: transparent !important;
+  padding: 4px 0;
+  color: var(--ifm-color-content-secondary);
+}
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ifm-color-primary);
+}
+
+/* ───────── Buttons / CTA ───────── */
+.button {
+  border: 1px solid var(--md-border-strong);
+  background: transparent;
+  color: var(--ifm-color-content);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--ifm-font-family-base);
+  font-weight: 500;
+  padding: 12px 18px;
+}
+.button:hover {
+  background: var(--ifm-color-primary);
+  color: #0a0a0a;
+  border-color: var(--ifm-color-primary);
+}
+.button--primary {
+  background: var(--ifm-color-primary);
+  color: #0a0a0a;
+  border-color: var(--ifm-color-primary);
+}
+.button--primary:hover {
+  background: transparent;
+  color: var(--ifm-color-primary);
+}
+
+/* ───────── Card (homepage features) ───────── */
+.card {
+  border: 1px solid var(--md-border);
+  background: transparent;
+  box-shadow: none;
+  padding: 20px;
+  transition: none;
+}
+.card:hover {
+  border-color: var(--ifm-color-primary);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ───────── Code blocks ───────── */
+.prism-code, pre {
+  border: 1px solid var(--md-border);
+  background: #050505 !important;
+}
+code {
+  border: 1px solid var(--md-border);
+  color: var(--ifm-color-primary);
+}
+
+/* ───────── Admonitions ───────── */
+.admonition,
+.theme-admonition {
+  border: 1px solid var(--md-border-strong);
+  border-left-width: 1px;
+  background: rgba(255,255,255,0.02);
+}
+.admonition-heading h5,
+.theme-admonition .admonitionHeading {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+}
+
+/* blockquote */
+blockquote {
+  border-left: 2px solid var(--ifm-color-primary);
+  background: rgba(255,106,26,0.04);
+  color: var(--ifm-color-content);
+}
+
+/* hr ascii-style */
+hr {
+  border: 0;
+  border-top: 1px dashed var(--md-border-strong);
+  margin: 2em 0;
+}
+
+/* ───────── Pagination ───────── */
+.pagination-nav__link {
+  border: 1px solid var(--md-border);
+  border-radius: 0;
+  background: transparent;
+}
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+}
+.pagination-nav__sublabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  color: var(--ifm-color-content-secondary);
+}
+.pagination-nav__label {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+.pagination-nav__link:hover .pagination-nav__label {
+  color: var(--ifm-color-primary);
+}
+
+/* ───────── Footer (lo trasformo in status-bar simulata) ───────── */
+.footer {
+  border-top: 1px solid var(--md-border);
+  background: #050505;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 14px 16px 18px;
+  color: var(--ifm-color-content-secondary);
+}
+.footer__title { color: var(--ifm-color-primary); font-size: 0.72rem; }
+.footer__link-item { color: var(--ifm-color-content-secondary); }
+.footer__link-item:hover { color: var(--ifm-color-primary); }
+.footer__copyright {
+  border-top: 1px solid var(--md-border);
+  margin-top: 12px;
+  padding-top: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ───────── Hero homepage (se usi il template default) ───────── */
+.hero {
+  background: transparent;
+  border-bottom: 1px solid var(--md-border);
+  padding: 64px 24px 32px;
+}
+.hero__title {
+  font-size: clamp(48px, 9vw, 120px);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+.hero__subtitle {
+  color: var(--ifm-color-content-secondary);
+  font-size: 1.05rem;
+  max-width: 680px;
+  margin-top: 14px;
+}
+
+/* search (DocSearch) — sharp edges */
+.DocSearch-Button {
+  border-radius: 0 !important;
+  border: 1px solid var(--md-border);
+  background: transparent !important;
+}
+.DocSearch-Button:hover { border-color: var(--ifm-color-primary); }
+
+/* link arrow hover (subtle nudge) */
+a:hover { text-decoration: none; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: var(--md-border-strong); }
+::-webkit-scrollbar-thumb:hover { background: var(--ifm-color-primary); }
+
+/* ───────── Status bar (usata se swizzi src/theme/Footer/index.js) ───────── */
+.md-statusbar {
+  position: sticky;
+  bottom: 0;
+  border-top: 1px solid var(--md-border);
+  background: #000;
+  color: var(--ifm-color-content-secondary);
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 16px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  z-index: 5;
+}
+.md-statusbar .sb-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.md-statusbar .sb-spacer { flex: 1; }
+.md-statusbar .sb-dot {
+  width: 6px;
+  height: 6px;
+  background: #4ade80;
+  display: inline-block;
+}
+.md-statusbar .sb-accent { color: var(--ifm-color-primary); }
+.md-statusbar a.sb-item {
+  color: var(--ifm-color-content-secondary);
+  text-decoration: none;
+}
+.md-statusbar a.sb-item:hover { color: var(--ifm-color-primary); }

@@ -1,4 +1,7 @@
 {
-  "label": "Processi",
-  "position": 1
+  "label": "// Processi",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "link": null
 }
