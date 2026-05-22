@@ -194,6 +194,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Spike** — [glossario](glossario#spike) · [analisi-tecnica/07](processi/analisi-tecnica/07-piano.md)
 - **Staging** — [glossario](glossario#staging) · [regole/ambienti](regole/ambienti.md) · [sviluppo/03](processi/sviluppo/03-validazione.md)
 - **Stati e transizioni** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **Strategy pattern** — [pattern-di-sviluppo/strategy](pattern-di-sviluppo/strategy.md) · [csharp/pattern/strategy](tecnologie/csharp/pattern/strategy.md) · [glossario](glossario#strategy-pattern)
 
 ## T
 
