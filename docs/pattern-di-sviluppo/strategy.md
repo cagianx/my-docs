@@ -7,36 +7,51 @@ description: Strategy pattern — incapsula una famiglia di algoritmi intercambi
 
 ## Problema
 
-Un componente deve eseguire un'operazione che può avere più varianti (algoritmi, regole di business, canali di comunicazione). L'approccio ingenuo — una catena di `if`/`switch` — produce codice fragile: ogni nuova variante richiede una modifica al componente esistente, violando il principio Open/Closed.
+Un componente deve eseguire un'operazione che ammette più algoritmi o varianti (regole di calcolo, canali di comunicazione, formati di export). L'approccio ingenuo — una catena di `if`/`switch` — produce codice fragile: ogni nuova variante richiede una modifica al componente esistente, violando il principio Open/Closed.
 
-## Soluzione
+## Idea centrale
 
-Si estrae l'operazione variabile in un'interfaccia (*strategy*) e si passa l'implementazione concreta al componente che la utilizza (*context*). Il contesto delega l'esecuzione alla strategy ricevuta senza conoscerne i dettagli.
+A parità di firma — stesso input, stesso output — esistono più implementazioni possibili dello stesso problema. Lo Strategy pattern separa **chi sceglie** l'implementazione da **chi la usa**.
+
+## I tre attori
+
+### 1. L'interfaccia (il contratto)
+
+Definisce la firma dell'operazione: quali dati entrano e cosa esce. Non dice *come* si risolve il problema — solo *quale forma* ha la soluzione. Tutte le implementazioni rispettano questo contratto.
+
+### 2. Le implementazioni (le strategy concrete)
+
+Ciascuna risolve lo stesso problema in modo diverso: algoritmo differente, canale differente, logica differente. L'importante è che tutte accettino lo stesso input e producano lo stesso tipo di output.
+
+### 3. Il selettore (chi sceglie)
+
+Un attore esterno decide quale implementazione usare. La scelta può basarsi su qualsiasi criterio: una stringa di configurazione, un valore in un header HTTP, un enum, una regola di business. Il selettore conosce le implementazioni disponibili e ne restituisce una al consumatore.
+
+### 4. Il consumatore (chi usa — il *context*)
+
+Il codice che ha bisogno dell'operazione **dipende esclusivamente dall'interfaccia**. Non sa quale implementazione concreta riceve, non gli interessa, e non cambia comportamento in funzione di essa. La logica a valle della selezione resta identica indipendentemente dalla strategy scelta — a meno che l'implementazione non esponga esplicitamente differenze nel risultato (es. un campo opzionale nel DTO di output).
+
+Questo è il vantaggio fondamentale: il consumatore è **disaccoppiato** dalle implementazioni. Aggiungere, rimuovere o sostituire una strategy non tocca il codice che la utilizza.
 
 ```text
-┌────────────┐         ┌─────────────────┐
-│  Context   │────────▶│   IStrategy     │  (interfaccia)
-└────────────┘         └─────────────────┘
-                              ▲
-                ┌─────────────┼─────────────┐
-                │             │             │
-        ┌───────────┐ ┌───────────┐ ┌───────────┐
-        │ StrategyA │ │ StrategyB │ │ StrategyC │
-        └───────────┘ └───────────┘ └───────────┘
+                  ┌─────────────────┐
+ ┌──────────┐    │   IStrategy     │    ┌──────────────┐
+ │ Selettore│───▶│  (interfaccia)  │◀───│ Consumatore  │
+ └──────────┘    └─────────────────┘    └──────────────┘
+       │               ▲
+       │  ┌────────────┼────────────┐
+       ▼  │            │            │
+    ┌──────────┐ ┌──────────┐ ┌──────────┐
+    │StrategyA │ │StrategyB │ │StrategyC │
+    └──────────┘ └──────────┘ └──────────┘
 ```
-
-## Struttura
-
-1. **Interfaccia strategy** — definisce il contratto dell'operazione variabile.
-2. **Implementazioni concrete** — ciascuna incapsula una variante dell'algoritmo.
-3. **Context** — mantiene un riferimento all'interfaccia strategy e delega l'esecuzione.
-4. **Punto di selezione** — il luogo in cui si decide quale implementazione usare (configurazione, input utente, DI container).
 
 ## Quando usarlo
 
 - Si hanno più varianti di uno stesso comportamento e la scelta dipende da un fattore esterno (configurazione, input, contesto di esecuzione).
 - Si vuole rispettare il principio Open/Closed: aggiungere una variante significa aggiungere una classe, non toccare il codice esistente.
 - Si vuole rendere le singole varianti testabili in isolamento.
+- Si vuole che il consumatore resti ignaro delle implementazioni concrete e lavori solo contro l'interfaccia.
 
 ## Quando evitarlo
 
