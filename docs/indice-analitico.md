@@ -12,6 +12,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Async / Await** — [csharp/15-async](tecnologie/csharp/linguaggio/15-async.md) · [glossario](glossario#async--await)
 - **Async all the way down** — [csharp/15-async](tecnologie/csharp/linguaggio/15-async.md)
 - **ACID** — [glossario](glossario#acid)
+- **Adapter pattern** — [pattern-di-sviluppo/adapter](pattern-di-sviluppo/adapter.md) · [csharp/pattern/adapter](tecnologie/csharp/pattern/adapter.md) · [glossario](glossario#adapter-pattern)
 - **Ambienti (local, staging, produzione)** — [regole/ambienti](regole/ambienti.md)
 - **Analisi funzionale** — [analisi-tecnica/01](processi/analisi-tecnica/01-analisi-funzionale.md) · [glossario](glossario#analisi-funzionale)
 - **Analisi tecnica** — [analisi-tecnica/index](processi/analisi-tecnica/index.md) · [glossario](glossario#analisi-tecnica)
@@ -29,6 +30,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Backpressure** — [csharp/08-code-native](tecnologie/csharp/concorrenza/08-code-native.md) · [glossario](glossario#backpressure)
 - **Bearer Token** — [regole/autenticazione](regole/autenticazione.md)
 - **Branch (strategia)** — [regole/git](regole/git.md)
+- **Builder pattern** — [pattern-di-sviluppo/builder](pattern-di-sviluppo/builder.md) · [csharp/pattern/builder](tecnologie/csharp/pattern/builder.md) · [glossario](glossario#builder-pattern)
 - **Breaking change** — [glossario](glossario#breaking-change) · [analisi-tecnica/02](processi/analisi-tecnica/02-perimetro.md) · [regole/dominio](regole/dominio.md)
 - **Business logic** — [sviluppo/02](processi/sviluppo/02-business-logic.md) · [regole/architettura](regole/architettura.md)
 
@@ -40,6 +42,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **CancellationToken** — [csharp/15-async](tecnologie/csharp/linguaggio/15-async.md) · [csharp/19-background-services](tecnologie/csharp/concorrenza/19-background-services.md)
 - **Captive dependency** — [csharp/16-dependency-injection](tecnologie/csharp/16-dependency-injection.md) · [glossario](glossario#captive-dependency)
 - **Circuit breaker** — [csharp/21-resilience](tecnologie/csharp/integrazione/21-resilience.md) · [glossario](glossario#circuit-breaker)
+- **Chain of Responsibility** — [pattern-di-sviluppo/chain-of-responsibility](pattern-di-sviluppo/chain-of-responsibility.md) · [csharp/pattern/chain-of-responsibility](tecnologie/csharp/pattern/chain-of-responsibility.md) · [glossario](glossario#chain-of-responsibility)
 - **CI/CD** — [processi/pipeline](processi/pipeline.md) · [regole/testing](regole/testing.md)
 - **ConcurrentQueue\<T\>** — [csharp/08-code-native](tecnologie/csharp/concorrenza/08-code-native.md)
 - **Clustered index** — [glossario](glossario#clustered-index) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
@@ -47,6 +50,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Codice difensivo (da evitare)** — [regole/dominio](regole/dominio.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/gestione-errori](regole/gestione-errori.md)
 - **Combinazioni inconsistenti** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Commit** — [regole/git](regole/git.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Command pattern** — [pattern-di-sviluppo/command](pattern-di-sviluppo/command.md) · [csharp/pattern/command](tecnologie/csharp/pattern/command.md) · [glossario](glossario#command-pattern)
 - **Commands (livello)** — vedi [UseCases (livello)](#u)
 - **Compensazioni** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Configurazione** — [regole/configurazione](regole/configurazione.md)
@@ -66,6 +70,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **DbContext** — [glossario](glossario#dbcontext) · [regole/entity-framework](regole/entity-framework.md)
 - **Definition of Done** — [glossario](glossario#definition-of-done) · [sviluppo/03](processi/sviluppo/03-validazione.md)
 - **Dependency Injection** — [csharp/16-dependency-injection](tecnologie/csharp/16-dependency-injection.md) · [glossario](glossario#dependency-injection-di)
+- **Decorator pattern** — [pattern-di-sviluppo/decorator](pattern-di-sviluppo/decorator.md) · [csharp/pattern/decorator](tecnologie/csharp/pattern/decorator.md) · [glossario](glossario#decorator-pattern)
 - **Dependency Inversion** — [regole/principi](regole/principi.md)
 - **Deprecazione** — [regole/dominio](regole/dominio.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Docker** — [regole/ambienti](regole/ambienti.md)
@@ -85,6 +90,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## F
 
+- **Factory Method** — [pattern-di-sviluppo/factory-method](pattern-di-sviluppo/factory-method.md) · [csharp/pattern/factory-method](tecnologie/csharp/pattern/factory-method.md) · [glossario](glossario#factory-method)
 - **Feature flag** — [glossario](glossario#feature-flag) · [regole/git](regole/git.md)
 - **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **FluentValidation** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md) · [glossario](glossario#fluentvalidation)
@@ -149,6 +155,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## O
 
 - **OAuth2 / OIDC** — [regole/autenticazione](regole/autenticazione.md)
+- **Observer / Pub-Sub** — [pattern-di-sviluppo/observer](pattern-di-sviluppo/observer.md) · [csharp/pattern/observer](tecnologie/csharp/pattern/observer.md) · [glossario](glossario#observer--pub-sub)
 - **Open/Closed Principle** — [regole/principi](regole/principi.md)
 
 ## P

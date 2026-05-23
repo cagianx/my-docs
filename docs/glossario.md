@@ -9,6 +9,10 @@ description: Definizioni dei termini tecnici e di dominio usati nella documentaz
 
 Modello di programmazione asincrona in C# basato su `Task<T>` e le keyword `async`/`await`. Permette di liberare il thread durante operazioni I/O-bound (database, HTTP, file system), aumentando il throughput delle Web API senza aumentare il numero di thread. Vedi [`tecnologie/csharp/linguaggio/15-async`](tecnologie/csharp/linguaggio/15-async.md).
 
+## Adapter pattern
+
+Pattern strutturale che concilia un'interfaccia esistente (es. una libreria esterna) con quella attesa dal consumatore. In una solution C# l'adapter vive nei progetti di integrazione e isola le librerie dal Core, traducendone tipi ed eccezioni nel vocabolario del dominio. Vedi [`pattern-di-sviluppo/adapter`](pattern-di-sviluppo/adapter.md) · [`tecnologie/csharp/pattern/adapter`](tecnologie/csharp/pattern/adapter.md).
+
 ## ACID
 
 Proprietà che garantiscono l'affidabilità delle transazioni database: Atomicità, Consistenza, Isolamento, Durabilità. Entity Framework eredita queste garanzie tramite `SaveChanges()`. Vedi [`regole/entity-framework`](regole/entity-framework.md).
@@ -20,6 +24,10 @@ Documento che descrive *cosa* il sistema deve fare dal punto di vista del busine
 ## Analisi tecnica
 
 Processo che traduce l'analisi funzionale in una soluzione implementabile: modello dati, contratti, flussi, requisiti non funzionali, piano. Vedi [`processi/analisi-tecnica`](processi/analisi-tecnica/index.md).
+
+## Builder pattern
+
+Pattern creazionale che costruisce passo per passo oggetti complessi, restituendo istanze valide solo al termine tramite `Build()`. In C# si introduce solo quando object initializer, `record` con `with` o parametri opzionali non bastano. Vedi [`pattern-di-sviluppo/builder`](pattern-di-sviluppo/builder.md) · [`tecnologie/csharp/pattern/builder`](tecnologie/csharp/pattern/builder.md).
 
 ## Background service
 
@@ -45,6 +53,10 @@ Bug di configurazione DI in cui un servizio con lifetime più lungo (es. singlet
 
 Pattern di resilienza che interrompe temporaneamente le chiamate a un servizio esterno dopo un numero sufficiente di errori consecutivi, evitando di sovraccaricare un sistema già in difficoltà. Il circuito torna operativo dopo un timeout. Vedi [`tecnologie/csharp/integrazione/21-resilienza`](tecnologie/csharp/integrazione/21-resilience.md).
 
+## Chain of Responsibility
+
+Pattern comportamentale che fa attraversare una richiesta a una sequenza di handler indipendenti, ciascuno libero di gestirla, trasformarla o passarla oltre. In ASP.NET Core si manifesta in tre forme: middleware HTTP, filter MVC e pipeline behavior di MediatR. Vedi [`pattern-di-sviluppo/chain-of-responsibility`](pattern-di-sviluppo/chain-of-responsibility.md) · [`tecnologie/csharp/pattern/chain-of-responsibility`](tecnologie/csharp/pattern/chain-of-responsibility.md).
+
 ## Caso d'uso
 
 Scenario concreto che descrive come un attore interagisce con il sistema per raggiungere un obiettivo. Nel codice, ogni caso d'uso è una classe che implementa `IUseCase`. Deve esistere uno scenario realistico prima di sviluppare qualsiasi funzionalità.
@@ -56,6 +68,10 @@ Indice che determina l'ordinamento fisico dei dati su disco. In PostgreSQL corri
 ## Code First
 
 Approccio Entity Framework in cui il codice C# è la fonte di verità del modello dati. Il database viene generato e aggiornato a partire dalle entity class e dalle migration. L'opposto (Database First) non si usa. Vedi [`regole/entity-framework`](regole/entity-framework.md).
+
+## Command pattern
+
+Pattern comportamentale che reifica un'azione in un oggetto immutabile, separando chi la richiede da chi la esegue. È la base concettuale di `IUseCase` e dei command di MediatR. Abilita logging uniforme, validazione, coda di lavoro, audit e retry. Vedi [`pattern-di-sviluppo/command`](pattern-di-sviluppo/command.md) · [`tecnologie/csharp/pattern/command`](tecnologie/csharp/pattern/command.md).
 
 ## Conventional Commits
 
@@ -81,6 +97,10 @@ Classe EF che rappresenta la sessione con il database. Implementa il pattern Uni
 
 Criteri che un caso d'uso deve soddisfare per essere considerato completato: dominio aggiornato, test verdi, CI verde, deploy in staging, validazione end-to-end approvata. Vedi [`processi/sviluppo/03-validazione`](processi/sviluppo/03-validazione.md).
 
+## Decorator pattern
+
+Pattern strutturale che avvolge un oggetto in un altro che ne implementa la stessa interfaccia, aggiungendo comportamento (logging, caching, retry, autorizzazione) senza modificarlo. In C# si compone manualmente in DI o tramite la libreria Scrutor. Vedi [`pattern-di-sviluppo/decorator`](pattern-di-sviluppo/decorator.md) · [`tecnologie/csharp/pattern/decorator`](tecnologie/csharp/pattern/decorator.md).
+
 ## Dependency Injection (DI)
 
 Pattern per cui le dipendenze di una classe vengono fornite dall'esterno anziché create internamente. In ASP.NET Core il container DI integrato risolve le dipendenze automaticamente. I servizi si registrano con tre lifetimes: singleton, scoped, transient. Vedi [`tecnologie/csharp/16-dependency-injection`](tecnologie/csharp/16-dependency-injection.md).
@@ -104,6 +124,10 @@ Libreria per la validazione dell'input con un'API fluente. I validator sono clas
 ## Feature flag
 
 Meccanismo che permette di abilitare o disabilitare funzionalità a runtime tramite configurazione, senza deploy. Rende possibile integrare codice incompleto su `main` senza esporlo agli utenti. I flag non sono permanenti: si rimuovono quando la funzionalità è stabile. Vedi [`regole/git`](regole/git.md).
+
+## Factory Method
+
+Pattern creazionale che incapsula la creazione di un oggetto dietro un metodo dedicato, separando chi richiede l'istanza da chi conosce il tipo concreto. Convive con [[Strategy pattern]]: una factory è spesso il selettore che restituisce la strategy giusta. Vedi [`pattern-di-sviluppo/factory-method`](pattern-di-sviluppo/factory-method.md) · [`tecnologie/csharp/pattern/factory-method`](tecnologie/csharp/pattern/factory-method.md).
 
 ## Fluent API
 
@@ -164,6 +188,10 @@ Capacità di gestire errori transitori nelle chiamate a servizi esterni tramite 
 ## Result pattern
 
 Pattern che incapsula l'esito di un'operazione in un oggetto `Result<T>`, distinguendo esplicitamente successo e fallimento senza usare eccezioni per il controllo del flusso. `Result<T>` vive in Models, prodotto da UseCases e consumato da Api. Vedi [`tecnologie/csharp/struttura-soluzione/07-models`](tecnologie/csharp/struttura-soluzione/07-models.md) · [`regole/gestione-errori`](regole/gestione-errori.md).
+
+## Observer / Pub-Sub
+
+Pattern comportamentale che notifica un numero variabile di consumatori al verificarsi di un evento, senza che il produttore conosca chi ascolta. In C# si realizza in-process con MediatR `INotification` e cross-process con MassTransit su broker (RabbitMQ, Azure Service Bus). Vedi [`pattern-di-sviluppo/observer`](pattern-di-sviluppo/observer.md) · [`tecnologie/csharp/pattern/observer`](tecnologie/csharp/pattern/observer.md).
 
 ## Problem Details
 

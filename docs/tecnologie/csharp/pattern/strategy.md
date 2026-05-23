@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+sidebar_label: "Strategy pattern in C#"
 description: "Strategy pattern in C# — implementazione tramite IEnumerable<T> per selezione a runtime e tramite Keyed Services per selezione dichiarativa via DI."
 ---
 

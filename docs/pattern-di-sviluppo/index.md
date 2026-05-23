@@ -14,3 +14,10 @@ Le implementazioni specifiche per linguaggio o framework si trovano nelle rispet
 | Pattern | Categoria | Problema che risolve |
 |---------|-----------|---------------------|
 | [Strategy](strategy.md) | Comportamentale | Variare un algoritmo a runtime senza condizionali sparsi nel codice |
+| [Factory Method](factory-method.md) | Creazionale | Creare oggetti senza accoppiare il chiamante al tipo concreto |
+| [Builder](builder.md) | Creazionale | Costruire passo per passo oggetti complessi, restituendo istanze valide solo al termine |
+| [Adapter](adapter.md) | Strutturale | Conciliare un'interfaccia esistente con quella attesa dal consumatore |
+| [Decorator](decorator.md) | Strutturale | Aggiungere comportamento componibile senza modificare l'oggetto decorato |
+| [Chain of Responsibility](chain-of-responsibility.md) | Comportamentale | Far attraversare una richiesta a una sequenza di handler indipendenti |
+| [Command](command.md) | Comportamentale | Reificare un'azione in un oggetto, separando chi la richiede da chi la esegue |
+| [Observer / Pub-Sub](observer.md) | Comportamentale | Notificare un numero variabile di consumatori senza che il produttore li conosca |
