@@ -48,6 +48,9 @@ Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core
 ### Test unitari
 - [A cosa servono](test-unitari/01-scopo.md) — logica pura, monitoraggio librerie di terze parti, verifica di comportamenti puntuali
 
+### Pattern
+- [Strategy](pattern/strategy.md) — `IEnumerable<T>` per selezione a runtime, Keyed Services per selezione dichiarativa
+
 ### Test di integrazione
 - [Pattern: template e scope](test-integrazione/01-pattern.mdx) — classe base NUnit, clone da template, scope DI per test
 - [Scrivere un test](test-integrazione/02-scrivere-test.md) — `Get<T>()`, `SeedAsync`, FluentAssertions, parallelismo

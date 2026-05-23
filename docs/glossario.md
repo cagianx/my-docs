@@ -193,6 +193,10 @@ Task a tempo fisso per esplorare un'incertezza tecnica. Produce una risposta (do
 
 Ambiente intermedio tra sviluppo e produzione. Riceve ogni versione prima che arrivi in produzione. La validazione end-to-end avviene qui. Vedi [`regole/ambienti`](regole/ambienti.md).
 
+## Strategy pattern
+
+Pattern comportamentale che incapsula una famiglia di algoritmi intercambiabili dietro un'interfaccia comune, permettendo di variare il comportamento a runtime senza modificare il contesto. In C# si implementa tipicamente con `IEnumerable<T>` (selezione a runtime) o con keyed services (selezione dichiarativa). Vedi [`pattern-di-sviluppo/strategy`](pattern-di-sviluppo/strategy.md) · [`tecnologie/csharp/pattern/strategy`](tecnologie/csharp/pattern/strategy.md).
+
 ## Trunk-based development
 
 Strategia di branching in cui tutto il lavoro confluisce direttamente su `main`. I branch, se usati, hanno vita brevissima. Le funzionalità incomplete si nascondono tramite feature flag. Vedi [`regole/git`](regole/git.md).
