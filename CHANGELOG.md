@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.5](https://github.com/cagianx/my-docs/compare/v1.0.4...v1.0.5) (2026-05-23)
+
+
+### Bug Fixes
+
+* **mobile:** drawer navbar e layout footer su smartphone ([e058e40](https://github.com/cagianx/my-docs/commit/e058e406aaf6013b8b01b87e2c0037758c6e97cf))
+
+
+### Documentation
+
+* add 7 development patterns (generic + C# specific) ([a88916a](https://github.com/cagianx/my-docs/commit/a88916aa3db406df28dec520246550e6d5074a36))
+* add Strategy Pattern section (generic + C# specific) ([#1](https://github.com/cagianx/my-docs/issues/1)) ([6c0a84c](https://github.com/cagianx/my-docs/commit/6c0a84ce783774c92fa093edcbcd783b9a8c8f9a))
+
 ## [1.0.4](https://github.com/cagianx/my-docs/compare/v1.0.3...v1.0.4) (2026-05-19)
 
 ## [1.0.3](https://github.com/cagianx/my-docs/compare/v1.0.2...v1.0.3) (2026-05-19)
