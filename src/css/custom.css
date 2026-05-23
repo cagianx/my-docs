@@ -137,7 +137,23 @@ html, body {
 .navbar {
   border-bottom: 1px solid var(--md-border);
   height: 56px;
+  /* NOTA: niente backdrop-filter qui.
+     `backdrop-filter` (come `transform`, `filter`, `perspective`) crea un
+     containing block per i discendenti `position: fixed`. La `.navbar-sidebar`
+     (drawer mobile) è un figlio DOM della navbar: se applichiamo il blur
+     direttamente alla navbar, il drawer viene confinato all'altezza della
+     navbar invece che al viewport e di fatto non appare. Il blur lo
+     applichiamo a uno pseudo-elemento separato. */
+  isolation: isolate;
+}
+.navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
 }
 .navbar__title {
   text-transform: uppercase;
@@ -162,6 +178,30 @@ html, body {
 .navbar__link--active {
   color: var(--ifm-color-primary) !important;
   border-color: var(--ifm-color-primary);
+}
+
+/* ───────── Mobile navbar drawer ─────────
+   Il navbar ha sfondo translucido (rgba + backdrop-filter): senza override,
+   il drawer mobile eredita quel valore e lascia trasparire la pagina sotto.
+   Forziamo sfondo solido sul container e sulle sue sezioni. */
+.navbar-sidebar,
+.navbar-sidebar__brand,
+.navbar-sidebar__items,
+.navbar-sidebar__item {
+  background: var(--ifm-background-color);
+}
+.navbar-sidebar {
+  border-right: 1px solid var(--md-border);
+}
+.navbar-sidebar__brand {
+  border-bottom: 1px solid var(--md-border);
+}
+.navbar-sidebar__back {
+  background: var(--ifm-background-color);
+  color: var(--ifm-color-content-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
 }
 
 /* ───────── Sidebar (menu) ───────── */
@@ -718,3 +758,20 @@ a:hover { text-decoration: none; }
   text-decoration: none;
 }
 .md-statusbar a.sb-item:hover { color: var(--ifm-color-primary); }
+
+/* su mobile la status bar è troppo larga per restare in riga: griglia
+   a due colonne, lo spacer sparisce. L'ultimo item ("IT") occupa entrambe
+   le colonne per chiudere la griglia in modo pulito. */
+@media (max-width: 700px) {
+  .md-statusbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+    row-gap: 6px;
+    height: auto;
+    padding: 10px 16px;
+    align-items: center;
+  }
+  .md-statusbar .sb-spacer { display: none; }
+  .md-statusbar .sb-item:last-child { grid-column: 1 / -1; }
+}
