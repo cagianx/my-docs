@@ -120,6 +120,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Indici (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Indici univoci (idempotenza)** — [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md)
 - **Interface Segregation** — [regole/principi](regole/principi.md)
+- **InternalsVisibleTo** — [csharp/linguaggio/23-internals-visible-to](tecnologie/csharp/linguaggio/23-internals-visible-to.md) · [glossario](glossario#internalsvisibleto)
 - **IOptions\<T\>** — [csharp/07-configuration](tecnologie/csharp/07-configuration.md) · [glossario](glossario#ioptionst)
 - **IOptionsMonitor\<T\>** — [csharp/07-configuration](tecnologie/csharp/07-configuration.md)
 - **IUseCase** — [glossario](glossario#iusecase) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
