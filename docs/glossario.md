@@ -145,6 +145,10 @@ Interfaccia che rappresenta una query non ancora eseguita su un database. EF tra
 
 Proprietà di un'operazione che produce lo stesso risultato indipendentemente da quante volte viene eseguita con gli stessi input. Obbligatoria per operazioni critiche per gestire retry e timeout. Vedi [`processi/analisi-tecnica/04-contratti`](processi/analisi-tecnica/04-contratti.md).
 
+## InternalsVisibleTo
+
+Attributo assembly che concede a un progetto "amico" l'accesso ai membri `internal` senza renderli `public`. Il caso d'uso principale è dare visibilità completa di una libreria ai test unitari senza alterare la superficie pubblica. Vedi [`tecnologie/csharp/linguaggio/23-internals-visible-to`](tecnologie/csharp/linguaggio/23-internals-visible-to.md).
+
 ## Integrazioni (progetti di)
 
 Progetti che isolano client HTTP/SOAP, librerie esterne (html2pdf, MailKit) e integrazioni con sistemi terzi. Espongono interfacce ad-hoc che wrappano la libreria sottostante: Core usa l'interfaccia, la libreria resta confinata nel progetto e non si propaga al resto della solution. Vedi [`tecnologie/csharp/struttura-soluzione/06-integrazioni`](tecnologie/csharp/struttura-soluzione/06-integrazioni.md).
