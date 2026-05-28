@@ -66,6 +66,31 @@ if (!ordineResult.IsSuccess)
 return ordineResult;
 ```
 
+## Fail Fast
+
+Se qualcosa di essenziale manca o è sbagliato, il sistema si ferma e lo dice chiaramente. Non tenta di continuare con valori di default inventati, non degrada silenziosamente, non maschera il problema.
+
+Questo è un principio della filosofia Unix: **se non puoi fare il tuo lavoro correttamente, fermati subito e segnala l'errore**. Un crash esplicito allo startup è infinitamente meglio di un comportamento silenziosamente scorretto in produzione.
+
+L'esempio più comune è la **configurazione mancante**: se l'applicazione richiede una stringa di connessione, una chiave API o un parametro di business per funzionare, e quel valore non c'è, il processo è legittimato a crashare. Non deve esistere un fallback cablato nel codice che permetta di "andare avanti comunque".
+
+```csharp
+// Corretto: crash esplicito se la configurazione manca
+var connectionString = configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException(
+        "ConnectionStrings:Default non configurata. L'applicazione non può avviarsi.");
+```
+
+```csharp
+// Sbagliato: fallback silenzioso che nasconde il problema
+var connectionString = configuration.GetConnectionString("Default")
+    ?? "Host=localhost;Database=fallback";
+```
+
+La tentazione di aggiungere valori di default "ragionevoli" per ogni configurazione porta a sistemi che sembrano funzionare ma operano in uno stato non previsto. Quando il problema emerge — e emerge sempre — è lontano dalla causa e molto più difficile da diagnosticare.
+
+**Eccezione:** un valore di default è accettabile solo quando è una **scelta progettuale esplicita e documentata** — non una rete di sicurezza contro la dimenticanza. Per esempio, un timeout di default di 30 secondi per le chiamate HTTP è una scelta progettuale; una stringa di connessione di default a `localhost` è una trappola.
+
 ## Quando usare le eccezioni
 
 - Errori infrastrutturali imprevedibili: mancata connessione al database, query in timeout, rete non raggiungibile
