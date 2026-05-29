@@ -41,6 +41,22 @@ La descrizione è in minuscolo, al presente, senza punto finale: `feat(auth): ad
 
 **Non si committa codice che non compila.** La storia deve essere in uno stato funzionante a ogni commit, non solo alla fine.
 
+### Cosa separare, cosa si può unire
+
+Organizzare le modifiche in più commit è cruciale per mantenere una storia leggibile e per permettere operazioni come il cherry-pick su branch di manutenzione.
+
+**Mai mischiare tra loro o con altro:**
+
+| Tipo di modifica | Perché va isolato |
+|------------------|-------------------|
+| Refactoring | Deve essere verificabile indipendentemente: zero cambi di comportamento. Se si rompe qualcosa, il colpevole è immediato. |
+| Feature di modellazione | Cambia la struttura dei dati — ha impatto trasversale e deve essere tracciabile da sola. |
+| Bug fix | Deve poter essere cherry-pickato su un branch di manutenzione senza portarsi dietro feature incomplete. |
+
+**Mai feat + bugfix nello stesso commit.** Se una feature e un fix finiscono insieme, è impossibile portare solo il fix su un branch `release/x.y.z` tramite cherry-pick. Sono sempre commit separati.
+
+**Sì: documentazione + feature (predomina `feat`).** La documentazione che descrive una feature appena introdotta va nello stesso commit della feature — è bene che codice e documentazione viaggino insieme. Il tipo del commit resta `feat`.
+
 ## Branch
 
 Si tende al **trunk-based development**: il lavoro confluisce direttamente su `main`, che rappresenta sempre uno stato rilasciabile.
