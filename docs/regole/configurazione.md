@@ -29,7 +29,7 @@ Nient'altro. Nessun parametro di business, nessuna soglia, nessuna feature flag,
 Tutto ciò che l'applicazione deve sapere per funzionare — al di là di come connettersi al database — è una riga o un set di righe nel database. Questo include:
 
 - parametri di business (soglie, limiti, valori di default)
-- feature flag (vedi [`regole/git`](git.md))
+- feature flag (vedi [`tecnologie/git`](../tecnologie/git/index.md))
 - endpoint e credenziali di servizi esterni
 - qualsiasi impostazione che varia tra ambienti o nel tempo
 

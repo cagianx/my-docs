@@ -47,7 +47,7 @@ A livello di classe: `CreaOrdine` ha un solo motivo per cambiare — la logica d
 
 Aggiungere comportamento non deve richiedere di modificare ciò che già funziona.
 
-**Nel progetto:** nel dominio non si rinomina e non si cambia il significato a nulla — si aggiunge e si depreca. Le migration sul database seguono lo stesso principio: si aggiungono colonne, si aggiungono tabelle. Il database preesistente resta intatto e retrocompatibile. I feature flag permettono di estendere il comportamento del sistema senza toccare il percorso principale. Vedi [`regole/dominio`](dominio.md) e [`regole/git`](git.md).
+**Nel progetto:** nel dominio non si rinomina e non si cambia il significato a nulla — si aggiunge e si depreca. Le migration sul database seguono lo stesso principio: si aggiungono colonne, si aggiungono tabelle. Il database preesistente resta intatto e retrocompatibile. I feature flag permettono di estendere il comportamento del sistema senza toccare il percorso principale. Vedi [`regole/dominio`](dominio.md) e [`tecnologie/git`](../tecnologie/git/index.md).
 
 ### L — Liskov Substitution
 

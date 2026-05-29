@@ -26,7 +26,7 @@ const CATEGORIES = [
   {
     idx: '04',
     title: 'Git e versionamento',
-    path: '/docs/regole/git',
+    path: '/docs/tecnologie/git',
     desc: 'Convenzioni di commit e branch, Semantic Versioning, ciclo di rilascio tracciabile, niente pride versioning.',
   },
   {

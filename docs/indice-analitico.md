@@ -29,7 +29,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Background service** — [csharp/19-background-services](tecnologie/csharp/concorrenza/19-background-services.md) · [glossario](glossario#background-service)
 - **Backpressure** — [csharp/08-code-native](tecnologie/csharp/concorrenza/08-code-native.md) · [glossario](glossario#backpressure)
 - **Bearer Token** — [regole/autenticazione](regole/autenticazione.md)
-- **Branch (strategia)** — [regole/git](regole/git.md)
+- **Branch (strategia)** — [tecnologie/git](tecnologie/git/index.md)
 - **Builder pattern** — [pattern-di-sviluppo/builder](pattern-di-sviluppo/builder.md) · [csharp/pattern/builder](tecnologie/csharp/pattern/builder.md) · [glossario](glossario#builder-pattern)
 - **Breaking change** — [glossario](glossario#breaking-change) · [analisi-tecnica/02](processi/analisi-tecnica/02-perimetro.md) · [regole/dominio](regole/dominio.md)
 - **Business logic** — [sviluppo/02](processi/sviluppo/02-business-logic.md) · [regole/architettura](regole/architettura.md)
@@ -51,7 +51,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Code First** — [glossario](glossario#code-first) · [regole/entity-framework](regole/entity-framework.md)
 - **Codice difensivo (da evitare)** — [regole/dominio](regole/dominio.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/gestione-errori](regole/gestione-errori.md)
 - **Combinazioni inconsistenti** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
-- **Commit** — [regole/git](regole/git.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Commit** — [tecnologie/git](tecnologie/git/index.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Command pattern** — [pattern-di-sviluppo/command](pattern-di-sviluppo/command.md) · [csharp/pattern/command](tecnologie/csharp/pattern/command.md) · [glossario](glossario#command-pattern)
 - **Commands (livello)** — vedi [UseCases (livello)](#u)
 - **Compensazioni** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
@@ -60,7 +60,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Check constraint (da enum)** — [csharp/entity-framework/04-enum](tecnologie/csharp/entity-framework/04-enum.md)
 - **Container** — [regole/ambienti](regole/ambienti.md)
 - **Contratti** — [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md) · [glossario](glossario#contratto)
-- **Conventional Commits** — [glossario](glossario#conventional-commits) · [regole/git](regole/git.md)
+- **Conventional Commits** — [glossario](glossario#conventional-commits) · [tecnologie/git](tecnologie/git/index.md)
 - **Cookie (autenticazione)** — [regole/autenticazione](regole/autenticazione.md)
 - **Core (progetto)** — [glossario](glossario#core) · [regole/architettura](regole/architettura.md)
 - **Correttezza dei dati** — [regole/dominio](regole/dominio.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
@@ -93,12 +93,12 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## F
 
 - **Factory Method** — [pattern-di-sviluppo/factory-method](pattern-di-sviluppo/factory-method.md) · [csharp/pattern/factory-method](tecnologie/csharp/pattern/factory-method.md) · [glossario](glossario#factory-method)
-- **Feature flag** — [glossario](glossario#feature-flag) · [regole/git](regole/git.md)
+- **Feature flag** — [glossario](glossario#feature-flag) · [tecnologie/git](tecnologie/git/index.md)
 - **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **FluentValidation** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md) · [glossario](glossario#fluentvalidation)
 - **Fluent API** — [glossario](glossario#fluent-api) · [regole/entity-framework](regole/entity-framework.md)
 - **Flussi critici** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
-- **Force push (vietato)** — [regole/git](regole/git.md)
+- **Force push (vietato)** — [tecnologie/git](tecnologie/git/index.md)
 
 ## G
 
@@ -170,7 +170,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Principi (Unix, SOLID)** — [regole/principi](regole/principi.md)
 - **Problem Details** — [csharp/14-problem-details](tecnologie/csharp/pipeline/14-problem-details.md) · [glossario](glossario#problem-details)
 - **Pride versioning** — [regole/versionamento](regole/versionamento.md) · [glossario](glossario#pride-versioning)
-- **Pull Request** — [regole/git](regole/git.md)
+- **Pull Request** — [tecnologie/git](tecnologie/git/index.md)
 
 ## Q
 
@@ -182,7 +182,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Record (C#)** — [csharp/22-records](tecnologie/csharp/linguaggio/22-records.md) · [glossario](glossario#record-c)
 - **Resilienza (HTTP)** — [csharp/21-resilience](tecnologie/csharp/integrazione/21-resilience.md) · [glossario](glossario#resilienza-http)
 - **Retry** — [csharp/21-resilience](tecnologie/csharp/integrazione/21-resilience.md)
-- **Refactoring (separazione commit)** — [regole/git](regole/git.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Refactoring (separazione commit)** — [tecnologie/git](tecnologie/git/index.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Repository pattern (da evitare)** — [regole/entity-framework](regole/entity-framework.md)
 - **Resilienza** — [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 - **Result pattern** — [glossario](glossario#result-pattern) · [regole/gestione-errori](regole/gestione-errori.md) · [csharp/struttura-soluzione/07](tecnologie/csharp/struttura-soluzione/07-models.md)
@@ -216,7 +216,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Test unitari — naming** — [csharp/test-unitari/02-come-scriverli](tecnologie/csharp/test-unitari/02-come-scriverli.md)
 - **Test unitari — parametrici (TestCase/TestCaseSource)** — [csharp/test-unitari/02-come-scriverli](tecnologie/csharp/test-unitari/02-come-scriverli.md)
 - **Transazionalità (sistemi esterni)** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
-- **Trunk-based development** — [glossario](glossario#trunk-based-development) · [regole/git](regole/git.md)
+- **Trunk-based development** — [glossario](glossario#trunk-based-development) · [tecnologie/git](tecnologie/git/index.md)
 - **Troubleshooting (log)** — [regole/logging](regole/logging.md)
 
 ## U

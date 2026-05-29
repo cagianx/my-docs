@@ -42,7 +42,7 @@ Questo progetto segue le convenzioni in `my-docs/`. Riferimenti principali:
 - Entity Framework → `my-docs/docs/regole/entity-framework.md`
 - Architettura solution → `my-docs/docs/regole/architettura.md`
 - Test → `my-docs/docs/regole/testing.md`
-- Git e commit → `my-docs/docs/regole/git.md`
+- Git e commit → `my-docs/docs/tecnologie/git/index.md`
 - Glossario → `my-docs/docs/glossario.md`
 
 Per cercare altri concetti, partire da `my-docs/docs/indice-analitico.md`.
