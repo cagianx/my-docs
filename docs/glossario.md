@@ -75,7 +75,7 @@ Pattern comportamentale che reifica un'azione in un oggetto immutabile, separand
 
 ## Conventional Commits
 
-Convenzione per i messaggi di commit: `<type>(<scope>): <descrizione>`. Tipi comuni: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`. Vedi [`regole/git`](regole/git.md).
+Convenzione per i messaggi di commit: `<type>(<scope>): <descrizione>`. Tipi comuni: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`. Vedi [`tecnologie/git`](tecnologie/git/index.md).
 
 ## Contratto
 
@@ -123,7 +123,7 @@ Libreria per la validazione dell'input con un'API fluente. I validator sono clas
 
 ## Feature flag
 
-Meccanismo che permette di abilitare o disabilitare funzionalità a runtime tramite configurazione, senza deploy. Rende possibile integrare codice incompleto su `main` senza esporlo agli utenti. I flag non sono permanenti: si rimuovono quando la funzionalità è stabile. Vedi [`regole/git`](regole/git.md).
+Meccanismo che permette di abilitare o disabilitare funzionalità a runtime tramite configurazione, senza deploy. Rende possibile integrare codice incompleto su `main` senza esporlo agli utenti. I flag non sono permanenti: si rimuovono quando la funzionalità è stabile. Vedi [`tecnologie/git`](tecnologie/git/index.md).
 
 ## Factory Method
 
@@ -231,7 +231,7 @@ Pattern comportamentale che incapsula una famiglia di algoritmi intercambiabili 
 
 ## Trunk-based development
 
-Strategia di branching in cui tutto il lavoro confluisce direttamente su `main`. I branch, se usati, hanno vita brevissima. Le funzionalità incomplete si nascondono tramite feature flag. Vedi [`regole/git`](regole/git.md).
+Strategia di branching in cui tutto il lavoro confluisce direttamente su `main`. I branch, se usati, hanno vita brevissima. Le funzionalità incomplete si nascondono tramite feature flag. Vedi [`tecnologie/git`](tecnologie/git/index.md).
 
 ## Ubiquitous Language
 
