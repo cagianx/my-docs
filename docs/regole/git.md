@@ -57,6 +57,26 @@ Organizzare le modifiche in più commit è cruciale per mantenere una storia leg
 
 **Sì: documentazione + feature (predomina `feat`).** La documentazione che descrive una feature appena introdotta va nello stesso commit della feature — è bene che codice e documentazione viaggino insieme. Il tipo del commit resta `feat`.
 
+### Quando fare squash
+
+Durante la lavorazione su un branch è normale accumulare commit intermedi — salvataggi di progresso, esperimenti, correzioni parziali. Questi commit sono utili come backup locale ma non hanno valore nella storia finale del repository.
+
+**Lo squash consolida più commit in uno solo**, producendo una storia pulita e leggibile su `main`.
+
+Quando ha senso:
+
+- **Commit di backup durante lo sviluppo** — `wip`, `fix typo`, `try again` non aggiungono informazione alla storia. Si squashano prima del merge.
+- **Lavorazione spezzettata in più sessioni** — una feature sviluppata in 5 commit su un branch di lavoro diventa un singolo commit logico su `main`.
+- **PR con squash merge** — la pull request mergia tutto il lavoro del branch in un unico commit su `main`. È la strategia preferita quando i commit intermedi non hanno valore individuale.
+
+Quando **non** fare squash:
+
+- Se i commit nel branch rappresentano unità logiche distinte (un refactoring preparatorio + la feature vera) — in quel caso si mantengono separati, o si fa un rebase interattivo per riordinarli e pulirli senza fonderli tutti.
+
+:::caution Riscrittura della storia
+Lo squash (come il rebase interattivo) **riscrive la storia**. Si fa solo su branch privati o prima del merge su `main`. Mai su commit già condivisi con altri — si userebbe un force push che rompe la storia altrui.
+:::
+
 ## Branch
 
 Si tende al **trunk-based development**: il lavoro confluisce direttamente su `main`, che rappresenta sempre uno stato rilasciabile.
@@ -95,6 +115,12 @@ Quando si usano le PR:
 - la descrizione spiega cosa cambia e perché — non riscrive il diff
 - la CI deve essere verde prima del merge
 - la PR è piccola: oltre 400 righe di diff è probabile che possa essere spezzata
+
+### Strategia di merge
+
+La strategia preferita è **squash merge**: tutti i commit del branch vengono fusi in un singolo commit su `main`. Il messaggio del commit risultante segue le convenzioni di Conventional Commits ed è tipicamente il titolo della PR.
+
+Questo approccio funziona bene quando il branch contiene lavorazione spezzettata in più commit intermedi. La storia su `main` resta lineare e ogni commit corrisponde a un'unità logica completa (la PR stessa).
 
 ## Cosa non si fa
 
