@@ -46,7 +46,164 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 await ChiamaServizioEsternoAsync(cts.Token);
 ```
 
-## Come si usa in ASP.NET Core
+## Esempio pratico: applicazione console con Ctrl+C
+
+Un'applicazione console che esegue un'elaborazione lunga deve interrompersi in modo pulito quando l'utente preme Ctrl+C o il sistema invia SIGTERM (es. Docker che ferma il container).
+
+```csharp
+// Program.cs — applicazione console
+var cts = new CancellationTokenSource();
+
+// Ctrl+C e SIGTERM annullano il token
+Console.CancelKeyPress += (_, e) =>
+{
+    e.Cancel = true; // impedisce la chiusura immediata del processo
+    cts.Cancel();
+    Console.WriteLine("Interruzione richiesta. Terminazione in corso...");
+};
+
+try
+{
+    await ElaboraFileAsync("archivio.csv", cts.Token);
+    Console.WriteLine("Elaborazione completata.");
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Elaborazione interrotta dall'utente.");
+    Environment.ExitCode = 1;
+}
+
+static async Task ElaboraFileAsync(string percorso, CancellationToken ct)
+{
+    var righe = await File.ReadAllLinesAsync(percorso, ct);
+    var totale = righe.Length;
+
+    for (var i = 0; i < totale; i++)
+    {
+        ct.ThrowIfCancellationRequested();
+
+        await ElaboraRigaAsync(righe[i], ct);
+
+        if (i % 100 == 0)
+            Console.WriteLine($"Progresso: {i}/{totale}");
+    }
+}
+```
+
+Cosa succede:
+1. L'utente preme Ctrl+C → il runtime invoca `CancelKeyPress` → `cts.Cancel()` annulla il token.
+2. Il ciclo `for` incontra `ThrowIfCancellationRequested()` alla prossima iterazione → lancia `OperationCanceledException`.
+3. L'eccezione risale fino al `catch` nel `Main` → uscita controllata con messaggio e codice di errore.
+
+`e.Cancel = true` è importante: senza, il processo termina immediatamente al primo Ctrl+C senza dare tempo al codice di reagire.
+
+## Esempio pratico: Web API con client che si disconnette
+
+In una Web API, quando il client chiude la connessione (timeout del browser, utente che naviga altrove, abort esplicito), ASP.NET Core annulla automaticamente il `CancellationToken` della richiesta.
+
+```csharp
+[ApiController]
+[Route("api/[controller]")]
+public class ReportController : ControllerBase
+{
+    private readonly AppDbContext _db;
+    private readonly IPdfService _pdfService;
+    private readonly ILogger<ReportController> _logger;
+
+    public ReportController(
+        AppDbContext db,
+        IPdfService pdfService,
+        ILogger<ReportController> logger)
+    {
+        _db = db;
+        _pdfService = pdfService;
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// Genera un report PDF pesante. Se il client si disconnette,
+    /// l'elaborazione si interrompe senza sprecare risorse.
+    /// </summary>
+    [HttpGet("{anno}")]
+    public async Task<IActionResult> GeneraReport(int anno, CancellationToken ct)
+    {
+        // 1. Query al database — se il client è già andato, la query non parte
+        var transazioni = await _db.Transazioni
+            .Where(t => t.Anno == anno)
+            .ToListAsync(ct);
+
+        // 2. Elaborazione pesante — il token viene controllato ad ogni step
+        var reportData = await CalcolaStatisticheAsync(transazioni, ct);
+
+        // 3. Generazione PDF — anche il servizio esterno rispetta il token
+        var pdf = await _pdfService.GeneraAsync(reportData, ct);
+
+        return File(pdf, "application/pdf", $"report-{anno}.pdf");
+    }
+
+    private async Task<ReportData> CalcolaStatisticheAsync(
+        List<Transazione> transazioni,
+        CancellationToken ct)
+    {
+        var risultato = new ReportData();
+
+        foreach (var batch in transazioni.Chunk(500))
+        {
+            ct.ThrowIfCancellationRequested();
+
+            // Simulazione di elaborazione pesante per ogni batch
+            risultato.AggiungiStatistiche(await ElaboraBatchAsync(batch, ct));
+        }
+
+        return risultato;
+    }
+}
+```
+
+Cosa succede quando il client si disconnette a metà:
+
+```
+Timeline:
+  0 ms    → Il client chiama GET /api/report/2025
+  50 ms   → La query al DB inizia
+  200 ms  → La query completa, inizia CalcolaStatisticheAsync
+  350 ms  → Il client chiude la connessione (timeout, navigazione, abort)
+  350 ms  → ASP.NET Core annulla il CancellationToken
+  351 ms  → Il prossimo ThrowIfCancellationRequested() lancia OperationCanceledException
+  351 ms  → L'eccezione risale — nessun PDF viene generato, nessuna risposta inviata
+```
+
+Senza il token, il server continuerebbe a calcolare statistiche e generare un PDF che nessuno riceverà mai — consumando CPU, memoria e connessioni al database inutilmente.
+
+### Cosa fare e cosa non fare nel controller
+
+```csharp
+// ✅ Il token si propaga a tutte le operazioni
+[HttpGet]
+public async Task<IActionResult> Get(CancellationToken ct)
+{
+    var dati = await _service.GetDatiAsync(ct);
+    return Ok(dati);
+}
+
+// ❌ Il token c'è ma non viene propagato — inutile dichiararlo
+[HttpGet]
+public async Task<IActionResult> Get(CancellationToken ct)
+{
+    var dati = await _service.GetDatiAsync(); // ct ignorato!
+    return Ok(dati);
+}
+
+// ❌ Nessun token dichiarato — impossibile interrompere l'operazione
+[HttpGet]
+public async Task<IActionResult> Get()
+{
+    var dati = await _service.GetDatiAsync();
+    return Ok(dati);
+}
+```
+
+## Propagazione in ASP.NET Core
 
 Nelle action dei controller e negli endpoint minimal API, basta dichiarare un parametro `CancellationToken`: il framework lo inietta automaticamente, collegato alla connessione del client.
 
@@ -78,7 +235,11 @@ Se il client chiude la connessione a metà elaborazione, il token si annulla e l
 
 ## Controllare il token nel codice applicativo
 
-Per operazioni lunghe che non chiamano API esterne (loop CPU-bound, elaborazioni batch), il token va controllato esplicitamente:
+Per operazioni lunghe che non chiamano API esterne (loop CPU-bound, elaborazioni batch), il token va controllato esplicitamente. Esistono diverse strategie a seconda del tipo di uscita desiderato.
+
+### Strategia 1: uscita con eccezione (ThrowIfCancellationRequested)
+
+È la forma più comune. L'eccezione risale lo stack e il chiamante gestisce l'interruzione.
 
 ```csharp
 public async Task ElaboraBatchAsync(IList<Ordine> ordini, CancellationToken ct)
@@ -92,15 +253,157 @@ public async Task ElaboraBatchAsync(IList<Ordine> ordini, CancellationToken ct)
 }
 ```
 
-`ThrowIfCancellationRequested()` è la forma più comune. Per situazioni in cui si preferisce un'uscita controllata senza eccezione:
+Si usa quando: l'operazione non ha bisogno di restituire risultati parziali e chi chiama è pronto a gestire `OperationCanceledException`.
+
+### Strategia 2: uscita controllata con risultato parziale
+
+In alcuni casi, il lavoro già fatto è utile anche se il ciclo non finisce. Si controlla `IsCancellationRequested` e si esce con un `break`, restituendo ciò che si ha.
 
 ```csharp
-while (!ct.IsCancellationRequested)
+public async Task<ImportResult> ImportaClientiAsync(
+    IReadOnlyList<ClienteDto> clienti,
+    CancellationToken ct)
 {
-    await Task.Delay(TimeSpan.FromSeconds(5), ct);
-    await ControllaAggiornamenti(ct);
+    var importati = 0;
+    var errori = new List<string>();
+
+    foreach (var cliente in clienti)
+    {
+        if (ct.IsCancellationRequested)
+        {
+            // Uscita pulita: si restituisce il lavoro fatto finora
+            break;
+        }
+
+        try
+        {
+            await _repository.InserisciAsync(cliente, ct);
+            importati++;
+        }
+        catch (DuplicateException ex)
+        {
+            errori.Add($"Cliente {cliente.CodiceFiscale}: già presente.");
+        }
+    }
+
+    return new ImportResult
+    {
+        Importati = importati,
+        Errori = errori,
+        Completato = !ct.IsCancellationRequested,
+        TotaleRichiesti = clienti.Count
+    };
 }
 ```
+
+Il chiamante riceve il risultato e sa quanti record sono stati processati. Nessuna eccezione — la cancellazione è un esito legittimo.
+
+### Strategia 3: completare l'elemento corrente prima di uscire
+
+Se ogni iterazione è una transazione logica (es. invio email, elaborazione pagamento), si vuole **completare l'elemento in corso** e poi uscire — mai interrompere a metà.
+
+```csharp
+public async Task InviaNotificheAsync(
+    IReadOnlyList<Notifica> notifiche,
+    CancellationToken ct)
+{
+    foreach (var notifica in notifiche)
+    {
+        // Controllo PRIMA di iniziare un nuovo elemento
+        if (ct.IsCancellationRequested)
+        {
+            _logger.LogInformation(
+                "Interruzione richiesta. Inviate {Inviate}/{Totale} notifiche.",
+                notifica.Indice, notifiche.Count);
+            break;
+        }
+
+        // Da qui in poi, l'elemento viene completato anche se il token scatta
+        // durante l'esecuzione — non si passa ct alle operazioni interne
+        await _emailService.InviaAsync(notifica.Destinatario, notifica.Corpo);
+        await _db.SegnaInviataAsync(notifica.Id);
+        await _db.SaveChangesAsync(CancellationToken.None); // commit garantito
+    }
+}
+```
+
+Qui `CancellationToken.None` nelle operazioni interne è **intenzionale**: una volta iniziato l'invio, si vuole che la persistenza avvenga. Il controllo del token è solo al confine tra un elemento e il successivo.
+
+### Strategia 4: loop con intervallo e uscita pulita (worker/daemon)
+
+Per loop infiniti tipici di background service o worker:
+
+```csharp
+protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+{
+    _logger.LogInformation("Worker avviato.");
+
+    while (!stoppingToken.IsCancellationRequested)
+    {
+        try
+        {
+            var messaggi = await _coda.LeggiAsync(maxBatch: 10, stoppingToken);
+
+            foreach (var messaggio in messaggi)
+            {
+                if (stoppingToken.IsCancellationRequested)
+                    break; // non si iniziano nuovi messaggi
+
+                await ElaboraAsync(messaggio, stoppingToken);
+                await _coda.ConfermaAsync(messaggio.Id, stoppingToken);
+            }
+        }
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+        {
+            // Shutdown richiesto — uscita pulita, non è un errore
+            break;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Errore durante l'elaborazione.");
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+        }
+    }
+
+    _logger.LogInformation("Worker fermato.");
+}
+```
+
+Il pattern `catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)` cattura solo la cancellazione da shutdown e non quella da timeout interni o altri motivi.
+
+### Strategia 5: elaborazione CPU-bound con controllo periodico
+
+Per calcoli pesanti senza punti naturali di `await`, si controlla il token a intervalli regolari:
+
+```csharp
+public RisultatoAnalisi AnalizzaDati(IReadOnlyList<Campione> campioni, CancellationToken ct)
+{
+    var risultati = new List<double>(campioni.Count);
+
+    for (var i = 0; i < campioni.Count; i++)
+    {
+        // Controllo ogni 1000 iterazioni per non penalizzare le prestazioni
+        if (i % 1000 == 0)
+            ct.ThrowIfCancellationRequested();
+
+        risultati.Add(CalcolaDistanza(campioni[i]));
+    }
+
+    return new RisultatoAnalisi(risultati);
+}
+```
+
+Il controllo non va fatto ad ogni iterazione in loop stretti: `ThrowIfCancellationRequested()` è economico ma non gratuito. Ogni N iterazioni è un buon compromesso tra reattività e prestazioni.
+
+### Riepilogo delle strategie
+
+| Strategia | Quando usarla |
+|-----------|---------------|
+| `ThrowIfCancellationRequested()` | L'operazione non ha risultati parziali utili |
+| `if (IsCancellationRequested) break` + risultato | Il lavoro fatto finora è utile |
+| Completare l'elemento + uscire | Ogni iterazione è una transazione atomica |
+| `while (!ct.IsCancellationRequested)` | Loop infinito di un worker |
+| Controllo ogni N iterazioni | Loop CPU-bound molto stretto |
 
 ## Timeout con CancellationTokenSource
 
