@@ -30,6 +30,7 @@ Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core
 19. [Caching](integrazione/20-caching.md) — `IMemoryCache`, `IDistributedCache`, output caching
 20. [Resilienza](integrazione/21-resilience.md) — retry, circuit breaker, timeout con `Microsoft.Extensions.Http.Resilience`
 21. [Records e immutabilità](linguaggio/22-records.md) — `record`, `with` expression, DTO e value object
+22. [CancellationToken](concorrenza/23-cancellation-token.md) — propagazione, timeout, linked token, anti-pattern
 
 ### Struttura della Solution
 - [Struttura fisica](struttura-soluzione/01-struttura-fisica.md) — filesystem, .sln, .csproj, naming assembly e namespace

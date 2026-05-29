@@ -45,6 +45,10 @@ Modifica che rompe la compatibilità con quanto già in uso: rinomina di colonne
 
 Tecnica per memorizzare temporaneamente il risultato di operazioni costose (query DB, chiamate HTTP) e riutilizzarlo nelle richieste successive. In ASP.NET Core: `IMemoryCache` per cache in-process, `IDistributedCache` per cache condivisa tra istanze (Redis), output caching per risposte HTTP complete. Vedi [`tecnologie/csharp/integrazione/20-caching`](tecnologie/csharp/integrazione/20-caching.md).
 
+## CancellationToken
+
+Meccanismo standard di .NET per segnalare la cancellazione cooperativa di un'operazione asincrona. Il `CancellationTokenSource` è il produttore (chi annulla), il `CancellationToken` è il segnale in sola lettura passato ai consumatori. `CreateLinkedTokenSource` permette di combinare più motivi di cancellazione in un unico token. Vedi [`tecnologie/csharp/concorrenza/23-cancellation-token`](tecnologie/csharp/concorrenza/23-cancellation-token.md).
+
 ## Captive dependency
 
 Bug di configurazione DI in cui un servizio con lifetime più lungo (es. singleton) cattura una dipendenza con lifetime più breve (es. scoped). La dipendenza viene tenuta viva oltre il suo ciclo di vita previsto. Vedi [`tecnologie/csharp/16-dependency-injection`](tecnologie/csharp/16-dependency-injection.md).
