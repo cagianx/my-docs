@@ -107,20 +107,26 @@ while (!ct.IsCancellationRequested)
 Per imporre un tempo massimo a un'operazione:
 
 ```csharp
-using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+public async Task<string> GetDatiAsync(CancellationToken ct)
+{
+    using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+    cts.CancelAfter(TimeSpan.FromSeconds(10));
 
-try
-{
-    var risposta = await _httpClient.GetAsync("/api/dati", cts.Token);
-}
-catch (OperationCanceledException) when (!ct.IsCancellationRequested)
-{
-    // Il timeout è scaduto (non è una cancellazione del client)
-    throw new TimeoutException("Il servizio esterno non ha risposto entro 10 secondi.");
+    try
+    {
+        var risposta = await _httpClient.GetAsync("/api/dati", cts.Token);
+        return await risposta.Content.ReadAsStringAsync(cts.Token);
+    }
+    catch (OperationCanceledException) when (!ct.IsCancellationRequested)
+    {
+        // ct non è annullato → il timeout locale è scaduto
+        throw new TimeoutException("Il servizio esterno non ha risposto entro 10 secondi.");
+    }
+    // Se ct è annullato, l'eccezione risale normalmente (cancellazione del chiamante)
 }
 ```
 
-Il `when (!ct.IsCancellationRequested)` distingue un timeout locale da una cancellazione esterna (es. il client che chiude la connessione).
+Il `when (!ct.IsCancellationRequested)` distingue un timeout locale da una cancellazione esterna (es. il client che chiude la connessione): se il token originale `ct` non è annullato, la causa è il timeout.
 
 ## Linked CancellationToken
 
