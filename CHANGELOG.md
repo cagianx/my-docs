@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.6](https://github.com/cagianx/my-docs/compare/v1.0.5...v1.0.6) (2026-05-30)
+
+
+### Documentation
+
+* add fail-fast principle to error handling ([#3](https://github.com/cagianx/my-docs/issues/3)) ([e8e0f65](https://github.com/cagianx/my-docs/commit/e8e0f65a354b880747cd88f1b6f3f6c8393a9ec2))
+* add InternalsVisibleTo article in tecnologie/csharp/linguaggio ([#2](https://github.com/cagianx/my-docs/issues/2)) ([7713943](https://github.com/cagianx/my-docs/commit/7713943ef4c7701d346e2f8f06909020dd8e8dbd))
+* **git:** add commit organization guidelines, squash section, and move to tecnologie/ ([#6](https://github.com/cagianx/my-docs/issues/6)) ([e1c2cac](https://github.com/cagianx/my-docs/commit/e1c2cacbe0ff1a13519fc34fe5ecd3d0dd23cc6e))
+* make ambiente-di-sviluppo page express generic principles ([#4](https://github.com/cagianx/my-docs/issues/4)) ([690a881](https://github.com/cagianx/my-docs/commit/690a881eb67522340c72656684813a172ecb135a))
+
 ## [1.0.5](https://github.com/cagianx/my-docs/compare/v1.0.4...v1.0.5) (2026-05-23)
 
 
