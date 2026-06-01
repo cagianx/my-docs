@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-description: Pattern moderni Angular che sostituiscono quelli legacy.
+description: Pattern e pratiche consigliate per lo sviluppo Angular.
 ---
 
-# Pattern Moderni Angular
+# Pattern Consigliati
 
-Questa sezione raccoglie i pattern moderni di Angular che **sostituiscono** le pratiche legacy. L'adozione di questi pattern è fortemente consigliata (o obbligatoria dove indicato) nei nuovi sviluppi.
+Questa sezione raccoglie i pattern Angular da adottare, indicando cosa **sostituiscono** rispetto alle pratiche precedenti. L'adozione di questi pattern è fortemente consigliata (o obbligatoria dove indicato) nei nuovi sviluppi.
 
 ---
 
