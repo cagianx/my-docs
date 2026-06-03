@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.7](https://github.com/cagianx/my-docs/compare/v1.0.6...v1.0.7) (2026-06-03)
+
+
+### Documentation
+
+* **angular:** restructure pattern consigliati into dedicated subpages ([#7](https://github.com/cagianx/my-docs/issues/7)) ([06ce82b](https://github.com/cagianx/my-docs/commit/06ce82bc06de373d82f17561c692d17a7d1f3ba3))
+
 ## [1.0.6](https://github.com/cagianx/my-docs/compare/v1.0.5...v1.0.6) (2026-05-30)
 
 
