@@ -16,22 +16,32 @@ Motivazioni:
 - Validazione centralizzata
 - Composabilità
 
-### Esempio base
+### Binding diretto al controllo
+
+Passare sempre il controllo direttamente all'input con `[formControl]`, **non** usare `formControlName`:
 
 ```typescript
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-readonly form = new FormGroup({
-  name: new FormControl('', Validators.required),
-  email: new FormControl('', [Validators.required, Validators.email])
+readonly fg = new FormGroup({
+  name: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
+  email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] })
 });
 ```
 
 ```html
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <input formControlName="name" />
-  <input formControlName="email" />
-  <button type="submit" [disabled]="form.invalid">Invia</button>
+<input [formControl]="fg.controls.name" />
+<input [formControl]="fg.controls.email" />
+<button [disabled]="fg.invalid" (click)="onSubmit()">Invia</button>
+```
+
+Il tag `<form>` si usa **solo** quando serve intercettare eventi nativi del browser, ad esempio il tasto Enter per fare submit:
+
+```html
+<form (ngSubmit)="onSubmit()">
+  <input [formControl]="fg.controls.name" />
+  <input [formControl]="fg.controls.email" />
+  <button type="submit" [disabled]="fg.invalid">Invia</button>
 </form>
 ```
 
@@ -40,27 +50,16 @@ readonly form = new FormGroup({
 Dalla v14+ i Reactive Forms sono fortemente tipizzati:
 
 ```typescript
-readonly form = new FormGroup({
+readonly fg = new FormGroup({
   name: new FormControl<string>('', { nonNullable: true }),
   age: new FormControl<number | null>(null)
 });
 
-// form.value è tipizzato correttamente
-const name: string = this.form.controls.name.value;
+// fg.value è tipizzato correttamente
+const name: string = this.fg.controls.name.value;
 ```
 
-### FormBuilder
-
-```typescript
-private readonly fb = inject(FormBuilder);
-
-readonly form = this.fb.nonNullable.group({
-  name: ['', Validators.required],
-  email: ['', [Validators.required, Validators.email]]
-});
-```
-
-### Validazione custom
+### Validazione custom sincrona
 
 ```typescript
 function minAge(min: number): ValidatorFn {
@@ -70,6 +69,80 @@ function minAge(min: number): ValidatorFn {
   };
 }
 ```
+
+### Validazione condizionale
+
+Un validatore a livello di `FormGroup` consente di rendere un campo obbligatorio in base al valore di un altro. La logica è centralizzata nel gruppo: i singoli controlli non sanno nulla l'uno dell'altro.
+
+```typescript
+const requiredIfChecked: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  const fg = group as FormGroup;
+  const checked = fg.controls['hasDiscount'].value as boolean;
+  const code = fg.controls['discountCode'].value as string;
+  return checked && !code ? { discountCodeRequired: true } : null;
+};
+
+readonly fg = new FormGroup(
+  {
+    hasDiscount: new FormControl<boolean>(false, { nonNullable: true }),
+    discountCode: new FormControl<string>('', { nonNullable: true })
+  },
+  { validators: requiredIfChecked }
+);
+```
+
+L'errore vive sul gruppo, non sul controllo figlio. Nel template si legge da `fg.errors`:
+
+```html
+<input type="checkbox" [formControl]="fg.controls.hasDiscount" />
+<input [formControl]="fg.controls.discountCode" />
+@if (fg.errors?.['discountCodeRequired']) {
+  <span>Il codice sconto è obbligatorio</span>
+}
+```
+
+> Aggiornare dinamicamente i validator del controllo figlio (con `setValidators` / `updateValueAndValidity`) è una soluzione alternativa ma più fragile: disperde la logica tra costruttore e lifecycle hooks. Preferire il validatore di gruppo.
+
+### Validazione asincrona
+
+I validatori asincroni ricevono un `AbstractControl` e restituiscono un `Observable` o `Promise` di `ValidationErrors | null`:
+
+```typescript
+function uniqueUsernameValidator(userService: UserService): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    return userService.checkUsername(control.value).pipe(
+      map(isTaken => (isTaken ? { usernameTaken: true } : null)),
+      catchError(() => of(null))
+    );
+  };
+}
+```
+
+Utilizzo con iniezione della dipendenza tramite `inject`:
+
+```typescript
+readonly fg = new FormGroup({
+  username: new FormControl<string>('', {
+    nonNullable: true,
+    validators: Validators.required,
+    asyncValidators: uniqueUsernameValidator(inject(UserService))
+  })
+});
+```
+
+Template per mostrare lo stato asincrono:
+
+```html
+<input [formControl]="fg.controls.username" />
+@if (fg.controls.username.pending) {
+  <span>Verifica in corso…</span>
+}
+@if (fg.controls.username.errors?.['usernameTaken']) {
+  <span>Username già in uso</span>
+}
+```
+
+> Per evitare troppe chiamate HTTP, combinare il validatore asincrono con `debounceTime` oppure usare `updateOn: 'blur'` sul controllo.
 
 ---
 
