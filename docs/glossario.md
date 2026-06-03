@@ -29,6 +29,10 @@ Documento che descrive *cosa* il sistema deve fare dal punto di vista del busine
 
 Processo che traduce l'analisi funzionale in una soluzione implementabile: modello dati, contratti, flussi, requisiti non funzionali, piano. Vedi [`processi/analisi-tecnica`](processi/analisi-tecnica/index.md).
 
+## Audit log
+
+Registro persistente e immutabile delle operazioni eseguite su un sistema, con tutti i dettagli necessari per ricostruire cosa è successo: chi, quando, su quale risorsa, con quale risultato. Nel contesto HTTP: metodo, path, body di request e response, status code, utente, latenza. Vedi [`tecnologie/csharp/esempi/http-audit-log`](tecnologie/csharp/esempi/02-http-audit-log.md).
+
 ## Builder pattern
 
 Pattern creazionale che costruisce passo per passo oggetti complessi, restituendo istanze valide solo al termine tramite `Build()`. In C# si introduce solo quando object initializer, `record` con `with` o parametri opzionali non bastano. Vedi [`pattern-di-sviluppo/builder`](pattern-di-sviluppo/builder.md) · [`tecnologie/csharp/pattern/builder`](tecnologie/csharp/pattern/builder.md).
@@ -225,6 +229,10 @@ Standard RFC 9457 per il formato strutturato di risposte di errore HTTP. Usa il 
 
 Pratica di gonfiare i numeri di versione per ragioni di immagine o marketing anziché per rispecchiare l'entità reale delle modifiche. Esempi: saltare da `v1.x` a `v2.0` senza breaking changes, rilasciare una `v10.0` in coincidenza di un anniversario. Distorce il contratto comunicativo del versioning e può trarre in inganno chi automatizza gli aggiornamenti. Vedi [`regole/versionamento`](regole/versionamento.md).
 
+## Serilog
+
+Libreria di logging strutturato per .NET. Principale alternativa a `Microsoft.Extensions.Logging` puro. Supporta sink multipli (console, file, database, Seq, Application Insights, OpenTelemetry), log strutturati nativi e configurazione da `appsettings.json`. Vedi [`tecnologie/csharp/osservabilita/logging`](tecnologie/csharp/osservabilita/05-logging.md) · [`tecnologie/csharp/esempi/serilog-db`](tecnologie/csharp/esempi/01-serilog-db.md).
+
 ## Sidecar
 
 Processo esterno avviato e gestito da un'applicazione principale. Nel contesto desktop, il WebAPI C# viene eseguito come sidecar dalla shell (Electron, Tauri, WPF): viene avviato all'apertura dell'app e terminato alla chiusura. Vedi [`tecnologie/desktop`](tecnologie/desktop/index.md).
@@ -236,6 +244,10 @@ Principio per cui la struttura del codice comunica immediatamente *cosa fa* il s
 ## Semantic Versioning
 
 Schema di versioning `MAJOR.MINOR.PATCH`: MAJOR per breaking changes, MINOR per nuove funzionalità retrocompatibili, PATCH per bug fix. Vedi [`regole/versionamento`](regole/versionamento.md).
+
+## Sink (Serilog)
+
+Destinazione di scrittura dei log in Serilog: console, file, database, Seq, Application Insights, ecc. Si possono configurare più sink contemporaneamente, con livelli minimi differenti per ciascuno. È possibile scrivere sink custom implementando `ILogEventSink`. Vedi [`tecnologie/csharp/osservabilita/logging`](tecnologie/csharp/osservabilita/05-logging.md).
 
 ## Soft delete
 

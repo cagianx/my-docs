@@ -57,3 +57,7 @@ Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core
 - [Scrivere un test](test-integrazione/02-scrivere-test.md) — `Get<T>()`, `SeedAsync`, FluentAssertions, parallelismo
 - [Testcontainers](test-integrazione/03-testcontainers.md) — PostgreSQL in Docker, nessuna dipendenza locale
 
+### Esempi
+- [Serilog su database (EF)](esempi/01-serilog-db.md) — sink custom per scrivere eccezioni su DB via Entity Framework
+- [HTTP audit log](esempi/02-http-audit-log.md) — middleware per registrare request/response su DB, con modellazione e considerazioni operative
+
