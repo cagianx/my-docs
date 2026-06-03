@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.9](https://github.com/cagianx/my-docs/compare/v1.0.8...v1.0.9) (2026-06-03)
+
+
+### Documentation
+
+* **desktop:** add section on desktop distribution strategies for WebAPI + Angular ([c152865](https://github.com/cagianx/my-docs/commit/c152865821b519ca805cf963c7c4c7a846af7431))
+* update glossario and indice-analitico for Angular, Git, and Desktop sections ([8249023](https://github.com/cagianx/my-docs/commit/82490238136d577705250c2f5eaa0d8bed8d9795))
+
 ## [1.0.8](https://github.com/cagianx/my-docs/compare/v1.0.7...v1.0.8) (2026-06-03)
 
 
