@@ -9,8 +9,10 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## A
 
 - **Action filter** — [csharp/11-action-filter](tecnologie/csharp/pipeline/11-action-filter.md)
+- **Angular (panoramica pattern)** — [angular/pattern-consigliati](tecnologie/angular/pattern-consigliati/index.md)
 - **Async / Await** — [csharp/15-async](tecnologie/csharp/linguaggio/15-async.md) · [glossario](glossario#async--await)
 - **Async all the way down** — [csharp/15-async](tecnologie/csharp/linguaggio/15-async.md)
+- **AsyncValidatorFn (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md) · [glossario](glossario#asyncvalidatorfn)
 - **ACID** — [glossario](glossario#acid)
 - **Adapter pattern** — [pattern-di-sviluppo/adapter](pattern-di-sviluppo/adapter.md) · [csharp/pattern/adapter](tecnologie/csharp/pattern/adapter.md) · [glossario](glossario#adapter-pattern)
 - **Ambienti (local, staging, produzione)** — [regole/ambienti](regole/ambienti.md)
@@ -68,6 +70,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 ## D
 
+- **Desktop (app da WebAPI + Angular)** — [tecnologie/desktop](tecnologie/desktop/index.md)
 - **Dati duttili (principio)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **DbContext** — [glossario](glossario#dbcontext) · [regole/entity-framework](regole/entity-framework.md)
 - **Definition of Done** — [glossario](glossario#definition-of-done) · [sviluppo/03](processi/sviluppo/03-validazione.md)
@@ -85,6 +88,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Eccezioni** — [regole/gestione-errori](regole/gestione-errori.md) · [regole/logging](regole/logging.md)
 - **Eccezioni (decorazione con contesto)** — [regole/logging](regole/logging.md)
 - **Entity Framework** — [regole/entity-framework](regole/entity-framework.md) · [csharp/entity-framework](tecnologie/csharp/entity-framework/01-code-first.md)
+- **Electron** — [tecnologie/desktop/electron-puro](tecnologie/desktop/electron-puro.md) · [glossario](glossario#electron)
+- **Electron.NET** — [tecnologie/desktop/electron-net](tecnologie/desktop/electron-net.md) · [glossario](glossario#electronnet)
 - **Exception filter** — [csharp/13-exception-filter](tecnologie/csharp/pipeline/13-exception-filter.md) · [glossario](glossario#exception-filter)
 - **Enum (vs stringa libera)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Enum (persistenza con EF)** — [csharp/entity-framework/04-enum](tecnologie/csharp/entity-framework/04-enum.md)
@@ -99,6 +104,9 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Fluent API** — [glossario](glossario#fluent-api) · [regole/entity-framework](regole/entity-framework.md)
 - **Flussi critici** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Force push (vietato)** — [tecnologie/git](tecnologie/git/index.md)
+- **FormControl (binding diretto)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
+- **FormGroup (validatore di gruppo)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
+- **Functional guards (Angular)** — [angular/functional-guards](tecnologie/angular/pattern-consigliati/functional-guards.md)
 
 ## G
 
@@ -107,6 +115,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## H
 
 - **Hangfire** — [csharp/09-librerie-code](tecnologie/csharp/concorrenza/09-librerie-code.md)
+- **Health check** — [tecnologie/desktop](tecnologie/desktop/self-hosted-kestrel.md)
 - **Handoff** — [analisi-tecnica/08](processi/analisi-tecnica/08-handoff.md)
 
 ## I
@@ -116,7 +125,9 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **IA (generazione test)** — [regole/testing](regole/testing.md) · [regole/entity-framework](regole/entity-framework.md)
 - **IA (uso di MyDocs come knowledge base)** — [uso-con-ia](uso-con-ia.md)
 - **Idempotenza** — [glossario](glossario#idempotenza) · [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
-- **IHttpClientFactory** — [csharp/17-httpclient](tecnologie/csharp/integrazione/17-httpclient.md) · [glossario](glossario#ihttpclientfactory)
+- **IHttpClientFactory**
+- **inject() (Angular)** — [angular/inject](tecnologie/angular/pattern-consigliati/inject.md)
+- **input() / output() (Angular)** — [angular/input-output](tecnologie/angular/pattern-consigliati/input-output.md) — [csharp/17-httpclient](tecnologie/csharp/integrazione/17-httpclient.md) · [glossario](glossario#ihttpclientfactory)
 - **IQueryable\<T\>** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#iqueryablet)
 - **ILogger\<T\>** — [regole/logging](regole/logging.md) · [regole/principi](regole/principi.md)
 - **Indici (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
@@ -142,6 +153,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## M
 
 - **Mermaid** — [regole/documentazione](regole/documentazione.md) · [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
+- **Merge (strategia git)** — [tecnologie/git](tecnologie/git/index.md)
 - **Models (progetto)** — [csharp/struttura-soluzione/07](tecnologie/csharp/struttura-soluzione/07-models.md)
 - **Middleware** — [csharp/10-middleware](tecnologie/csharp/pipeline/10-middleware.md) · [glossario](glossario#middleware)
 - **Migration** — [glossario](glossario#migration) · [regole/entity-framework](regole/entity-framework.md) · [sviluppo/01](processi/sviluppo/01-dominio.md)
@@ -153,7 +165,9 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **`nameof()` (mapping EF)** — [csharp/entity-framework/01-code-first](tecnologie/csharp/entity-framework/01-code-first.md#convenzioni-di-naming)
 - **Naming (tabelle, DbSet, colonne)** — [csharp/entity-framework/01-code-first](tecnologie/csharp/entity-framework/01-code-first.md#convenzioni-di-naming)
 - **NUnit** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
-- **NFR (requisiti non funzionali)** — [glossario](glossario#nfr) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
+- **NFR (requisiti non funzionali)**
+- **ngModel (da evitare)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
+- **NSIS (installer Windows)** — [tecnologie/desktop/installer-windows](tecnologie/desktop/installer-windows.md) · [glossario](glossario#nsis) — [glossario](glossario#nfr) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 
 ## O
 
@@ -180,8 +194,11 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## R
 
 - **Record (C#)** — [csharp/22-records](tecnologie/csharp/linguaggio/22-records.md) · [glossario](glossario#record-c)
+- **Reactive Forms (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
+- **Rebase (git)** — [tecnologie/git](tecnologie/git/index.md)
 - **Resilienza (HTTP)** — [csharp/21-resilience](tecnologie/csharp/integrazione/21-resilience.md) · [glossario](glossario#resilienza-http)
-- **Retry** — [csharp/21-resilience](tecnologie/csharp/integrazione/21-resilience.md)
+- **Retry**
+- **Resolver funzionali (Angular)** — [angular/functional-guards](tecnologie/angular/pattern-consigliati/functional-guards.md) — [csharp/21-resilience](tecnologie/csharp/integrazione/21-resilience.md)
 - **Refactoring (separazione commit)** — [tecnologie/git](tecnologie/git/index.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Repository pattern (da evitare)** — [regole/entity-framework](regole/entity-framework.md)
 - **Resilienza** — [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
@@ -191,6 +208,12 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## S
 
 - **SaveChanges** — [regole/entity-framework](regole/entity-framework.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Sidecar** — [glossario](glossario#sidecar) · [tecnologie/desktop/tauri](tecnologie/desktop/tauri.md) · [tecnologie/desktop](tecnologie/desktop/index.md)
+- **Signals (Angular)** — [angular/signals](tecnologie/angular/pattern-consigliati/signals.md)
+- **Signal Forms (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
+- **Standalone components (Angular)** — [angular/standalone-components](tecnologie/angular/pattern-consigliati/standalone-components.md)
+- **Squash (git)** — [tecnologie/git](tecnologie/git/index.md)
+- **SQLite (percorsi dati su Windows)** — [tecnologie/desktop/installer-windows](tecnologie/desktop/installer-windows.md)
 - **Sottomodulo git (MyDocs)** — [uso-con-ia](uso-con-ia.md)
 - **Screaming Architecture** — [glossario](glossario#screaming-architecture) · [regole/architettura](regole/architettura.md) · [csharp/struttura-soluzione/03](tecnologie/csharp/struttura-soluzione/03-organizzazione-core.md)
 - **Scrittura difficile, lettura facile** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/dominio](regole/dominio.md)
@@ -215,6 +238,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Test unitari — AAA (Arrange/Act/Assert)** — [csharp/test-unitari/02-come-scriverli](tecnologie/csharp/test-unitari/02-come-scriverli.md)
 - **Test unitari — naming** — [csharp/test-unitari/02-come-scriverli](tecnologie/csharp/test-unitari/02-come-scriverli.md)
 - **Test unitari — parametrici (TestCase/TestCaseSource)** — [csharp/test-unitari/02-come-scriverli](tecnologie/csharp/test-unitari/02-come-scriverli.md)
+- **Tauri** — [tecnologie/desktop/tauri](tecnologie/desktop/tauri.md) · [glossario](glossario#tauri)
+- **takeUntilDestroyed (Angular)** — [angular/take-until-destroyed](tecnologie/angular/pattern-consigliati/take-until-destroyed.md)
 - **Transazionalità (sistemi esterni)** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Trunk-based development** — [glossario](glossario#trunk-based-development) · [tecnologie/git](tecnologie/git/index.md)
 - **Troubleshooting (log)** — [regole/logging](regole/logging.md)
@@ -229,8 +254,18 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## V
 
 - **Validazione (staging)** — [sviluppo/03](processi/sviluppo/03-validazione.md)
+- **Validazione asincrona (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
+- **Validazione condizionale (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
 - **Validazione input** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md)
 - **ValueTask\<T\>** — [csharp/15-async](tecnologie/csharp/linguaggio/15-async.md)
 - **Versionamento** — [regole/versionamento](regole/versionamento.md) · [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md)
 - **Versionamento (CalVer)** — [regole/versionamento](regole/versionamento.md)
 - **Versionamento contratti** — [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md)
+
+## W
+
+- **WebView2** — [tecnologie/desktop/webview2](tecnologie/desktop/webview2.md) · [glossario](glossario#webview2)
+
+## @
+
+- **@if / @for / @switch (Angular control flow)** — [angular/control-flow](tecnologie/angular/pattern-consigliati/control-flow.md)

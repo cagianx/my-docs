@@ -5,6 +5,10 @@ description: Definizioni dei termini tecnici e di dominio usati nella documentaz
 
 # Glossario
 
+## AsyncValidatorFn
+
+Tipo Angular per un validatore asincrono su un `FormControl`. Riceve un `AbstractControl` e restituisce un `Observable<ValidationErrors | null>` o una `Promise`. Si passa al controllo tramite `asyncValidators` nell'opzione del costruttore. Vedi [`tecnologie/angular/pattern-consigliati/forms`](tecnologie/angular/pattern-consigliati/forms.md).
+
 ## Async / Await
 
 Modello di programmazione asincrona in C# basato su `Task<T>` e le keyword `async`/`await`. Permette di liberare il thread durante operazioni I/O-bound (database, HTTP, file system), aumentando il throughput delle Web API senza aumentare il numero di thread. Vedi [`tecnologie/csharp/linguaggio/15-async`](tecnologie/csharp/linguaggio/15-async.md).
@@ -129,6 +133,14 @@ Libreria per la validazione dell'input con un'API fluente. I validator sono clas
 
 Meccanismo che permette di abilitare o disabilitare funzionalità a runtime tramite configurazione, senza deploy. Rende possibile integrare codice incompleto su `main` senza esporlo agli utenti. I flag non sono permanenti: si rimuovono quando la funzionalità è stabile. Vedi [`tecnologie/git`](tecnologie/git/index.md).
 
+## Electron
+
+Framework open source che permette di distribuire applicazioni web come app desktop. Incorpora Chromium (per il frontend) e Node.js (per il processo principale). Il bundle risultante è pesante (~150 MB+) ma garantisce uniformità cross-platform. Vedi [`tecnologie/desktop/electron-puro`](tecnologie/desktop/electron-puro.md) · [`tecnologie/desktop/electron-net`](tecnologie/desktop/electron-net.md).
+
+## Electron.NET
+
+Libreria che integra ASP.NET Core con Electron, consentendo di controllare la shell Electron da C# anziché da JavaScript. Il progetto desktop è una minimal ASP.NET Core app con Electron.NET; il WebAPI resta un processo separato. Vedi [`tecnologie/desktop/electron-net`](tecnologie/desktop/electron-net.md).
+
 ## Factory Method
 
 Pattern creazionale che incapsula la creazione di un oggetto dietro un metodo dedicato, separando chi richiede l'istanza da chi conosce il tipo concreto. Convive con [[Strategy pattern]]: una factory è spesso il selettore che restituisce la strategy giusta. Vedi [`pattern-di-sviluppo/factory-method`](pattern-di-sviluppo/factory-method.md) · [`tecnologie/csharp/pattern/factory-method`](tecnologie/csharp/pattern/factory-method.md).
@@ -177,6 +189,10 @@ File generato da EF che descrive una modifica incrementale allo schema del datab
 
 Progetto che raccoglie i tipi condivisi tra Db, Core, UseCases e Api: DTO, enum di dominio e `Result<T>`. Contiene tipi puri, non comportamento: niente logica di business, niente validazione, niente factory di dominio. Non dipende da nessun altro progetto della solution. Vedi [`tecnologie/csharp/struttura-soluzione/07-models`](tecnologie/csharp/struttura-soluzione/07-models.md).
 
+## NSIS
+
+*Nullsoft Scriptable Install System.* Sistema open source per creare installer Windows. Permette di copiare file, creare shortcut, scrivere chiavi di registro, gestire la disinstallazione e impostare percorsi per i dati applicativi (es. SQLite). È lo strumento di riferimento per distribuire app desktop .NET su Windows. Vedi [`tecnologie/desktop/installer-windows`](tecnologie/desktop/installer-windows.md).
+
 ## N+1 (problema)
 
 Anti-pattern di accesso ai dati in cui si esegue una query per ottenere N record e poi N query aggiuntive per caricare dati correlati. Si risolve con `Include` per il caricamento eager o con proiezioni `Select` che portano solo i dati necessari in un'unica query. Vedi [`tecnologie/csharp/entity-framework/02-queryable-vs-list`](tecnologie/csharp/entity-framework/02-queryable-vs-list.md).
@@ -209,6 +225,10 @@ Standard RFC 9457 per il formato strutturato di risposte di errore HTTP. Usa il 
 
 Pratica di gonfiare i numeri di versione per ragioni di immagine o marketing anziché per rispecchiare l'entità reale delle modifiche. Esempi: saltare da `v1.x` a `v2.0` senza breaking changes, rilasciare una `v10.0` in coincidenza di un anniversario. Distorce il contratto comunicativo del versioning e può trarre in inganno chi automatizza gli aggiornamenti. Vedi [`regole/versionamento`](regole/versionamento.md).
 
+## Sidecar
+
+Processo esterno avviato e gestito da un'applicazione principale. Nel contesto desktop, il WebAPI C# viene eseguito come sidecar dalla shell (Electron, Tauri, WPF): viene avviato all'apertura dell'app e terminato alla chiusura. Vedi [`tecnologie/desktop`](tecnologie/desktop/index.md).
+
 ## Screaming Architecture
 
 Principio per cui la struttura del codice comunica immediatamente *cosa fa* il sistema. Le cartelle si chiamano `Ordini/`, `Fatturazione/`, non `Services/`, `Repositories/`. Vedi [`regole/architettura`](regole/architettura.md).
@@ -233,6 +253,10 @@ Ambiente intermedio tra sviluppo e produzione. Riceve ogni versione prima che ar
 
 Pattern comportamentale che incapsula una famiglia di algoritmi intercambiabili dietro un'interfaccia comune, permettendo di variare il comportamento a runtime senza modificare il contesto. In C# si implementa tipicamente con `IEnumerable<T>` (selezione a runtime) o con keyed services (selezione dichiarativa). Vedi [`pattern-di-sviluppo/strategy`](pattern-di-sviluppo/strategy.md) · [`tecnologie/csharp/pattern/strategy`](tecnologie/csharp/pattern/strategy.md).
 
+## Tauri
+
+Framework per app desktop che usa il webview nativo del sistema operativo (WebKit su macOS/Linux, WebView2 su Windows) e un backend Rust. Produce bundle molto leggeri (~5–15 MB). In combinazione con un WebAPI C#, il backend gira come sidecar esterno. Vedi [`tecnologie/desktop/tauri`](tecnologie/desktop/tauri.md).
+
 ## Trunk-based development
 
 Strategia di branching in cui tutto il lavoro confluisce direttamente su `main`. I branch, se usati, hanno vita brevissima. Le funzionalità incomplete si nascondono tramite feature flag. Vedi [`tecnologie/git`](tecnologie/git/index.md).
@@ -240,6 +264,10 @@ Strategia di branching in cui tutto il lavoro confluisce direttamente su `main`.
 ## Ubiquitous Language
 
 Linguaggio condiviso tra developer, analisti e stakeholder: i nomi del dominio si usano ovunque nel codice, senza sinonimi, abbreviazioni o traduzioni. Vedi [`regole/dominio`](regole/dominio.md).
+
+## WebView2
+
+Controllo browser Microsoft basato su Chromium Edge, disponibile solo su Windows. Permette di ospitare una webview dentro un'applicazione WPF, WinForms o WinUI senza includere Chromium nel bundle: usa il runtime Edge già installato sul sistema. Supporta `SetVirtualHostNameToFolderMapping` per servire file statici locali senza un server HTTP. Vedi [`tecnologie/desktop/webview2`](tecnologie/desktop/webview2.md).
 
 ## Unit of Work
 
