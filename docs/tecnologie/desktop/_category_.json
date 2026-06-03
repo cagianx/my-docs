@@ -1,0 +1,10 @@
+{
+  "label": "Desktop",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "tecnologie/desktop/index"
+  }
+}
