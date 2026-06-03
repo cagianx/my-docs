@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.10](https://github.com/cagianx/my-docs/compare/v1.0.9...v1.0.10) (2026-06-03)
+
+
+### Documentation
+
+* **csharp:** add esempi section with Serilog DB sink and HTTP audit middleware ([032a31b](https://github.com/cagianx/my-docs/commit/032a31b89b055e4eabea47bd125e38554320f07c))
+
 ## [1.0.9](https://github.com/cagianx/my-docs/compare/v1.0.8...v1.0.9) (2026-06-03)
 
 
