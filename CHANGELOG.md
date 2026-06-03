@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.8](https://github.com/cagianx/my-docs/compare/v1.0.7...v1.0.8) (2026-06-03)
+
+
+### Documentation
+
+* **angular:** update forms patterns — direct formControl binding, conditional and async validation ([8e47a29](https://github.com/cagianx/my-docs/commit/8e47a298f24a63d819dddf1509b8efa86e83befd))
+
 ## [1.0.7](https://github.com/cagianx/my-docs/compare/v1.0.6...v1.0.7) (2026-06-03)
 
 
