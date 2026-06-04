@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.12](https://github.com/cagianx/my-docs/compare/v1.0.11...v1.0.12) (2026-06-04)
+
+
+### Bug Fixes
+
+* **sidebar:** unify root category styling and drop duplicate index entries ([4931edf](https://github.com/cagianx/my-docs/commit/4931edf11cb1539794fd6f4ec96f3d922e92a27c))
+
+
+### Documentation
+
+* **csharp:** add DB filesystem storage example ([cea508f](https://github.com/cagianx/my-docs/commit/cea508fd807a825a55fb71b9c869185d738be238))
+* **csharp:** rework HTTP audit example with per-endpoint attribute ([c88b289](https://github.com/cagianx/my-docs/commit/c88b2895ec6d6684dfe017e8a153a8b95810aab9))
+
 ## [1.0.11](https://github.com/cagianx/my-docs/compare/v1.0.10...v1.0.11) (2026-06-03)
 
 
