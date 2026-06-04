@@ -102,6 +102,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 - **Factory Method** — [pattern-di-sviluppo/factory-method](pattern-di-sviluppo/factory-method.md) · [csharp/pattern/factory-method](tecnologie/csharp/pattern/factory-method.md) · [glossario](glossario#factory-method)
 - **Feature flag** — [glossario](glossario#feature-flag) · [tecnologie/git](tecnologie/git/index.md)
+- **File storage su database (EF)** — [csharp/esempi/db-filesystem](tecnologie/csharp/esempi/03-db-filesystem.md)
 - **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **FluentValidation** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md) · [glossario](glossario#fluentvalidation)
 - **Fluent API** — [glossario](glossario#fluent-api) · [regole/entity-framework](regole/entity-framework.md)
