@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-description: Middleware ASP.NET Core per registrare su database tutte le chiamate HTTP in ingresso, compresi body di request e response, via Entity Framework.
+description: Middleware ASP.NET Core con attributo per audit HTTP per-endpoint, configurabile su errori/all e full/headers.
 ---
 
-# HTTP audit log (middleware + EF)
+# HTTP audit log (middleware + EF + attributo)
 
-Un middleware che intercetta ogni richiesta HTTP, ne legge body in entrata e in uscita, e salva tutto su database tramite Entity Framework. Utile per audit trail, troubleshooting e analisi retroattiva delle operazioni.
+Un middleware che intercetta le richieste HTTP solo quando l'endpoint ha un attributo di audit. L'attributo consente una configurazione capillare per controller/metodo: quando loggare (`All` o `ErrorsOnly`) e cosa salvare (`None`, `Headers`, `Full`) per request e response.
 
 ## Modello dati
 
@@ -21,10 +21,12 @@ public class HttpAuditLog
     public string? QueryString { get; set; }
 
     public string? RequestContentType { get; set; }
+    public string? RequestHeaders { get; set; }
     public string? RequestBody { get; set; }
 
     public int StatusCode { get; set; }
     public string? ResponseContentType { get; set; }
+    public string? ResponseHeaders { get; set; }
     public string? ResponseBody { get; set; }
 
     public long ElapsedMs { get; set; }
@@ -58,8 +60,14 @@ public class HttpAuditLogConfiguration : IEntityTypeConfiguration<HttpAuditLog>
         builder.Property(e => e.RequestContentType)
             .HasMaxLength(200);
 
+        builder.Property(e => e.RequestHeaders)
+            .HasColumnType("nvarchar(max)");
+
         builder.Property(e => e.ResponseContentType)
             .HasMaxLength(200);
+
+        builder.Property(e => e.ResponseHeaders)
+            .HasColumnType("nvarchar(max)");
 
         builder.Property(e => e.RemoteIp)
             .HasMaxLength(45); // IPv6 max length
@@ -82,6 +90,46 @@ public class AppDbContext : DbContext
 }
 ```
 
+## Attributo + enum di configurazione
+
+```csharp
+// MyApp.Api/Audit/HttpAuditAttribute.cs
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+public sealed class HttpAuditAttribute : Attribute
+{
+    public HttpAuditTrigger Trigger { get; init; } = HttpAuditTrigger.All;
+    public HttpAuditCaptureMode Request { get; init; } = HttpAuditCaptureMode.Headers;
+    public HttpAuditCaptureMode Response { get; init; } = HttpAuditCaptureMode.Headers;
+}
+
+public enum HttpAuditTrigger
+{
+    All = 0,
+    ErrorsOnly = 1
+}
+
+public enum HttpAuditCaptureMode
+{
+    None = 0,
+    Headers = 1,
+    Full = 2
+}
+```
+
+Con questa configurazione puoi applicare l'audit in modo capillare:
+
+```csharp
+[ApiController]
+[Route("api/orders")]
+[HttpAudit(Trigger = HttpAuditTrigger.ErrorsOnly, Request = HttpAuditCaptureMode.Headers)]
+public class OrdersController : ControllerBase
+{
+    [HttpPost]
+    [HttpAudit(Trigger = HttpAuditTrigger.All, Request = HttpAuditCaptureMode.Full, Response = HttpAuditCaptureMode.Full)]
+    public IActionResult Create(CreateOrderRequest request) => Ok();
+}
+```
+
 ## Middleware
 
 ```csharp
@@ -89,6 +137,7 @@ public class AppDbContext : DbContext
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 public class HttpAuditMiddleware
 {
@@ -118,22 +167,35 @@ public class HttpAuditMiddleware
             return;
         }
 
-        // --- Lettura del body della request ---
-        // EnableBuffering permette di leggere il body più volte
-        // (il middleware lo legge, poi il controller lo deve rileggere dall'inizio)
-        context.Request.EnableBuffering();
-        var requestBody = await ReadBodyAsync(context.Request.Body);
-        context.Request.Body.Position = 0; // riporta a inizio per il middleware successivo
+        var policy = context.GetEndpoint()?.Metadata.GetMetadata<HttpAuditAttribute>();
+        if (policy is null)
+        {
+            await _next(context);
+            return;
+        }
 
-        // --- Intercettazione del body della response ---
-        // Si sostituisce il body stream originale con un MemoryStream intercettabile,
-        // poi al termine si riscrive tutto nel body originale
+        string? requestHeaders = null;
+        string? requestBody = null;
+
+        if (policy.Request is HttpAuditCaptureMode.Headers or HttpAuditCaptureMode.Full)
+            requestHeaders = SerializeHeaders(context.Request.Headers);
+
+        if (policy.Request is HttpAuditCaptureMode.Full && IsTextContent(context.Request.ContentType))
+        {
+            context.Request.EnableBuffering();
+            requestBody = await ReadBodyAsync(context.Request.Body);
+            context.Request.Body.Position = 0;
+        }
+
+        // intercetta la response per poter leggere body e status finale
         var originalResponseBody = context.Response.Body;
         using var capturedResponse = new MemoryStream();
         context.Response.Body = capturedResponse;
 
-        var sw = Stopwatch.StartNew();
+        string? responseHeaders = null;
+        string? responseBody = null;
         Exception? thrownException = null;
+        var sw = Stopwatch.StartNew();
 
         try
         {
@@ -148,22 +210,36 @@ public class HttpAuditMiddleware
         {
             sw.Stop();
 
-            // Ripristina il body originale copiando quanto scritto dal controller
             capturedResponse.Position = 0;
-            var responseBody = await ReadBodyAsync(capturedResponse);
+            if (policy.Response is HttpAuditCaptureMode.Full && IsTextContent(context.Response.ContentType))
+                responseBody = await ReadBodyAsync(capturedResponse);
+
             capturedResponse.Position = 0;
             await capturedResponse.CopyToAsync(originalResponseBody);
             context.Response.Body = originalResponseBody;
 
-            // Salva il log in uno scope separato per isolare la transazione
-            // dal DbContext della request (che potrebbe essere in stato di errore)
-            await SaveAsync(context, requestBody, responseBody, sw.ElapsedMilliseconds);
+            if (policy.Response is HttpAuditCaptureMode.Headers or HttpAuditCaptureMode.Full)
+                responseHeaders = SerializeHeaders(context.Response.Headers);
+
+            var hasError = thrownException is not null || context.Response.StatusCode >= 400;
+            if (policy.Trigger == HttpAuditTrigger.All || hasError)
+            {
+                await SaveAsync(
+                    context,
+                    requestHeaders,
+                    requestBody,
+                    responseHeaders,
+                    responseBody,
+                    sw.ElapsedMilliseconds);
+            }
         }
     }
 
     private async Task SaveAsync(
         HttpContext context,
+        string? requestHeaders,
         string? requestBody,
+        string? responseHeaders,
         string? responseBody,
         long elapsedMs)
     {
@@ -180,9 +256,11 @@ public class HttpAuditMiddleware
                 QueryString         = context.Request.QueryString.HasValue
                                       ? context.Request.QueryString.Value : null,
                 RequestContentType  = context.Request.ContentType,
+                RequestHeaders      = requestHeaders,
                 RequestBody         = requestBody,
                 StatusCode          = context.Response.StatusCode,
                 ResponseContentType = context.Response.ContentType,
+                ResponseHeaders     = responseHeaders,
                 ResponseBody        = responseBody,
                 ElapsedMs           = elapsedMs,
                 UserId              = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
@@ -192,6 +270,27 @@ public class HttpAuditMiddleware
             await db.SaveChangesAsync();
         }
         catch { /* il middleware di audit non deve compromettere la request */ }
+    }
+
+    private static string? SerializeHeaders(IHeaderDictionary headers)
+    {
+        // Evita di persistere header sensibili
+        var filtered = headers
+            .Where(h => !h.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase)
+                     && !h.Key.Equals("Cookie", StringComparison.OrdinalIgnoreCase)
+                     && !h.Key.Equals("Set-Cookie", StringComparison.OrdinalIgnoreCase))
+            .ToDictionary(h => h.Key, h => h.Value.ToString());
+
+        return filtered.Count == 0 ? null : JsonSerializer.Serialize(filtered);
+    }
+
+    private static bool IsTextContent(string? contentType)
+    {
+        if (contentType is null) return false;
+        return contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase)
+            || contentType.StartsWith("text/", StringComparison.OrdinalIgnoreCase)
+            || contentType.StartsWith("application/xml", StringComparison.OrdinalIgnoreCase)
+            || contentType.StartsWith("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase);
     }
 
     private static async Task<string?> ReadBodyAsync(Stream stream)
@@ -209,7 +308,7 @@ public class HttpAuditMiddleware
 }
 ```
 
-Il salvataggio avviene in uno scope dedicato, non nel `DbContext` della request. Questo evita conflitti con eventuali modifiche tracciate nel contesto della richiesta o con un contesto già in stato di errore dopo un'eccezione.
+Il salvataggio avviene in uno scope dedicato, non nel `DbContext` della request. Questo evita conflitti con eventuali modifiche tracciate nel contesto della richiesta o con un contesto già in stato di errore dopo un'eccezione. Se l'endpoint non ha `[HttpAudit]`, il middleware passa senza persistere nulla.
 
 ## Esclusione dei body binari
 
@@ -226,12 +325,12 @@ private static bool IsTextContent(string? contentType)
 }
 ```
 
-Usare questo controllo prima di `ReadBodyAsync` — sia per la request che per la response — e salvare `null` per i tipi binari.
+Nel middleware sopra è già usato prima di leggere request/response body.
 
 ## Registrazione
 
 ```csharp
-// Program.cs — dopo UseExceptionHandler, prima di UseAuthentication
+// Program.cs — dopo UseRouting (endpoint metadata disponibile)
 app.UseMiddleware<HttpAuditMiddleware>();
 ```
 
