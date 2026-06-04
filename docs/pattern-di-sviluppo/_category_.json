@@ -3,5 +3,8 @@
   "position": 2,
   "collapsible": true,
   "collapsed": true,
-  "link": null
+  "link": {
+    "type": "doc",
+    "id": "pattern-di-sviluppo/index"
+  }
 }

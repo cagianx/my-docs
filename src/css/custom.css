@@ -306,6 +306,38 @@ html, body {
   cursor: default;
 }
 
+/* Eccezione: categoria collapsible CON link (es. // Tecnologie, Pattern di
+   sviluppo). Docusaurus non assegna --sublist-caret quando la categoria ha un
+   link — il caret diventa un bottone separato — quindi senza questo override
+   cadrebbe nello stile "header maiuscolo" qui sopra. A livello radice va resa
+   identica alle altre categorie collapsible: marker ▸/▾, testo normale. */
+.theme-doc-sidebar-menu > .menu__list-item
+  > .menu__list-item-collapsible
+  > .menu__link--sublist:not(.menu__link--sublist-caret) {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: var(--ifm-font-size-base);
+  color: var(--ifm-color-content);
+  font-weight: 600;
+  cursor: pointer;
+}
+.theme-doc-sidebar-menu > .menu__list-item
+  > .menu__list-item-collapsible
+  > .menu__link--sublist:not(.menu__link--sublist-caret)::before {
+  content: "▾";
+  display: inline-block;
+  width: 14px;
+  margin-left: -4px;
+  color: var(--ifm-color-primary);
+  font-family: var(--ifm-font-family-monospace);
+  text-align: left;
+}
+.theme-doc-sidebar-menu > .menu__list-item--collapsed
+  > .menu__list-item-collapsible
+  > .menu__link--sublist:not(.menu__link--sublist-caret)::before {
+  content: "▸";
+}
+
 /* ───────── Right TOC ───────── */
 .table-of-contents {
   font-size: 0.78rem;

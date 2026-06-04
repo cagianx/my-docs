@@ -3,5 +3,8 @@
   "position": 3,
   "collapsible": true,
   "collapsed": true,
-  "link": null
+  "link": {
+    "type": "doc",
+    "id": "tecnologie/index"
+  }
 }
