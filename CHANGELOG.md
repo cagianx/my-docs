@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.0](https://github.com/cagianx/my-docs/compare/v1.0.12...v1.1.0) (2026-06-06)
+
+
+### Features
+
+* **db:** add relational databases section with indexing best practices ([b0a3f7c](https://github.com/cagianx/my-docs/commit/b0a3f7cb3d852cba6766bf2beeb859cfd0608163))
+
 ## [1.0.12](https://github.com/cagianx/my-docs/compare/v1.0.11...v1.0.12) (2026-06-04)
 
 
