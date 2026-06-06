@@ -1,0 +1,10 @@
+{
+  "label": "Best practice generali",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "tecnologie/database-relazionali/best-practice/index"
+  }
+}

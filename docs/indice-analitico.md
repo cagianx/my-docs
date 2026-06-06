@@ -33,6 +33,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Backpressure** — [csharp/08-code-native](tecnologie/csharp/concorrenza/08-code-native.md) · [glossario](glossario#backpressure)
 - **Bearer Token** — [regole/autenticazione](regole/autenticazione.md)
 - **Branch (strategia)** — [tecnologie/git](tecnologie/git/index.md)
+- **BRIN (indice PostgreSQL)** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [glossario](glossario#brin)
 - **Builder pattern** — [pattern-di-sviluppo/builder](pattern-di-sviluppo/builder.md) · [csharp/pattern/builder](tecnologie/csharp/pattern/builder.md) · [glossario](glossario#builder-pattern)
 - **Breaking change** — [glossario](glossario#breaking-change) · [analisi-tecnica/02](processi/analisi-tecnica/02-perimetro.md) · [regole/dominio](regole/dominio.md)
 - **Business logic** — [sviluppo/02](processi/sviluppo/02-business-logic.md) · [regole/architettura](regole/architettura.md)
@@ -50,7 +51,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Chain of Responsibility** — [pattern-di-sviluppo/chain-of-responsibility](pattern-di-sviluppo/chain-of-responsibility.md) · [csharp/pattern/chain-of-responsibility](tecnologie/csharp/pattern/chain-of-responsibility.md) · [glossario](glossario#chain-of-responsibility)
 - **CI/CD** — [processi/pipeline](processi/pipeline.md) · [regole/testing](regole/testing.md)
 - **ConcurrentQueue\<T\>** — [csharp/08-code-native](tecnologie/csharp/concorrenza/08-code-native.md)
-- **Clustered index** — [glossario](glossario#clustered-index) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **Clustered index** — [database-relazionali/indici](tecnologie/database-relazionali/best-practice/indici.md) · [glossario](glossario#clustered-index) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **CLUSTER (PostgreSQL)** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md)
 - **Code First** — [glossario](glossario#code-first) · [regole/entity-framework](regole/entity-framework.md)
 - **Codice difensivo (da evitare)** — [regole/dominio](regole/dominio.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/gestione-errori](regole/gestione-errori.md)
 - **Combinazioni inconsistenti** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
@@ -72,6 +74,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## D
 
 - **Desktop (app da WebAPI + Angular)** — [tecnologie/desktop](tecnologie/desktop/index.md)
+- **Database relazionali** — [tecnologie/database-relazionali](tecnologie/database-relazionali/index.md)
 - **Dati duttili (principio)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **DbContext** — [glossario](glossario#dbcontext) · [regole/entity-framework](regole/entity-framework.md)
 - **Definition of Done** — [glossario](glossario#definition-of-done) · [sviluppo/03](processi/sviluppo/03-validazione.md)
@@ -120,6 +123,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 - **Hangfire** — [csharp/09-librerie-code](tecnologie/csharp/concorrenza/09-librerie-code.md)
 - **Health check** — [tecnologie/desktop](tecnologie/desktop/self-hosted-kestrel.md)
+- **Heap (PostgreSQL)** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [glossario](glossario#heap-postgresql)
 - **Handoff** — [analisi-tecnica/08](processi/analisi-tecnica/08-handoff.md)
 
 ## I
@@ -134,7 +138,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **input() / output() (Angular)** — [angular/input-output](tecnologie/angular/pattern-consigliati/input-output.md) — [csharp/17-httpclient](tecnologie/csharp/integrazione/17-httpclient.md) · [glossario](glossario#ihttpclientfactory)
 - **IQueryable\<T\>** — [csharp/entity-framework/02-queryable-vs-list](tecnologie/csharp/entity-framework/02-queryable-vs-list.md) · [glossario](glossario#iqueryablet)
 - **ILogger\<T\>** — [regole/logging](regole/logging.md) · [regole/principi](regole/principi.md)
-- **Indici (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **Indici (database)** — [database-relazionali/indici](tecnologie/database-relazionali/best-practice/indici.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **Indice di copertura** — [database-relazionali/sqlserver](tecnologie/database-relazionali/sqlserver.md) · [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [glossario](glossario#indice-di-copertura)
 - **Indici univoci (idempotenza)** — [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md)
 - **Interface Segregation** — [regole/principi](regole/principi.md)
 - **InternalsVisibleTo** — [csharp/linguaggio/23-internals-visible-to](tecnologie/csharp/linguaggio/23-internals-visible-to.md) · [glossario](glossario#internalsvisibleto)
@@ -182,9 +187,10 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## P
 
 - **Perimetro** — [analisi-tecnica/02](processi/analisi-tecnica/02-perimetro.md)
+- **Partizionamento (database)** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [glossario](glossario#partizionamento-database)
 - **Piano di lavoro** — [analisi-tecnica/07](processi/analisi-tecnica/07-piano.md)
 - **Pipeline** — [processi/pipeline](processi/pipeline.md)
-- **PostgreSQL** — [regole/entity-framework](regole/entity-framework.md)
+- **PostgreSQL** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [regole/entity-framework](regole/entity-framework.md)
 - **Principi (Unix, SOLID)** — [regole/principi](regole/principi.md)
 - **Problem Details** — [csharp/14-problem-details](tecnologie/csharp/pipeline/14-problem-details.md) · [glossario](glossario#problem-details)
 - **Pride versioning** — [regole/versionamento](regole/versionamento.md) · [glossario](glossario#pride-versioning)
@@ -206,6 +212,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Refactoring (separazione commit)** — [tecnologie/git](tecnologie/git/index.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Repository pattern (da evitare)** — [regole/entity-framework](regole/entity-framework.md)
 - **Resilienza** — [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
+- **rowid (SQLite)** — [database-relazionali/sqlite](tecnologie/database-relazionali/sqlite.md) · [glossario](glossario#rowid-sqlite)
 - **Result pattern** — [glossario](glossario#result-pattern) · [regole/gestione-errori](regole/gestione-errori.md) · [csharp/struttura-soluzione/07](tecnologie/csharp/struttura-soluzione/07-models.md)
 - **Retrocompatibilità** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/entity-framework](regole/entity-framework.md)
 
@@ -217,7 +224,9 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Signal Forms (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
 - **Standalone components (Angular)** — [angular/standalone-components](tecnologie/angular/pattern-consigliati/standalone-components.md)
 - **Squash (git)** — [tecnologie/git](tecnologie/git/index.md)
+- **SQLite** — [database-relazionali/sqlite](tecnologie/database-relazionali/sqlite.md)
 - **SQLite (percorsi dati su Windows)** — [tecnologie/desktop/installer-windows](tecnologie/desktop/installer-windows.md)
+- **SQL Server** — [database-relazionali/sqlserver](tecnologie/database-relazionali/sqlserver.md)
 - **Sottomodulo git (MyDocs)** — [uso-con-ia](uso-con-ia.md)
 - **Screaming Architecture** — [glossario](glossario#screaming-architecture) · [regole/architettura](regole/architettura.md) · [csharp/struttura-soluzione/03](tecnologie/csharp/struttura-soluzione/03-organizzazione-core.md)
 - **Scrittura difficile, lettura facile** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/dominio](regole/dominio.md)
@@ -271,6 +280,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 ## W
 
 - **WebView2** — [tecnologie/desktop/webview2](tecnologie/desktop/webview2.md) · [glossario](glossario#webview2)
+- **WITHOUT ROWID (SQLite)** — [database-relazionali/sqlite](tecnologie/database-relazionali/sqlite.md) · [glossario](glossario#without-rowid)
 
 ## @
 

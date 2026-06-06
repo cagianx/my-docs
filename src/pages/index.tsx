@@ -39,7 +39,7 @@ const CATEGORIES = [
     idx: '06',
     title: 'Tecnologie',
     path: '/docs/tecnologie/',
-    desc: 'Convenzioni specifiche per stack: C# con Entity Framework e ASP.NET Core, Angular per il frontend.',
+    desc: 'Convenzioni specifiche per stack: C# con Entity Framework e ASP.NET Core, Angular per il frontend, database relazionali (SQLite, SQL Server, PostgreSQL).',
   },
   {
     idx: '07',

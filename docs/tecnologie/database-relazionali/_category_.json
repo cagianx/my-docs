@@ -1,0 +1,10 @@
+{
+  "label": "Database relazionali",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "tecnologie/database-relazionali/index"
+  }
+}

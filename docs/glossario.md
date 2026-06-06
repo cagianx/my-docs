@@ -45,6 +45,10 @@ Componente che gira in background per tutta la vita dell'applicazione, in parall
 
 Meccanismo con cui un consumatore segnala al produttore di rallentare perché non riesce a elaborare i messaggi abbastanza velocemente. In .NET si realizza con `Channel<T>` limitato (`BoundedChannelFullMode.Wait`). Vedi [`tecnologie/csharp/concorrenza/08-code-native`](tecnologie/csharp/concorrenza/08-code-native.md).
 
+## BRIN
+
+*Block Range Index.* Tipo di indice PostgreSQL che registra il valore minimo e massimo per blocchi contigui di righe. Molto compatto, efficace solo quando i dati sono già fisicamente ordinati in modo approssimato (serie temporali append-only). Vedi [`tecnologie/database-relazionali/postgres`](tecnologie/database-relazionali/postgres.md).
+
 ## Breaking change
 
 Modifica che rompe la compatibilità con quanto già in uso: rinomina di colonne o campi API, rimozione di entità, variazione di comportamento atteso. Richiede comunicazione immediata ai team dipendenti e un bump `MAJOR`. Vedi [`regole/versionamento`](regole/versionamento.md).
@@ -75,7 +79,7 @@ Scenario concreto che descrive come un attore interagisce con il sistema per rag
 
 ## Clustered index
 
-Indice che determina l'ordinamento fisico dei dati su disco. In PostgreSQL corrisponde implicitamente alla chiave primaria. Va pianificato per supportare il caso d'uso più generico della tabella.
+Indice che determina l'ordinamento fisico dei dati su disco. Ce ne può essere uno solo per tabella e va pianificato sul caso d'uso di lettura più comune, non lasciato di default sulla chiave primaria surrogata. Non va dichiarato `UNIQUE`: il clustered index non si cambia senza ricostruire la tabella, mentre l'unicità è un requisito applicativo mutevole che va tenuto in indici non clustered dedicati, modificabili a basso costo. In SQL Server è esplicito; in SQLite è il `rowid` (o la PK di una tabella `WITHOUT ROWID`); in PostgreSQL non esiste in forma persistente (la heap non è ordinata). Vedi [`tecnologie/database-relazionali/best-practice/indici`](tecnologie/database-relazionali/best-practice/indici.md).
 
 ## Code First
 
@@ -153,6 +157,14 @@ Pattern creazionale che incapsula la creazione di un oggetto dietro un metodo de
 
 Metodo di configurazione EF tramite classi `IEntityTypeConfiguration<T>`. Preferito alle Data Annotations perché mantiene le entity class pulite e concentra la configurazione in un unico posto.
 
+## Heap (PostgreSQL)
+
+Struttura in cui PostgreSQL memorizza le righe di una tabella: senza ordine fisico garantito. La chiave primaria è un indice B-tree univoco e non ordina la tabella, perciò in PostgreSQL non esiste un clustered index persistente. La località di accesso si ottiene con partizionamento, `CLUSTER` o indici BRIN. Vedi [`tecnologie/database-relazionali/postgres`](tecnologie/database-relazionali/postgres.md).
+
+## Indice di copertura
+
+Indice non clustered che include tutte le colonne lette da una query (con `INCLUDE`), così il motore risponde senza accedere alla tabella (*index-only scan*). Vedi [`tecnologie/database-relazionali/sqlserver`](tecnologie/database-relazionali/sqlserver.md) · [`tecnologie/database-relazionali/postgres`](tecnologie/database-relazionali/postgres.md).
+
 ## IHttpClientFactory
 
 Interfaccia ASP.NET Core per creare istanze `HttpClient` con gestione corretta del ciclo di vita degli handler HTTP. Evita socket exhaustion e DNS stale. Si usa tramite typed client o named client. Vedi [`tecnologie/csharp/integrazione/17-httpclient`](tecnologie/csharp/integrazione/17-httpclient.md).
@@ -209,6 +221,10 @@ Anti-pattern di accesso ai dati in cui si esegue una query per ottenere N record
 
 Tipo reference con semantica di valore: l'uguaglianza è basata sul contenuto delle proprietà, non sull'identità in memoria. Le proprietà sono `init`-only per default (immutabili dopo la costruzione). Si copia con modifiche tramite `with`. Ideale per DTO, value object e response model. Vedi [`tecnologie/csharp/linguaggio/22-records`](tecnologie/csharp/linguaggio/22-records.md).
 
+## rowid (SQLite)
+
+Colonna intera implicita che SQLite usa come chiave di ordinamento fisico (il clustered index del motore). Una colonna `INTEGER PRIMARY KEY` ne diventa un alias. Una tabella `WITHOUT ROWID` rinuncia al rowid e usa la propria chiave primaria come chiave di clustering. Vedi [`tecnologie/database-relazionali/sqlite`](tecnologie/database-relazionali/sqlite.md).
+
 ## Resilienza (HTTP)
 
 Capacità di gestire errori transitori nelle chiamate a servizi esterni tramite retry, circuit breaker e timeout. In ASP.NET Core si configura con `Microsoft.Extensions.Http.Resilience` (built on Polly). Vedi [`tecnologie/csharp/integrazione/21-resilience`](tecnologie/csharp/integrazione/21-resilience.md).
@@ -224,6 +240,10 @@ Pattern comportamentale che notifica un numero variabile di consumatori al verif
 ## Problem Details
 
 Standard RFC 9457 per il formato strutturato di risposte di errore HTTP. Usa il media type `application/problem+json` con campi fissi (`type`, `title`, `status`, `detail`, `instance`) e proprietà custom. ASP.NET Core offre `ProblemDetails` e `ProblemDetailsOptions` per implementarlo. Vedi [`tecnologie/csharp/pipeline/14-problem-details`](tecnologie/csharp/pipeline/14-problem-details.md).
+
+## Partizionamento (database)
+
+Tecnica che spezza una tabella in più partizioni fisiche per intervallo o per lista su una colonna di accesso (data, tenant). In PostgreSQL è dichiarativo (`PARTITION BY`) e abilita il *partition pruning*: una query tocca solo le partizioni rilevanti. È il sostituto strutturale del clustering su PostgreSQL. Vedi [`tecnologie/database-relazionali/postgres`](tecnologie/database-relazionali/postgres.md).
 
 ## Pride versioning
 
@@ -276,6 +296,10 @@ Strategia di branching in cui tutto il lavoro confluisce direttamente su `main`.
 ## Ubiquitous Language
 
 Linguaggio condiviso tra developer, analisti e stakeholder: i nomi del dominio si usano ovunque nel codice, senza sinonimi, abbreviazioni o traduzioni. Vedi [`regole/dominio`](regole/dominio.md).
+
+## WITHOUT ROWID
+
+Opzione SQLite che crea una tabella priva di `rowid`: la chiave primaria diventa direttamente la chiave di clustering, ordinando fisicamente le righe sul criterio scelto. Utile per chiavi naturali e accessi per intervallo; va valutata perché gli indici secondari duplicano la PK completa. Vedi [`tecnologie/database-relazionali/sqlite`](tecnologie/database-relazionali/sqlite.md).
 
 ## WebView2
 
