@@ -61,6 +61,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Commands (livello)** — vedi [UseCases (livello)](#u)
 - **Compensazioni** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Configurazione** — [regole/configurazione](regole/configurazione.md)
+- **Configurazione prompt (AI)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md) · [glossario](glossario#configurazione-prompt-ai)
 - **Constraint (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/entity-framework](regole/entity-framework.md) · [regole/dominio](regole/dominio.md)
 - **Check constraint (da enum)** — [csharp/entity-framework/04-enum](tecnologie/csharp/entity-framework/04-enum.md)
 - **Container** — [regole/ambienti](regole/ambienti.md)
@@ -167,6 +168,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Middleware** — [csharp/10-middleware](tecnologie/csharp/pipeline/10-middleware.md) · [glossario](glossario#middleware)
 - **Migration** — [glossario](glossario#migration) · [regole/entity-framework](regole/entity-framework.md) · [sviluppo/01](processi/sviluppo/01-dominio.md)
 - **Modellazione dati** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
+- **Modello / Provider (AI)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md)
 
 ## N
 
@@ -193,6 +195,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **PostgreSQL** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [regole/entity-framework](regole/entity-framework.md)
 - **Principi (Unix, SOLID)** — [regole/principi](regole/principi.md)
 - **Problem Details** — [csharp/14-problem-details](tecnologie/csharp/pipeline/14-problem-details.md) · [glossario](glossario#problem-details)
+- **Prompt AI (su database)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md) · [glossario](glossario#prompt-system-e-user)
+- **Prompt (system e user)** — [glossario](glossario#prompt-system-e-user) · [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md)
 - **Pride versioning** — [regole/versionamento](regole/versionamento.md) · [glossario](glossario#pride-versioning)
 - **Pull Request** — [tecnologie/git](tecnologie/git/index.md)
 

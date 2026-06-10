@@ -77,6 +77,10 @@ Pattern comportamentale che fa attraversare una richiesta a una sequenza di hand
 
 Scenario concreto che descrive come un attore interagisce con il sistema per raggiungere un obiettivo. Nel codice, ogni caso d'uso è una classe che implementa `IUseCase`. Deve esistere uno scenario realistico prima di sviluppare qualsiasi funzionalità.
 
+## Configurazione prompt (AI)
+
+Insieme versionato che lega una funzionalità AI a un system prompt, uno user prompt e un modello, con i relativi parametri di inferenza. Di un caso d'uso ne esistono più versioni ma una sola attiva alla volta: cambiare prompt o modello crea una nuova versione invece di sovrascrivere, così ogni output resta riconducibile alla configurazione che l'ha prodotto. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/04-db-prompt-ai.md).
+
 ## Clustered index
 
 Indice che determina l'ordinamento fisico dei dati su disco. Ce ne può essere uno solo per tabella e va pianificato sul caso d'uso di lettura più comune, non lasciato di default sulla chiave primaria surrogata. Non va dichiarato `UNIQUE`: il clustered index non si cambia senza ricostruire la tabella, mentre l'unicità è un requisito applicativo mutevole che va tenuto in indici non clustered dedicati, modificabili a basso costo. In SQL Server è esplicito; in SQLite è il `rowid` (o la PK di una tabella `WITHOUT ROWID`); in PostgreSQL non esiste in forma persistente (la heap non è ordinata). Vedi [`tecnologie/database-relazionali/best-practice/indici`](tecnologie/database-relazionali/best-practice/indici.md).
@@ -244,6 +248,10 @@ Standard RFC 9457 per il formato strutturato di risposte di errore HTTP. Usa il 
 ## Partizionamento (database)
 
 Tecnica che spezza una tabella in più partizioni fisiche per intervallo o per lista su una colonna di accesso (data, tenant). In PostgreSQL è dichiarativo (`PARTITION BY`) e abilita il *partition pruning*: una query tocca solo le partizioni rilevanti. È il sostituto strutturale del clustering su PostgreSQL. Vedi [`tecnologie/database-relazionali/postgres`](tecnologie/database-relazionali/postgres.md).
+
+## Prompt (system e user)
+
+Le due parti di un'istruzione a un modello linguistico. Il **system prompt** fissa ruolo, vincoli e tono e lo governa chi cura il prodotto; lo **user prompt** è il template con i dati della richiesta, spesso con segnaposto `{{variabile}}` riempiti a runtime. Tenerli su database, separati per caso d'uso, permette di modificarli senza release. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/04-db-prompt-ai.md).
 
 ## Pride versioning
 
