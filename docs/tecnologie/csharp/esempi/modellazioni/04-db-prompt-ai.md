@@ -49,6 +49,8 @@ erDiagram
     PROVIDER {
         int Id PK
         string Codice UK
+        string Url
+        string ApiKey "cifrata a riposo"
         bool Default
         int ModelloDefaultId FK "nullable"
     }
@@ -91,6 +93,11 @@ public class Provider
     // Chiave logica usata in configurazione: 'anthropic', 'openai', 'azure-openai'
     public string Codice { get; set; } = default!;
     public string Nome { get; set; } = default!;
+
+    // Dati di connessione: endpoint base e credenziale del provider
+    public string Url { get; set; } = default!;       // 'https://api.anthropic.com'
+    // API key cifrata a riposo (vedi configurazione EF), mai in chiaro sul DB
+    public string ApiKey { get; set; } = default!;
 
     // Esattamente un provider ha Default = true: è quello usato quando
     // il caso d'uso non specifica un override
@@ -223,6 +230,13 @@ Un vincolo vive nel database, non nel codice applicativo: **un solo provider di 
 // MyApp.Infrastructure/Ai/ProviderConfiguration.cs
 public class ProviderConfiguration : IEntityTypeConfiguration<Provider>
 {
+    // Converter costruito sulla Data Protection di ASP.NET Core: cifra in
+    // scrittura, decifra in lettura. Iniettato in fase di configurazione.
+    private readonly ValueConverter<string, string> _apiKey;
+
+    public ProviderConfiguration(ValueConverter<string, string> apiKeyConverter)
+        => _apiKey = apiKeyConverter;
+
     public void Configure(EntityTypeBuilder<Provider> builder)
     {
         builder.ToTable(nameof(Provider));
@@ -230,7 +244,13 @@ public class ProviderConfiguration : IEntityTypeConfiguration<Provider>
 
         builder.Property(x => x.Codice).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Nome).HasMaxLength(200).IsRequired();
+        builder.Property(x => x.Url).HasMaxLength(2048).IsRequired();
         builder.HasIndex(x => x.Codice).IsUnique();
+
+        // API key cifrata a riposo: sul DB non finisce mai in chiaro
+        builder.Property(x => x.ApiKey)
+            .HasConversion(_apiKey)
+            .IsRequired();
 
         // Al più un provider di default. Filtro in sintassi SQL Server;
         // con PostgreSQL: "Default = true".
@@ -365,6 +385,8 @@ public sealed class RisolutorePrompt
 
         return new PromptRisolto(
             ProviderCodice: provider.Codice,
+            ProviderUrl:    provider.Url,
+            ApiKey:         provider.ApiKey,   // già decifrata dal converter
             ModelloCodice:  modello.Codice,
             SystemPrompt:   config.SystemPrompt,
             UserPrompt:     Rendi(config.UserPrompt, valori),
@@ -399,6 +421,8 @@ public sealed class RisolutorePrompt
 
 public sealed record PromptRisolto(
     string ProviderCodice,
+    string ProviderUrl,
+    string ApiKey,
     string ModelloCodice,
     string SystemPrompt,
     string UserPrompt,
@@ -419,7 +443,7 @@ public sealed record PromptRisolto(
 - **Log a parte.** Il registro di cosa è stato inviato all'AI vive fuori da questo modello — nel [log integrale delle chiamate HTTP](05-log-chiamate-http.md), dove la chiamata al provider è una riga come le altre. Qui il prompt quindi **non si versiona**: si modifica in place e `UpdatedAt`/`UpdatedBy` bastano a sapere chi ha toccato cosa per ultimo. Se in futuro emerge un caso d'uso reale per il **rollback** o per legare un output a una versione specifica, si reintroduce una tabella di versioni con stato `Attiva` — non prima.
 - **Provider di default obbligatorio.** La cascata presuppone che esista sempre un provider con `Default = true`. L'indice filtrato garantisce che non ce ne sia più d'uno, ma non che ce ne sia almeno uno: lo si assicura con un seed e con un controllo in fase di disattivazione.
 - **Coerenza provider/modello.** Se un caso d'uso specifica un modello, questo deve appartenere al provider effettivo del caso d'uso. È un vincolo che attraversa due righe e non si esprime con una semplice `CHECK`: si valida nel caso d'uso che salva il `CasoUso`.
-- **Segreti fuori dal modello.** Le API key dei provider non stanno in queste tabelle: vivono nella [configurazione applicativa](../../07-configuration.md). Qui si modella *quale* modello usare, non *come* autenticarsi.
+- **API key cifrata, mai in chiaro.** L'`ApiKey` del provider sta sul DB ma **cifrata a riposo**, tramite un `ValueConverter` costruito sulla [Data Protection](../../07-configuration.md) di ASP.NET Core: cifra in scrittura, decifra in lettura, così una dump del database non espone le credenziali. In alternativa la colonna può contenere il *nome* di un segreto risolto a runtime da un secret manager (Key Vault, ecc.), tenendo fuori dal DB anche il cifrato. Quel che non va mai fatto è salvarla in chiaro.
 - **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne — non come JSON opaco — mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../../processi/analisi-tecnica/03-modellazione.md).
 
 Per il quadro su come si imposta il lavoro con strumenti AI nel processo di sviluppo, vedi [uso con l'IA](../../../../uso-con-ia.md).
