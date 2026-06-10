@@ -65,6 +65,10 @@ public class ChiamataHttp
     // Tipicamente l'ID dell'Activity corrente (W3C trace id)
     public string? CorrelationId { get; set; }
 
+    // Contesto del chiamante: valorizzati solo per le chiamate in entrata (inbound)
+    public string? Utente { get; set; }
+    public string? IpRemota { get; set; }
+
     public ChiamataHttpContenuto Contenuto { get; set; } = default!;
 }
 ```
@@ -109,12 +113,15 @@ public class ChiamataHttpConfiguration : IEntityTypeConfiguration<ChiamataHttp>
         builder.Property(x => x.Metodo).HasMaxLength(10).IsRequired();
         builder.Property(x => x.Url).HasMaxLength(2048).IsRequired();
         builder.Property(x => x.CorrelationId).HasMaxLength(64);
+        builder.Property(x => x.Utente).HasMaxLength(200);
+        builder.Property(x => x.IpRemota).HasMaxLength(45); // lunghezza max IPv6
 
         builder.HasIndex(x => x.Timestamp);
         builder.HasIndex(x => new { x.Servizio, x.Timestamp });
         builder.HasIndex(x => x.Categoria);
         builder.HasIndex(x => x.Esito);
         builder.HasIndex(x => x.CorrelationId);
+        builder.HasIndex(x => x.Utente);
 
         builder.HasOne(x => x.Contenuto)
             .WithOne(x => x.Chiamata)
@@ -346,13 +353,15 @@ db.ChiamateHttp.Add(new ChiamataHttp
                         ? EsitoChiamata.ErroreHttp : EsitoChiamata.Ok,
     DurataMs      = elapsedMs,
     CorrelationId = Activity.Current?.Id,
+    Utente        = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+    IpRemota      = context.Connection.RemoteIpAddress?.ToString(),
     Contenuto     = new ChiamataHttpContenuto { /* headers + body request/response */ }
 });
 ```
 
 Così un'unica tabella risponde a «cosa è entrato e cosa è uscito», con `Direzione` come discriminante e gli stessi indici per servizio, esito e tempo.
 
-L'unica informazione tipicamente inbound — **utente** e **IP remota** del chiamante — non c'è come colonna dedicata: per la maggior parte dei casi vive già negli header salvati. Se invece serve filtrarci o aggregarci sopra (es. tutte le chiamate di un utente), si aggiunge una coppia di colonne nullable `Utente`/`IpRemota`, valorizzate solo per l'inbound. È l'unico punto in cui le due direzioni divergono.
+`Utente` e `IpRemota` sono l'unico punto in cui le due direzioni divergono: identificano il chiamante e hanno senso solo per l'inbound, quindi restano `null` sulle chiamate in uscita. Sono nullable apposta — una piccola asimmetria accettata per tenere un'unica struttura invece di due. L'implementazione completa del middleware inbound è in [HTTP audit log](02-http-audit-log.md).
 
 ## Considerazioni operative
 
