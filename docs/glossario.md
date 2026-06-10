@@ -113,6 +113,14 @@ Punto centrale della solution dove si compone il grafo delle dipendenze: si regi
 
 Classe EF che rappresenta la sessione con il database. Implementa il pattern Unit of Work: traccia le modifiche alle entity e le persiste atomicamente con `SaveChanges()`. Si inietta direttamente nei casi d'uso — non serve un layer repository aggiuntivo.
 
+## DelegatingHandler
+
+Handler inseribile nella pipeline di `HttpClient` che intercetta ogni chiamata in uscita prima e dopo l'invio. È il punto d'aggancio idiomatico per attraversare in modo trasversale le chiamate verso servizi esterni — log, resilienza, autenticazione — senza che il codice chiamante lo sappia. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/05-log-chiamate-http.md).
+
+## Log integrale di chiamate HTTP
+
+Registro che persiste l'intera chiamata HTTP — metodo, URL, headers e body di richiesta e risposta, esito e durata — in un'unica struttura con un campo `Direzione` che distingue inbound e outbound. Generico sul content-type: copre allo stesso modo le chiamate a servizi IA (JSON), REST e SOAP (XML). I metadati sono separati dal payload per non trascinare i body nelle query di log. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/05-log-chiamate-http.md).
+
 ## Definition of Done
 
 Criteri che un caso d'uso deve soddisfare per essere considerato completato: dominio aggiornato, test verdi, CI verde, deploy in staging, validazione end-to-end approvata. Vedi [`processi/sviluppo/03-validazione`](processi/sviluppo/03-validazione.md).

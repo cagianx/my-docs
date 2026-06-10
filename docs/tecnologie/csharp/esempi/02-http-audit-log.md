@@ -7,6 +7,10 @@ description: Middleware ASP.NET Core con attributo per audit HTTP per-endpoint, 
 
 Un middleware che intercetta le richieste HTTP solo quando l'endpoint ha un attributo di audit. L'attributo consente una configurazione capillare per controller/metodo: quando loggare (`All` o `ErrorsOnly`) e cosa salvare (`None`, `Headers`, `Full`) per request e response.
 
+:::tip Audit inbound e outbound nella stessa struttura
+Questa pagina mostra l'audit **inbound** con una tabella dedicata. Se serve loggare anche le chiamate **in uscita** (servizi IA, REST, SOAP), conviene unificare i due versi in un'unica struttura con un campo `Direzione`: vedi [Log integrale di chiamate HTTP](05-log-chiamate-http.md). Lì il middleware qui descritto diventa il produttore inbound della tabella unificata.
+:::
+
 ## Modello dati
 
 ```csharp

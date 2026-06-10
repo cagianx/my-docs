@@ -374,7 +374,7 @@ public sealed record PromptRisolto(
 
 ## Considerazioni operative
 
-- **Log a parte.** Il registro di cosa è stato inviato all'AI vive fuori da questo modello, quindi qui il prompt **non si versiona**: si modifica in place e `UpdatedAt`/`UpdatedBy` bastano a sapere chi ha toccato cosa per ultimo. Se in futuro emerge un caso d'uso reale per il **rollback** o per legare un output a una versione specifica, si reintroduce una tabella di versioni con stato `Attiva` — non prima.
+- **Log a parte.** Il registro di cosa è stato inviato all'AI vive fuori da questo modello — nel [log integrale delle chiamate HTTP](05-log-chiamate-http.md), dove la chiamata al provider è una riga come le altre. Qui il prompt quindi **non si versiona**: si modifica in place e `UpdatedAt`/`UpdatedBy` bastano a sapere chi ha toccato cosa per ultimo. Se in futuro emerge un caso d'uso reale per il **rollback** o per legare un output a una versione specifica, si reintroduce una tabella di versioni con stato `Attiva` — non prima.
 - **Provider di default obbligatorio.** La cascata presuppone che esista sempre un provider con `Default = true`. L'indice filtrato garantisce che non ce ne sia più d'uno, ma non che ce ne sia almeno uno: lo si assicura con un seed e con un controllo in fase di disattivazione.
 - **Coerenza provider/modello.** Se un caso d'uso specifica un modello, questo deve appartenere al provider effettivo del caso d'uso. È un vincolo che attraversa due righe e non si esprime con una semplice `CHECK`: si valida nel caso d'uso che salva il `CasoUso`.
 - **Segreti fuori dal modello.** Le API key dei provider non stanno in queste tabelle: vivono nella [configurazione applicativa](../07-configuration.md). Qui si modella *quale* modello usare, non *come* autenticarsi.
