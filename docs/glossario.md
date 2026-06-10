@@ -79,7 +79,7 @@ Scenario concreto che descrive come un attore interagisce con il sistema per rag
 
 ## Configurazione prompt (AI)
 
-Insieme versionato che lega una funzionalità AI al suo system prompt, allo user prompt e ai parametri di inferenza. Di un caso d'uso ne esistono più versioni ma una sola attiva alla volta: cambiare prompt o parametri crea una nuova versione invece di sovrascrivere, così ogni output resta riconducibile alla configurazione che l'ha prodotto. La scelta di provider e modello vive invece sul caso d'uso, per differenza rispetto a un default di sistema. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/04-db-prompt-ai.md).
+Configurazione che lega una funzionalità AI al suo system prompt, allo user prompt e ai parametri di inferenza, una per caso d'uso. Si modifica in place: lo storico di cosa è stato inviato all'AI vive in un log a parte, quindi il modello tiene solo lo stato corrente, senza versionare. La scelta di provider e modello vive sul caso d'uso, per differenza rispetto a un default di sistema. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/04-db-prompt-ai.md).
 
 ## Clustered index
 
