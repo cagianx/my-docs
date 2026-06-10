@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-description: Modellazione su database dei prompt per funzionalità AI — catalogo provider e modelli, caso d'uso con system prompt e user prompt versionati, modello selezionabile.
+description: Modellazione su database dei prompt per funzionalità AI — provider di default con override per caso d'uso, modello opzionale, system e user prompt versionati.
 ---
 
 # Prompt AI su database (EF)
@@ -9,19 +9,28 @@ Quando un'applicazione usa modelli linguistici per più funzionalità — riassu
 
 L'idea è separare tre cose che cambiano con ritmi diversi:
 
-- **Cosa è disponibile** — il catalogo di `Provider` e `Modello`. Cambia raramente, lo governa chi gestisce l'infrastruttura.
-- **A cosa serve** — il `CasoUso`, cioè la funzionalità AI. È la chiave logica stabile con cui il codice applicativo chiede un prompt.
-- **Come si fa, oggi** — la `ConfigurazionePrompt`: system prompt, user prompt, modello scelto e parametri di inferenza. È la parte volatile, quindi **versionata**.
+- **Cosa è disponibile** — il catalogo di `Provider` e `Modello`. Cambia raramente, lo governa chi gestisce l'infrastruttura. Un provider è marcato come **default**.
+- **A cosa serve** — il `CasoUso`, cioè la funzionalità AI. È la chiave logica stabile con cui il codice chiede un prompt, ed è qui che si decide **quale provider e quale modello** usare, per differenza rispetto al default.
+- **Come si fa, oggi** — la `ConfigurazionePrompt`: system prompt, user prompt e parametri di inferenza. È la parte volatile, quindi **versionata**.
 
-Il caso d'uso è referenziato dal codice e non cambia; la configurazione attiva sotto può evolvere — nuovo modello, prompt ritoccato — senza toccare l'applicazione e senza perdere lo storico.
+Il caso d'uso è referenziato dal codice e non cambia; la configurazione attiva sotto può evolvere — prompt ritoccato, parametri diversi — senza toccare l'applicazione e senza perdere lo storico.
 
 Vale qui in pieno il principio di [modellazione](../../../processi/analisi-tecnica/03-modellazione.md): ogni comportamento dell'AI in produzione dev'essere **ricostruibile a posteriori**, quindi nulla si sovrascrive, tutto si versiona.
+
+## Provider e modello: default con override
+
+La scelta del modello a runtime segue una cascata a due livelli, così il caso comune resta a configurazione zero e i casi particolari si dichiarano solo dove servono:
+
+1. **Provider** — esiste un provider di sistema marcato come `Default`. Un caso d'uso può puntare a un **provider specifico che lo sovrascrive**; se non lo fa, vale il default.
+2. **Modello** — un caso d'uso può specificare il **modello**; se lo lascia nullo, si usa il **modello di default del provider** effettivo.
+
+In pratica: un caso d'uso senza override gira sul provider di default con il suo modello di default; basta valorizzare un campo per spostarne uno solo dei due, o entrambi.
 
 ## Quando usarlo
 
 Buoni candidati:
 
-- app con **più funzionalità AI** che condividono provider e modelli
+- app con **più funzionalità AI** che condividono un provider di default ma vogliono poterne deviare alcune
 - prompt che vanno ritoccati da chi cura il prodotto, **senza passare da una release**
 - requisito di **tracciabilità**: ricostruire quale prompt/modello ha generato un output
 
@@ -42,7 +51,7 @@ public enum StatoConfigurazione
 }
 ```
 
-Il **catalogo**: quali provider e quali modelli sono utilizzabili. Niente cancellazioni fisiche — un modello dismesso resta referenziabile dallo storico, si marca solo come non più attivo.
+Il **catalogo**: quali provider e quali modelli sono utilizzabili. Un provider è il default di sistema e indica il proprio modello di default. Niente cancellazioni fisiche — un modello dismesso resta referenziabile dallo storico, si marca solo come non più attivo.
 
 ```csharp
 // MyApp.Infrastructure/Ai/Provider.cs
@@ -53,6 +62,14 @@ public class Provider
     // Chiave logica usata in configurazione: 'anthropic', 'openai', 'azure-openai'
     public string Codice { get; set; } = default!;
     public string Nome { get; set; } = default!;
+
+    // Esattamente un provider ha Default = true: è quello usato quando
+    // il caso d'uso non specifica un override
+    public bool Default { get; set; }
+
+    // Modello di default del provider: usato quando il caso d'uso non ne specifica uno
+    public int? ModelloDefaultId { get; set; }
+    public Modello? ModelloDefault { get; set; }
 
     public bool Attivo { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
@@ -81,7 +98,7 @@ public class Modello
 }
 ```
 
-La **funzionalità AI**. Il `Codice` è la chiave stabile che il codice applicativo usa per chiedere il prompt («dammi la configurazione attiva di `riassunto-documento`»).
+La **funzionalità AI**. Il `Codice` è la chiave stabile che il codice usa per chiedere il prompt. È qui che vivono gli **override** di provider e modello: entrambi nullable, perché il caso normale è ereditare i default.
 
 ```csharp
 // MyApp.Infrastructure/Ai/CasoUso.cs
@@ -93,6 +110,15 @@ public class CasoUso
     public string Nome { get; set; } = default!;
     public string? Descrizione { get; set; }
 
+    // Override del provider di default. Null => si usa il provider marcato Default
+    public int? ProviderId { get; set; }
+    public Provider? Provider { get; set; }
+
+    // Override del modello. Null => si usa il modello di default del provider effettivo.
+    // Se valorizzato, deve appartenere al provider effettivo del caso d'uso (validato in scrittura)
+    public int? ModelloId { get; set; }
+    public Modello? Modello { get; set; }
+
     public bool Attivo { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
 
@@ -101,7 +127,7 @@ public class CasoUso
 }
 ```
 
-La **configurazione del prompt**, versionata. Tiene insieme i due prompt, il modello scelto e i parametri di inferenza. È l'entità centrale: di un caso d'uso ce ne possono essere molte versioni, ma una sola **attiva** alla volta.
+La **configurazione del prompt**, versionata. Tiene insieme i due prompt e i parametri di inferenza. Di un caso d'uso ce ne possono essere molte versioni, ma una sola **attiva** alla volta.
 
 ```csharp
 // MyApp.Infrastructure/Ai/ConfigurazionePrompt.cs
@@ -111,10 +137,6 @@ public class ConfigurazionePrompt
 
     public int CasoUsoId { get; set; }
     public CasoUso CasoUso { get; set; } = default!;
-
-    // Modello selezionato per questa versione: punta a un Modello, quindi a un Provider
-    public int ModelloId { get; set; }
-    public Modello Modello { get; set; } = default!;
 
     public int Versione { get; set; }
 
@@ -170,7 +192,61 @@ public class VariabilePrompt
 
 ## Configurazione EF
 
-Il vincolo che conta — **una sola configurazione attiva per caso d'uso** — vive nel database, non nel codice applicativo, come indice univoco filtrato.
+Due vincoli vivono nel database, non nel codice applicativo, entrambi come indice univoco filtrato: **un solo provider di default** e **una sola configurazione attiva per caso d'uso**.
+
+```csharp
+// MyApp.Infrastructure/Ai/ProviderConfiguration.cs
+public class ProviderConfiguration : IEntityTypeConfiguration<Provider>
+{
+    public void Configure(EntityTypeBuilder<Provider> builder)
+    {
+        builder.ToTable(nameof(Provider));
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.Codice).HasMaxLength(50).IsRequired();
+        builder.Property(x => x.Nome).HasMaxLength(200).IsRequired();
+        builder.HasIndex(x => x.Codice).IsUnique();
+
+        // Al più un provider di default. Filtro in sintassi SQL Server;
+        // con PostgreSQL: "Default = true".
+        builder.HasIndex(x => x.Default)
+            .HasFilter("[Default] = 1")
+            .IsUnique();
+
+        builder.HasOne(x => x.ModelloDefault)
+            .WithMany()
+            .HasForeignKey(x => x.ModelloDefaultId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
+}
+```
+
+```csharp
+// MyApp.Infrastructure/Ai/CasoUsoConfiguration.cs
+public class CasoUsoConfiguration : IEntityTypeConfiguration<CasoUso>
+{
+    public void Configure(EntityTypeBuilder<CasoUso> builder)
+    {
+        builder.ToTable(nameof(CasoUso));
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.Codice).HasMaxLength(100).IsRequired();
+        builder.HasIndex(x => x.Codice).IsUnique();
+
+        // Override opzionali: nessuna cascade, il catalogo non si tocca
+        // cancellando un caso d'uso
+        builder.HasOne(x => x.Provider)
+            .WithMany()
+            .HasForeignKey(x => x.ProviderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.Modello)
+            .WithMany()
+            .HasForeignKey(x => x.ModelloId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
+}
+```
 
 ```csharp
 // MyApp.Infrastructure/Ai/ConfigurazionePromptConfiguration.cs
@@ -199,15 +275,9 @@ public class ConfigurazionePromptConfiguration
         builder.HasIndex(x => new { x.CasoUsoId, x.Versione }).IsUnique();
 
         // Una sola versione ATTIVA per caso d'uso: indice univoco filtrato.
-        // Filtro in sintassi SQL Server; con PostgreSQL: "Stato = 'Attiva'".
         builder.HasIndex(x => x.CasoUsoId)
             .HasFilter("[Stato] = 'Attiva'")
             .IsUnique();
-
-        builder.HasOne(x => x.Modello)
-            .WithMany()
-            .HasForeignKey(x => x.ModelloId)
-            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(x => x.Variabili)
             .WithOne(x => x.Configurazione)
@@ -217,26 +287,7 @@ public class ConfigurazionePromptConfiguration
 }
 ```
 
-Il catalogo si configura con i vincoli di unicità sulle chiavi logiche:
-
-```csharp
-public class ModelloConfiguration : IEntityTypeConfiguration<Modello>
-{
-    public void Configure(EntityTypeBuilder<Modello> builder)
-    {
-        builder.ToTable(nameof(Modello));
-        builder.HasKey(x => x.Id);
-
-        builder.Property(x => x.Codice).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Nome).HasMaxLength(200).IsRequired();
-
-        // Stesso codice modello unico per provider
-        builder.HasIndex(x => new { x.ProviderId, x.Codice }).IsUnique();
-    }
-}
-```
-
-`Provider.Codice` e `CasoUso.Codice` ricevono allo stesso modo un indice univoco: sono le chiavi su cui il codice applicativo aggancia la configurazione.
+`Modello` riceve allo stesso modo un indice univoco su `(ProviderId, Codice)`: lo stesso codice modello è unico nell'ambito del provider.
 
 ## DbContext
 
@@ -252,7 +303,7 @@ public class AppDbContext : DbContext
 
 ## Risolvere il prompt attivo
 
-Il servizio prende il codice del caso d'uso, recupera la configurazione attiva, valida le variabili ricevute e produce i due prompt pronti per la chiamata al provider. La selezione del modello esce di qui già risolta (`Codice` del modello e del provider), così lo strato che parla con l'SDK del provider non conosce il database.
+Il servizio prende il codice del caso d'uso, applica la cascata provider/modello, recupera la configurazione attiva, valida le variabili e produce i due prompt pronti per la chiamata. La selezione esce di qui già risolta in `Codice` di provider e modello, così lo strato che parla con l'SDK del provider non conosce il database.
 
 ```csharp
 // MyApp.Infrastructure/Ai/RisolutorePrompt.cs
@@ -267,25 +318,44 @@ public sealed class RisolutorePrompt
         IReadOnlyDictionary<string, string> variabili,
         CancellationToken ct = default)
     {
+        var caso = await _db.CasiUso
+            .AsNoTracking()
+            .Include(x => x.Provider!).ThenInclude(p => p.ModelloDefault)
+            .Include(x => x.Modello!).ThenInclude(m => m.Provider)
+            .SingleOrDefaultAsync(x => x.Codice == codiceCasoUso && x.Attivo, ct)
+            ?? throw new InvalidOperationException(
+                $"Caso d'uso '{codiceCasoUso}' inesistente o non attivo.");
+
+        // Cascata: override sul caso d'uso, altrimenti il default di sistema
+        var provider = caso.Provider
+            ?? await _db.Provider
+                .AsNoTracking()
+                .Include(p => p.ModelloDefault)
+                .SingleAsync(p => p.Default, ct);
+
+        // Cascata: modello del caso d'uso, altrimenti il default del provider
+        var modello = caso.Modello ?? provider.ModelloDefault
+            ?? throw new InvalidOperationException(
+                $"Il provider '{provider.Codice}' non ha un modello di default e " +
+                $"il caso d'uso '{codiceCasoUso}' non ne specifica uno.");
+
         var config = await _db.ConfigurazioniPrompt
             .AsNoTracking()
-            .Include(x => x.Modello).ThenInclude(m => m.Provider)
             .Include(x => x.Variabili)
             .SingleOrDefaultAsync(
-                x => x.CasoUso.Codice == codiceCasoUso
-                  && x.Stato == StatoConfigurazione.Attiva,
-                ct)
+                x => x.CasoUsoId == caso.Id
+                  && x.Stato == StatoConfigurazione.Attiva, ct)
             ?? throw new InvalidOperationException(
                 $"Nessuna configurazione attiva per il caso d'uso '{codiceCasoUso}'.");
 
         var valori = ApplicaDefaultEValida(config.Variabili, variabili);
 
         return new PromptRisolto(
-            ProviderCodice: config.Modello.Provider.Codice,
-            ModelloCodice:  config.Modello.Codice,
-            SystemPrompt:   config.SystemPrompt,
-            UserPrompt:     Rendi(config.UserPrompt, valori),
-            Parametri:      config.Parametri,
+            ProviderCodice:   provider.Codice,
+            ModelloCodice:    modello.Codice,
+            SystemPrompt:     config.SystemPrompt,
+            UserPrompt:       Rendi(config.UserPrompt, valori),
+            Parametri:        config.Parametri,
             ConfigurazioneId: config.Id);
     }
 
@@ -324,22 +394,34 @@ public sealed record PromptRisolto(
     int ConfigurazioneId);
 ```
 
-`ConfigurazioneId` viaggia nel risultato apposta: registrandolo accanto all'output (in un log o in una tabella di esecuzioni) si chiude il cerchio della tracciabilità — da una risposta si risale alla versione esatta di prompt e modello che l'ha prodotta.
+`ConfigurazioneId` viaggia nel risultato apposta: registrandolo accanto all'output (in un log o in una tabella di esecuzioni) si chiude il cerchio della tracciabilità — da una risposta si risale alla versione esatta di prompt e ai parametri che l'hanno prodotta.
 
-## Versionare una modifica
+## Versionare una modifica del prompt
 
-Cambiare un prompt o il modello **non è un `UPDATE`** sulla configurazione attiva. Si crea una nuova versione e si sposta lo stato:
+Cambiare un prompt o i parametri **non è un `UPDATE`** sulla configurazione attiva. Si crea una nuova versione e si sposta lo stato:
 
 1. si duplica la configurazione attiva in una nuova riga `Bozza` con `Versione` incrementata e le modifiche;
 2. quando è pronta, in **un'unica transazione**, la vecchia attiva passa ad `Archiviata` e la bozza ad `Attiva`.
 
-L'indice univoco filtrato garantisce che il passaggio non possa mai lasciare due versioni attive insieme. Lo storico resta tutto sul DB: nessuna versione passata viene persa.
+L'indice univoco filtrato garantisce che il passaggio non possa mai lasciare due versioni attive insieme.
+
+La scelta di **provider e modello**, invece, vive sul caso d'uso, non nella versione del prompt: è una decisione di instradamento, non di contenuto. Cambiarla è un `UPDATE` sui campi del `CasoUso`, indipendente dalla storia delle versioni dei prompt.
+
+## Le quattro richieste, mappate
+
+| Requisito | Come è soddisfatto |
+|---|---|
+| Più provider | Catalogo `Provider` → `Modello`; uno è `Default` |
+| System prompt per caso d'uso | `ConfigurazionePrompt.SystemPrompt`, versionato e legato al `CasoUso` |
+| User prompt modificabile | `ConfigurazionePrompt.UserPrompt` come template versionato; le `{{variabili}}` riempite a runtime |
+| Modello specificabile | `CasoUso.ModelloId` opzionale; se nullo vale il modello di default del provider effettivo |
 
 ## Considerazioni operative
 
-- **Un modello per caso d'uso.** Il modello qui non prevede una catena di fallback fra provider. Se serve, si aggiunge una `Priorita` alla configurazione e si rilassa il vincolo «una sola attiva» in «una sola attiva per priorità».
-- **Tracciare le esecuzioni.** Se l'utente finale può riscrivere a piacere lo user prompt e serve auditarlo (con input, output, token e costo), si introduce una tabella `EsecuzionePrompt` che referenzia `ConfigurazioneId` e registra il prompt effettivamente inviato. Vale la pena solo se c'è il caso d'uso: senza, è [debito strutturale](../../../processi/analisi-tecnica/03-modellazione.md).
+- **Provider di default obbligatorio.** La cascata presuppone che esista sempre un provider con `Default = true`. L'indice filtrato garantisce che non ce ne sia più d'uno, ma non che ce ne sia almeno uno: lo si assicura con un seed e con un controllo in fase di disattivazione.
+- **Coerenza provider/modello.** Se un caso d'uso specifica un modello, questo deve appartenere al provider effettivo del caso d'uso. È un vincolo che attraversa due righe e non si esprime con una semplice `CHECK`: si valida nel caso d'uso che salva il `CasoUso`.
+- **Tracciare le esecuzioni.** Se l'utente finale può riscrivere a piacere lo user prompt e serve auditarlo (con input, output, token e costo), si introduce una tabella `EsecuzionePrompt` che referenzia `ConfigurazioneId`, il modello effettivo e registra il prompt inviato. Vale la pena solo se c'è il caso d'uso: senza, è [debito strutturale](../../../processi/analisi-tecnica/03-modellazione.md).
 - **Segreti fuori dal modello.** Le API key dei provider non stanno in queste tabelle: vivono nella [configurazione applicativa](../07-configuration.md). Qui si modella *quale* modello usare, non *come* autenticarsi.
-- **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne — non come JSON opaco — mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../processi/analisi-tecnica/03-modellazione.md). Se un provider espone parametri molto eterogenei, si valuta un owned type dedicato per quel provider.
+- **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne — non come JSON opaco — mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../processi/analisi-tecnica/03-modellazione.md).
 
 Per il quadro su come si imposta il lavoro con strumenti AI nel processo di sviluppo, vedi [uso con l'IA](../../../uso-con-ia.md).
