@@ -86,6 +86,13 @@ Il sito è pubblico e indicizzato. Quando si aggiungono nuove pagine o si modifi
 - **`docusaurus.config.ts`** — metadata globali del sito (headTags, tagline). Aggiornare se cambia lo scopo o il contenuto del sito.
 - **`static/robots.txt`** — già configurato con link alla sitemap. Aggiornare solo se si vuole escludere sezioni specifiche dal crawling.
 
+## Modellazioni
+
+Gli esempi di **modellazione del dato** vivono in `docs/tecnologie/csharp/esempi/modellazioni/`: una pagina per modello, con entità ed Entity Framework (si passa sempre per EF, quindi per C#). La **logica** che si appoggia a un modello (sink, middleware, servizi, handler) sta fuori da questa sottocartella, negli esempi di primo livello, e rimanda al modello: modellazione e logica restano separate e collegate.
+
+- **Ogni modellazione deve avere un diagramma ER Mermaid** (` ```mermaid` + `erDiagram`), in apertura della descrizione del modello. È obbligatorio, non opzionale.
+- Mermaid non viene validato dal build (il rendering è lato client): dopo aver aggiunto o modificato un ER diagram, **verificarne il rendering** servendo il sito, non solo con `pnpm build`. Attenzione alle chiavi valide (`PK`, `FK`, `UK`, combinabili con la virgola: `PK,FK`).
+
 ## Key constraints
 
 - `onBrokenLinks: 'throw'` — any internal link pointing to a non-existent page breaks the build. Always verify links after adding/removing docs.
