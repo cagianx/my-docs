@@ -1,0 +1,9 @@
+{
+  "label": "Modellazioni",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "title": "Modellazioni dati (EF)",
+    "description": "Esempi di modellazione del dato con Entity Framework: entità, configurazione EF e diagramma ER. La logica applicativa che vi si appoggia (sink, middleware, servizi) è documentata negli esempi che li referenziano."
+  }
+}

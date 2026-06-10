@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 description: Log integrale delle chiamate HTTP (headers + body) in un'unica struttura con campo Direzione — outbound via DelegatingHandler, inbound via middleware; copre servizi IA, REST e SOAP.
 ---
 
@@ -7,7 +7,7 @@ description: Log integrale delle chiamate HTTP (headers + body) in un'unica stru
 
 Quando l'applicazione chiama servizi esterni — un provider IA, una API REST, un endpoint SOAP — spesso serve registrare **l'intera chiamata**: metodo, URL, headers e body sia di richiesta che di risposta, con esito e durata. È il caso del [log delle chiamate IA tenuto «a parte»](04-db-prompt-ai.md#considerazioni-operative): qui lo si modella in modo **generico**, così la stessa tabella copre la chiamata al modello, la REST di terze parti e — *per assurdo* — anche la busta SOAP, perché a questo livello una chiamata HTTP è sempre la stessa cosa: headers più un body, qualunque sia il content-type.
 
-La struttura è **una sola** per entrambi i versi della comunicazione: un campo `Direzione` distingue le chiamate che l'app *fa* (outbound) da quelle che *riceve* (inbound). L'outbound si cattura con un `DelegatingHandler` su `HttpClient`, l'inbound con un middleware — ma finiscono nella stessa tabella, con gli stessi indici. L'[HTTP audit log](02-http-audit-log.md) inbound diventa così un produttore di questa struttura unificata, non un modello a parte (vedi [Inbound](#inbound-la-stessa-struttura-con-direzione--entrata)).
+La struttura è **una sola** per entrambi i versi della comunicazione: un campo `Direzione` distingue le chiamate che l'app *fa* (outbound) da quelle che *riceve* (inbound). L'outbound si cattura con un `DelegatingHandler` su `HttpClient`, l'inbound con un middleware — ma finiscono nella stessa tabella, con gli stessi indici. L'[HTTP audit log](../02-http-audit-log.md) inbound diventa così un produttore di questa struttura unificata, non un modello a parte (vedi [Inbound](#inbound-la-stessa-struttura-con-direzione--entrata)).
 
 ## Cosa cattura
 
@@ -20,6 +20,33 @@ Generico sul content-type: il body JSON di un'API IA e l'envelope XML di un serv
 ## Il modello dati
 
 I **metadati** — quello su cui si filtra e si fanno report — stanno separati dal **payload**, che è grosso e non serve quando si scorrono i log. È la stessa logica della separazione [`StoredFile` / `StoredFileContent`](03-db-filesystem.md): elencare le chiamate di un servizio in errore nelle ultime due ore non deve trascinare in memoria buste SOAP da centinaia di KB.
+
+```mermaid
+erDiagram
+    CHIAMATA_HTTP ||--|| CHIAMATA_HTTP_CONTENUTO : "ha"
+    CHIAMATA_HTTP {
+        long Id PK
+        DateTimeOffset Timestamp
+        DirezioneChiamata Direzione "Uscita | Entrata"
+        string Categoria "ai | soap | rest"
+        string Servizio
+        string Metodo
+        string Url
+        int StatusCode "nullable"
+        EsitoChiamata Esito "Ok | ErroreHttp | Eccezione"
+        long DurataMs
+        string CorrelationId "nullable"
+        string Utente "nullable, inbound"
+        string IpRemota "nullable, inbound"
+    }
+    CHIAMATA_HTTP_CONTENUTO {
+        long ChiamataHttpId PK,FK
+        string RequestHeaders
+        string RequestBody
+        string ResponseHeaders
+        string ResponseBody
+    }
+```
 
 ```csharp
 // MyApp.Infrastructure/Logging/DirezioneChiamata.cs
@@ -165,11 +192,11 @@ public class AppDbContext : DbContext
 
 ## Indici
 
-`ChiamataHttp` è una tabella **in forte scrittura**: ogni chiamata è un insert e ogni indice in più è lavoro in più ad ogni insert. Vale qui più che altrove la regola di tenere [solo gli indici giustificati da un accesso reale](../../database-relazionali/best-practice/indici.md) — meglio pochi indici sui pattern veri che una copertura difensiva.
+`ChiamataHttp` è una tabella **in forte scrittura**: ogni chiamata è un insert e ogni indice in più è lavoro in più ad ogni insert. Vale qui più che altrove la regola di tenere [solo gli indici giustificati da un accesso reale](../../../database-relazionali/best-practice/indici.md) — meglio pochi indici sui pattern veri che una copertura difensiva.
 
 L'accesso dominante è **per intervallo di tempo** («le chiamate delle ultime due ore», «gli errori di stamattina»), e la **data governa anche la retention** (si elimina o si stacca ciò che è più vecchio di N giorni). Quindi la `Timestamp` non è solo l'indice più importante: è il criterio su cui conviene **ordinare fisicamente** la tabella, così una finestra temporale è contigua sul disco e la pulizia colpisce un blocco continuo. Il come cambia col motore:
 
-- **SQL Server** — clustered index su `(Timestamp, Id)` e chiave primaria su `Id` dichiarata `NONCLUSTERED`. Gli insert restano in coda (la data cresce nel tempo, niente page split) e le letture per intervallo sono sequenziali — il caso descritto in [SQL Server](../../database-relazionali/sqlserver.md).
+- **SQL Server** — clustered index su `(Timestamp, Id)` e chiave primaria su `Id` dichiarata `NONCLUSTERED`. Gli insert restano in coda (la data cresce nel tempo, niente page split) e le letture per intervallo sono sequenziali — il caso descritto in [SQL Server](../../../database-relazionali/sqlserver.md).
 
   ```csharp
   // ordina la tabella per data; la PK su Id resta unica ma non clustered
@@ -177,9 +204,9 @@ L'accesso dominante è **per intervallo di tempo** («le chiamate delle ultime d
   builder.HasIndex(x => new { x.Timestamp, x.Id }).IsClustered();
   ```
 
-- **PostgreSQL** — la tabella è una heap: sulla `Timestamp` un indice **BRIN** è ideale per una tabella append-only ordinata nel tempo (minuscolo, perfetto per i range), tipicamente insieme al **partizionamento per mese**, che rende la retention un `DROP` di partizione. Vedi [PostgreSQL](../../database-relazionali/postgres.md).
+- **PostgreSQL** — la tabella è una heap: sulla `Timestamp` un indice **BRIN** è ideale per una tabella append-only ordinata nel tempo (minuscolo, perfetto per i range), tipicamente insieme al **partizionamento per mese**, che rende la retention un `DROP` di partizione. Vedi [PostgreSQL](../../../database-relazionali/postgres.md).
 
-- **SQLite** — l'`INTEGER PRIMARY KEY` (alias del rowid) tiene gli insert in coda; un indice esplicito sulla `Timestamp` copre le letture per data. Vedi [SQLite](../../database-relazionali/sqlite.md).
+- **SQLite** — l'`INTEGER PRIMARY KEY` (alias del rowid) tiene gli insert in coda; un indice esplicito sulla `Timestamp` copre le letture per data. Vedi [SQLite](../../../database-relazionali/sqlite.md).
 
 Sopra l'ordinamento temporale, gli indici composti servono i filtri ricorrenti, sempre con la `Timestamp` in coda alla chiave perché la domanda è «questo criterio, di recente»:
 
@@ -369,7 +396,7 @@ Se l'handler di log si registra **dopo** un handler di resilienza (es. Polly), o
 
 ## Inbound: la stessa struttura con `Direzione = Entrata`
 
-Per le chiamate **in entrata** il punto d'aggancio è un middleware invece di un handler, ma il modello è identico: il middleware dell'[HTTP audit log](02-http-audit-log.md) smette di avere una `HttpAuditLog` propria e scrive nella stessa `ChiamataHttp`, valorizzando `Direzione.Entrata`.
+Per le chiamate **in entrata** il punto d'aggancio è un middleware invece di un handler, ma il modello è identico: il middleware dell'[HTTP audit log](../02-http-audit-log.md) smette di avere una `HttpAuditLog` propria e scrive nella stessa `ChiamataHttp`, valorizzando `Direzione.Entrata`.
 
 ```csharp
 // dentro il middleware inbound, al posto della vecchia HttpAuditLog
@@ -394,11 +421,11 @@ db.ChiamateHttp.Add(new ChiamataHttp
 
 Così un'unica tabella risponde a «cosa è entrato e cosa è uscito», con `Direzione` come discriminante e gli stessi indici per servizio, esito e tempo.
 
-`Utente` e `IpRemota` sono l'unico punto in cui le due direzioni divergono: identificano il chiamante e hanno senso solo per l'inbound, quindi restano `null` sulle chiamate in uscita. Sono nullable apposta — una piccola asimmetria accettata per tenere un'unica struttura invece di due. L'implementazione completa del middleware inbound è in [HTTP audit log](02-http-audit-log.md).
+`Utente` e `IpRemota` sono l'unico punto in cui le due direzioni divergono: identificano il chiamante e hanno senso solo per l'inbound, quindi restano `null` sulle chiamate in uscita. Sono nullable apposta — una piccola asimmetria accettata per tenere un'unica struttura invece di due. L'implementazione completa del middleware inbound è in [HTTP audit log](../02-http-audit-log.md).
 
 ## Considerazioni operative
 
-- **Volume e retention.** È la tabella che cresce più in fretta dell'applicazione. Va pianificata una retention (`DELETE` oltre N giorni) o il [partizionamento](../../database-relazionali/postgres.md) per mese sulla `Timestamp`.
+- **Volume e retention.** È la tabella che cresce più in fretta dell'applicazione. Va pianificata una retention (`DELETE` oltre N giorni) o il [partizionamento](../../../database-relazionali/postgres.md) per mese sulla `Timestamp`.
 - **Dati sensibili oltre gli header.** L'oscuramento copre gli header, ma anche i *body* possono contenere dati personali o segreti (un prompt con dati del cliente, una busta SOAP con credenziali). Dove serve, si filtra per `Servizio` quali body salvare, o si applica un mascheramento prima della persistenza.
 - **Performance.** La scrittura sincrona aggiunge latenza a ogni chiamata. Sotto carico conviene accodare i log e scriverli in background, invece del `SaveChanges` per chiamata.
 - **Risposte in streaming.** Leggere il body lo bufferizza in memoria: va bene per risposte normali, **non** per download grandi o risposte IA in streaming (SSE). Per quei client il log integrale va disattivato o limitato ai soli metadati.

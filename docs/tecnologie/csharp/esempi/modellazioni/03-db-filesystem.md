@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 description: File storage su database con Entity Framework per file piccoli, separando metadati e contenuto binario in due tabelle.
 ---
 
@@ -11,6 +11,25 @@ L'idea è separare:
 
 - **`StoredFile`**: metadati — nome, tipo di file, content-type, size, hash
 - **`StoredFileContent`**: contenuto binario (`byte[]`)
+
+```mermaid
+erDiagram
+    STORED_FILE ||--|| STORED_FILE_CONTENT : "ha"
+    STORED_FILE {
+        Guid Id PK
+        string FileName
+        FileType FileType
+        string ContentType
+        long Length
+        string Sha256
+        DateTimeOffset CreatedAt
+        string CreatedBy "nullable"
+    }
+    STORED_FILE_CONTENT {
+        Guid StoredFileId PK,FK
+        bytes Bytes
+    }
+```
 
 Questa soluzione è adatta a file piccoli. Il limite reale dipende da quanta RAM sei disposto a consumare per request: se leggi tutto il file in memoria prima di salvarlo, il payload, i buffer ASP.NET Core e il `byte[]` EF convivono nello stesso processo.
 
@@ -283,7 +302,7 @@ public sealed record StoredFileListItem(
 
 Il punto chiave è che `ListAsync` interroga solo `StoredFile`, mentre `GetAsync` va anche sul contenuto. Così l'indexing resta leggero e il blob si materializza solo quando serve davvero.
 
-Il servizio **non chiama `SaveChanges`**: aggiunge o marca entità sul `DbContext` e basta. La chiusura della unit of work è responsabilità del comando che orchestra l'operazione, secondo la convenzione del [livello UseCases](../struttura-soluzione/04-usecases.md). Così lo stesso `DbFileStorage` può partecipare a una transazione più ampia — ad esempio salvare un allegato e l'entità che lo referenzia in un unico commit.
+Il servizio **non chiama `SaveChanges`**: aggiunge o marca entità sul `DbContext` e basta. La chiusura della unit of work è responsabilità del comando che orchestra l'operazione, secondo la convenzione del [livello UseCases](../../struttura-soluzione/04-usecases.md). Così lo stesso `DbFileStorage` può partecipare a una transazione più ampia — ad esempio salvare un allegato e l'entità che lo referenzia in un unico commit.
 
 ## Comando
 

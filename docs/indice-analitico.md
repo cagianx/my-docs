@@ -21,7 +21,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **API Key** — [regole/autenticazione](regole/autenticazione.md)
 - **Architettura (struttura solution)** — [regole/architettura](regole/architettura.md) · [csharp/struttura-soluzione](tecnologie/csharp/struttura-soluzione/01-struttura-fisica.md)
 - **Audit** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
-- **Audit log HTTP** — [csharp/esempi/http-audit-log](tecnologie/csharp/esempi/02-http-audit-log.md) · [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/05-log-chiamate-http.md) · [glossario](glossario#audit-log)
+- **Audit log HTTP** — [csharp/esempi/http-audit-log](tecnologie/csharp/esempi/02-http-audit-log.md) · [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md) · [glossario](glossario#audit-log)
 - **Autenticazione** — [regole/autenticazione](regole/autenticazione.md)
 - **Autorizzazione** — [regole/autenticazione](regole/autenticazione.md) · [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md)
 - **Authorization filter** — [csharp/12-authorization-filter](tecnologie/csharp/pipeline/12-authorization-filter.md) · [glossario](glossario#authorization-filter)
@@ -61,7 +61,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Commands (livello)** — vedi [UseCases (livello)](#u)
 - **Compensazioni** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
 - **Configurazione** — [regole/configurazione](regole/configurazione.md)
-- **Configurazione prompt (AI)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md) · [glossario](glossario#configurazione-prompt-ai)
+- **Configurazione prompt (AI)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/modellazioni/04-db-prompt-ai.md) · [glossario](glossario#configurazione-prompt-ai)
 - **Constraint (database)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/entity-framework](regole/entity-framework.md) · [regole/dominio](regole/dominio.md)
 - **Check constraint (da enum)** — [csharp/entity-framework/04-enum](tecnologie/csharp/entity-framework/04-enum.md)
 - **Container** — [regole/ambienti](regole/ambienti.md)
@@ -78,7 +78,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Database relazionali** — [tecnologie/database-relazionali](tecnologie/database-relazionali/index.md)
 - **Dati duttili (principio)** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **DbContext** — [glossario](glossario#dbcontext) · [regole/entity-framework](regole/entity-framework.md)
-- **DelegatingHandler** — [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/05-log-chiamate-http.md) · [glossario](glossario#delegatinghandler)
+- **DelegatingHandler** — [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md) · [glossario](glossario#delegatinghandler)
 - **Definition of Done** — [glossario](glossario#definition-of-done) · [sviluppo/03](processi/sviluppo/03-validazione.md)
 - **Dependency Injection** — [csharp/16-dependency-injection](tecnologie/csharp/16-dependency-injection.md) · [glossario](glossario#dependency-injection-di)
 - **Decorator pattern** — [pattern-di-sviluppo/decorator](pattern-di-sviluppo/decorator.md) · [csharp/pattern/decorator](tecnologie/csharp/pattern/decorator.md) · [glossario](glossario#decorator-pattern)
@@ -107,7 +107,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 - **Factory Method** — [pattern-di-sviluppo/factory-method](pattern-di-sviluppo/factory-method.md) · [csharp/pattern/factory-method](tecnologie/csharp/pattern/factory-method.md) · [glossario](glossario#factory-method)
 - **Feature flag** — [glossario](glossario#feature-flag) · [tecnologie/git](tecnologie/git/index.md)
-- **File storage su database (EF)** — [csharp/esempi/db-filesystem](tecnologie/csharp/esempi/03-db-filesystem.md)
+- **File storage su database (EF)** — [csharp/esempi/db-filesystem](tecnologie/csharp/esempi/modellazioni/03-db-filesystem.md)
 - **FluentAssertions** — [csharp/test-integrazione/01-setup](tecnologie/csharp/test-integrazione/01-pattern.mdx)
 - **FluentValidation** — [csharp/18-validation](tecnologie/csharp/pipeline/18-validation.md) · [glossario](glossario#fluentvalidation)
 - **Fluent API** — [glossario](glossario#fluent-api) · [regole/entity-framework](regole/entity-framework.md)
@@ -157,8 +157,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 
 - **LINQ (con Entity Framework)** — [csharp/entity-framework/03-linq](tecnologie/csharp/entity-framework/03-linq.md)
 - **Liskov Substitution** — [regole/principi](regole/principi.md)
-- **Log integrale di chiamate HTTP** — [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/05-log-chiamate-http.md) · [glossario](glossario#log-integrale-di-chiamate-http)
-- **Log chiamate IA / SOAP** — [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/05-log-chiamate-http.md)
+- **Log integrale di chiamate HTTP** — [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md) · [glossario](glossario#log-integrale-di-chiamate-http)
+- **Log chiamate IA / SOAP** — [csharp/esempi/log-chiamate-http](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md)
 - **Log strutturati** — [regole/logging](regole/logging.md)
 - **Logging** — [regole/logging](regole/logging.md)
 - **Logging (errori e troubleshooting)** — [regole/logging](regole/logging.md)
@@ -171,7 +171,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Middleware** — [csharp/10-middleware](tecnologie/csharp/pipeline/10-middleware.md) · [glossario](glossario#middleware)
 - **Migration** — [glossario](glossario#migration) · [regole/entity-framework](regole/entity-framework.md) · [sviluppo/01](processi/sviluppo/01-dominio.md)
 - **Modellazione dati** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
-- **Modello / Provider (AI)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md)
+- **Modello / Provider (AI)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/modellazioni/04-db-prompt-ai.md)
 
 ## N
 
@@ -198,8 +198,8 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **PostgreSQL** — [database-relazionali/postgres](tecnologie/database-relazionali/postgres.md) · [regole/entity-framework](regole/entity-framework.md)
 - **Principi (Unix, SOLID)** — [regole/principi](regole/principi.md)
 - **Problem Details** — [csharp/14-problem-details](tecnologie/csharp/pipeline/14-problem-details.md) · [glossario](glossario#problem-details)
-- **Prompt AI (su database)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md) · [glossario](glossario#prompt-system-e-user)
-- **Prompt (system e user)** — [glossario](glossario#prompt-system-e-user) · [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/04-db-prompt-ai.md)
+- **Prompt AI (su database)** — [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/modellazioni/04-db-prompt-ai.md) · [glossario](glossario#prompt-system-e-user)
+- **Prompt (system e user)** — [glossario](glossario#prompt-system-e-user) · [csharp/esempi/db-prompt-ai](tecnologie/csharp/esempi/modellazioni/04-db-prompt-ai.md)
 - **Pride versioning** — [regole/versionamento](regole/versionamento.md) · [glossario](glossario#pride-versioning)
 - **Pull Request** — [tecnologie/git](tecnologie/git/index.md)
 

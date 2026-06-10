@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 2
 description: Modellazione su database dei prompt per funzionalità AI — provider di default con override per caso d'uso, modello opzionale, system e user prompt editabili.
 ---
 
@@ -13,7 +13,7 @@ L'idea è separare tre cose che cambiano con ritmi diversi:
 - **A cosa serve** — il `CasoUso`, cioè la funzionalità AI. È la chiave logica stabile con cui il codice chiede un prompt, ed è qui che si decide **quale provider e quale modello** usare, per differenza rispetto al default.
 - **Come si fa** — la `ConfigurazionePrompt`: il system prompt, lo user prompt e i parametri di inferenza. È la parte volatile, ma si **modifica in place**: il registro di cosa è stato inviato all'AI vive in un log a parte, quindi questo modello non si porta dietro lo storico delle versioni.
 
-Niente storia speculativa: in linea con il principio di [modellazione](../../../processi/analisi-tecnica/03-modellazione.md), il modello tiene solo lo stato corrente. Se servisse il rollback o legare un output a una versione, si reintrodurrebbe — ma solo a fronte di quel caso d'uso reale (vedi [considerazioni](#considerazioni-operative)).
+Niente storia speculativa: in linea con il principio di [modellazione](../../../../processi/analisi-tecnica/03-modellazione.md), il modello tiene solo lo stato corrente. Se servisse il rollback o legare un output a una versione, si reintrodurrebbe — ma solo a fronte di quel caso d'uso reale (vedi [considerazioni](#considerazioni-operative)).
 
 ## Provider e modello: default con override
 
@@ -37,6 +37,48 @@ Cattivi candidati:
 - prompt che cambiano ad ogni richiesta in modo non riconducibile a un caso d'uso stabile
 
 ## Le entità
+
+```mermaid
+erDiagram
+    PROVIDER ||--o{ MODELLO : offre
+    PROVIDER |o--o| MODELLO : "default"
+    CASO_USO }o--o| PROVIDER : "override"
+    CASO_USO }o--o| MODELLO : "override"
+    CASO_USO ||--o| CONFIGURAZIONE_PROMPT : ha
+    CONFIGURAZIONE_PROMPT ||--o{ VARIABILE_PROMPT : dichiara
+    PROVIDER {
+        int Id PK
+        string Codice UK
+        bool Default
+        int ModelloDefaultId FK "nullable"
+    }
+    MODELLO {
+        int Id PK
+        int ProviderId FK
+        string Codice
+        bool Attivo
+    }
+    CASO_USO {
+        int Id PK
+        string Codice UK
+        int ProviderId FK "nullable, override"
+        int ModelloId FK "nullable, override"
+        bool Attivo
+    }
+    CONFIGURAZIONE_PROMPT {
+        int Id PK
+        int CasoUsoId FK "1:1"
+        string SystemPrompt
+        string UserPrompt
+        DateTimeOffset UpdatedAt
+    }
+    VARIABILE_PROMPT {
+        int Id PK
+        int ConfigurazioneId FK
+        string Nome
+        bool Obbligatoria
+    }
+```
 
 Il **catalogo**: quali provider e quali modelli sono utilizzabili. Un provider è il default di sistema e indica il proprio modello di default. Niente cancellazioni fisiche — un modello dismesso resta referenziabile, si marca solo come non più attivo.
 
@@ -377,7 +419,7 @@ public sealed record PromptRisolto(
 - **Log a parte.** Il registro di cosa è stato inviato all'AI vive fuori da questo modello — nel [log integrale delle chiamate HTTP](05-log-chiamate-http.md), dove la chiamata al provider è una riga come le altre. Qui il prompt quindi **non si versiona**: si modifica in place e `UpdatedAt`/`UpdatedBy` bastano a sapere chi ha toccato cosa per ultimo. Se in futuro emerge un caso d'uso reale per il **rollback** o per legare un output a una versione specifica, si reintroduce una tabella di versioni con stato `Attiva` — non prima.
 - **Provider di default obbligatorio.** La cascata presuppone che esista sempre un provider con `Default = true`. L'indice filtrato garantisce che non ce ne sia più d'uno, ma non che ce ne sia almeno uno: lo si assicura con un seed e con un controllo in fase di disattivazione.
 - **Coerenza provider/modello.** Se un caso d'uso specifica un modello, questo deve appartenere al provider effettivo del caso d'uso. È un vincolo che attraversa due righe e non si esprime con una semplice `CHECK`: si valida nel caso d'uso che salva il `CasoUso`.
-- **Segreti fuori dal modello.** Le API key dei provider non stanno in queste tabelle: vivono nella [configurazione applicativa](../07-configuration.md). Qui si modella *quale* modello usare, non *come* autenticarsi.
-- **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne — non come JSON opaco — mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../processi/analisi-tecnica/03-modellazione.md).
+- **Segreti fuori dal modello.** Le API key dei provider non stanno in queste tabelle: vivono nella [configurazione applicativa](../../07-configuration.md). Qui si modella *quale* modello usare, non *come* autenticarsi.
+- **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne — non come JSON opaco — mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../../processi/analisi-tecnica/03-modellazione.md).
 
-Per il quadro su come si imposta il lavoro con strumenti AI nel processo di sviluppo, vedi [uso con l'IA](../../../uso-con-ia.md).
+Per il quadro su come si imposta il lavoro con strumenti AI nel processo di sviluppo, vedi [uso con l'IA](../../../../uso-con-ia.md).

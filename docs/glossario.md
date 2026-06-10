@@ -79,7 +79,7 @@ Scenario concreto che descrive come un attore interagisce con il sistema per rag
 
 ## Configurazione prompt (AI)
 
-Configurazione che lega una funzionalità AI al suo system prompt, allo user prompt e ai parametri di inferenza, una per caso d'uso. Si modifica in place: lo storico di cosa è stato inviato all'AI vive in un log a parte, quindi il modello tiene solo lo stato corrente, senza versionare. La scelta di provider e modello vive sul caso d'uso, per differenza rispetto a un default di sistema. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/04-db-prompt-ai.md).
+Configurazione che lega una funzionalità AI al suo system prompt, allo user prompt e ai parametri di inferenza, una per caso d'uso. Si modifica in place: lo storico di cosa è stato inviato all'AI vive in un log a parte, quindi il modello tiene solo lo stato corrente, senza versionare. La scelta di provider e modello vive sul caso d'uso, per differenza rispetto a un default di sistema. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/modellazioni/04-db-prompt-ai.md).
 
 ## Clustered index
 
@@ -115,11 +115,11 @@ Classe EF che rappresenta la sessione con il database. Implementa il pattern Uni
 
 ## DelegatingHandler
 
-Handler inseribile nella pipeline di `HttpClient` che intercetta ogni chiamata in uscita prima e dopo l'invio. È il punto d'aggancio idiomatico per attraversare in modo trasversale le chiamate verso servizi esterni — log, resilienza, autenticazione — senza che il codice chiamante lo sappia. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/05-log-chiamate-http.md).
+Handler inseribile nella pipeline di `HttpClient` che intercetta ogni chiamata in uscita prima e dopo l'invio. È il punto d'aggancio idiomatico per attraversare in modo trasversale le chiamate verso servizi esterni — log, resilienza, autenticazione — senza che il codice chiamante lo sappia. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md).
 
 ## Log integrale di chiamate HTTP
 
-Registro che persiste l'intera chiamata HTTP — metodo, URL, headers e body di richiesta e risposta, esito e durata — in un'unica struttura con un campo `Direzione` che distingue inbound e outbound. Generico sul content-type: copre allo stesso modo le chiamate a servizi IA (JSON), REST e SOAP (XML). I metadati sono separati dal payload per non trascinare i body nelle query di log. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/05-log-chiamate-http.md).
+Registro che persiste l'intera chiamata HTTP — metodo, URL, headers e body di richiesta e risposta, esito e durata — in un'unica struttura con un campo `Direzione` che distingue inbound e outbound. Generico sul content-type: copre allo stesso modo le chiamate a servizi IA (JSON), REST e SOAP (XML). I metadati sono separati dal payload per non trascinare i body nelle query di log. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md).
 
 ## Definition of Done
 
@@ -259,7 +259,7 @@ Tecnica che spezza una tabella in più partizioni fisiche per intervallo o per l
 
 ## Prompt (system e user)
 
-Le due parti di un'istruzione a un modello linguistico. Il **system prompt** fissa ruolo, vincoli e tono e lo governa chi cura il prodotto; lo **user prompt** è il template con i dati della richiesta, spesso con segnaposto `{{variabile}}` riempiti a runtime. Tenerli su database, separati per caso d'uso, permette di modificarli senza release. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/04-db-prompt-ai.md).
+Le due parti di un'istruzione a un modello linguistico. Il **system prompt** fissa ruolo, vincoli e tono e lo governa chi cura il prodotto; lo **user prompt** è il template con i dati della richiesta, spesso con segnaposto `{{variabile}}` riempiti a runtime. Tenerli su database, separati per caso d'uso, permette di modificarli senza release. Vedi [`tecnologie/csharp/esempi/db-prompt-ai`](tecnologie/csharp/esempi/modellazioni/04-db-prompt-ai.md).
 
 ## Pride versioning
 

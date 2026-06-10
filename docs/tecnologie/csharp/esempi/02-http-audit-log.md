@@ -9,7 +9,7 @@ Un middleware che intercetta le richieste HTTP solo quando l'endpoint ha un attr
 
 ## Modello dati: la struttura unificata
 
-Questa pagina è il **lato inbound** del [Log integrale di chiamate HTTP](05-log-chiamate-http.md): non ha una tabella propria, scrive nella stessa `ChiamataHttp` valorizzando `Direzione.Entrata`. La struttura — metadati (`ChiamataHttp`) separati dal payload (`ChiamataHttpContenuto`), con headers e body di richiesta e risposta — è definita lì una volta sola.
+Questa pagina è il **lato inbound** del [Log integrale di chiamate HTTP](modellazioni/05-log-chiamate-http.md): non ha una tabella propria, scrive nella stessa `ChiamataHttp` valorizzando `Direzione.Entrata`. La struttura — metadati (`ChiamataHttp`) separati dal payload (`ChiamataHttpContenuto`), con headers e body di richiesta e risposta — è definita lì una volta sola.
 
 Quello che resta specifico dell'inbound è **come** lo si riempie:
 
@@ -290,10 +290,10 @@ app.UseHttpAudit();
 
 ## Migration
 
-La tabella è quella condivisa `ChiamataHttp`: la migration che la crea sta con il [log integrale](05-log-chiamate-http.md), non qui. Questo middleware è solo un altro produttore della stessa struttura, non introduce tabelle nuove.
+La tabella è quella condivisa `ChiamataHttp`: la migration che la crea sta con il [log integrale](modellazioni/05-log-chiamate-http.md), non qui. Questo middleware è solo un altro produttore della stessa struttura, non introduce tabelle nuove.
 
 ## Considerazioni operative
 
 - **Dati sensibili**: il body delle chiamate di autenticazione (login, token refresh) non va mai salvato — aggiungere il path di login a `ExcludedPrefixes`.
 - **Performance**: la latenza aggiunta dipende dal tempo di scrittura su DB. Per sistemi ad alto carico si può usare un buffer in memoria o una coda in background invece del salvataggio sincrono per-request.
-- **Volume e retention**: valgono per l'inbound le stesse note del [log integrale](05-log-chiamate-http.md#considerazioni-operative) — retention e partizionamento sulla `Timestamp` sono condivisi, perché la tabella è una sola.
+- **Volume e retention**: valgono per l'inbound le stesse note del [log integrale](modellazioni/05-log-chiamate-http.md#considerazioni-operative) — retention e partizionamento sulla `Timestamp` sono condivisi, perché la tabella è una sola.
