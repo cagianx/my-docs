@@ -116,12 +116,19 @@ public class ChiamataHttpConfiguration : IEntityTypeConfiguration<ChiamataHttp>
         builder.Property(x => x.Utente).HasMaxLength(200);
         builder.Property(x => x.IpRemota).HasMaxLength(45); // lunghezza max IPv6
 
-        builder.HasIndex(x => x.Timestamp);
+        // L'ordinamento per data — l'accesso dominante — si imposta a livello
+        // di motore: vedi la sezione «Indici». Qui restano gli indici sui filtri.
         builder.HasIndex(x => new { x.Servizio, x.Timestamp });
-        builder.HasIndex(x => x.Categoria);
-        builder.HasIndex(x => x.Esito);
-        builder.HasIndex(x => x.CorrelationId);
-        builder.HasIndex(x => x.Utente);
+        builder.HasIndex(x => new { x.Categoria, x.Timestamp });
+
+        // «gli errori recenti»: indice parziale, resta piccolo escludendo gli Ok
+        builder.HasIndex(x => x.Timestamp)
+            .HasDatabaseName("IX_ChiamataHttp_Errori")
+            .HasFilter("[Esito] <> 'Ok'");
+
+        // Solo se si interroga davvero per questi criteri:
+        builder.HasIndex(x => x.CorrelationId);                // tentativi di una stessa operazione
+        builder.HasIndex(x => new { x.Utente, x.Timestamp });  // audit per utente (inbound)
 
         builder.HasOne(x => x.Contenuto)
             .WithOne(x => x.Chiamata)
@@ -155,6 +162,32 @@ public class AppDbContext : DbContext
     public DbSet<ChiamataHttpContenuto> ChiamateHttpContenuti => Set<ChiamataHttpContenuto>();
 }
 ```
+
+## Indici
+
+`ChiamataHttp` è una tabella **in forte scrittura**: ogni chiamata è un insert e ogni indice in più è lavoro in più ad ogni insert. Vale qui più che altrove la regola di tenere [solo gli indici giustificati da un accesso reale](../../database-relazionali/best-practice/indici.md) — meglio pochi indici sui pattern veri che una copertura difensiva.
+
+L'accesso dominante è **per intervallo di tempo** («le chiamate delle ultime due ore», «gli errori di stamattina»), e la **data governa anche la retention** (si elimina o si stacca ciò che è più vecchio di N giorni). Quindi la `Timestamp` non è solo l'indice più importante: è il criterio su cui conviene **ordinare fisicamente** la tabella, così una finestra temporale è contigua sul disco e la pulizia colpisce un blocco continuo. Il come cambia col motore:
+
+- **SQL Server** — clustered index su `(Timestamp, Id)` e chiave primaria su `Id` dichiarata `NONCLUSTERED`. Gli insert restano in coda (la data cresce nel tempo, niente page split) e le letture per intervallo sono sequenziali — il caso descritto in [SQL Server](../../database-relazionali/sqlserver.md).
+
+  ```csharp
+  // ordina la tabella per data; la PK su Id resta unica ma non clustered
+  builder.HasKey(x => x.Id).IsClustered(false);
+  builder.HasIndex(x => new { x.Timestamp, x.Id }).IsClustered();
+  ```
+
+- **PostgreSQL** — la tabella è una heap: sulla `Timestamp` un indice **BRIN** è ideale per una tabella append-only ordinata nel tempo (minuscolo, perfetto per i range), tipicamente insieme al **partizionamento per mese**, che rende la retention un `DROP` di partizione. Vedi [PostgreSQL](../../database-relazionali/postgres.md).
+
+- **SQLite** — l'`INTEGER PRIMARY KEY` (alias del rowid) tiene gli insert in coda; un indice esplicito sulla `Timestamp` copre le letture per data. Vedi [SQLite](../../database-relazionali/sqlite.md).
+
+Sopra l'ordinamento temporale, gli indici composti servono i filtri ricorrenti, sempre con la `Timestamp` in coda alla chiave perché la domanda è «questo criterio, di recente»:
+
+- `(Servizio, Timestamp)` e `(Categoria, Timestamp)` — «le chiamate di un servizio o di una categoria, ultime X»;
+- un indice **parziale** sulla `Timestamp` con filtro `Esito <> 'Ok'` — «gli errori recenti»: resta piccolo perché il grosso del traffico è `Ok`, e non sporca gli insert delle chiamate riuscite;
+- `CorrelationId` e `(Utente, Timestamp)` **solo se** si interroga davvero per correlazione o per utente; altrimenti sono peso morto su ogni insert.
+
+`ChiamataHttpContenuto` non ha indici propri oltre alla chiave: vi si accede **solo per `ChiamataHttpId`**, quando si apre una singola chiamata per vederne il corpo. Su SQLite ha senso come tabella `WITHOUT ROWID`, dato che la si legge sempre per quella chiave.
 
 ## La cattura: un DelegatingHandler
 
