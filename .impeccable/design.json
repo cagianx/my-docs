@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-11T00:00:00Z",
+  "title": "Design System: MyDocs",
+  "extensions": {
+    "colorMeta": {
+      "accent-amber": {
+        "role": "primary",
+        "displayName": "Ambra Fosforo",
+        "canonical": "oklch(70.5% 0.19 45)",
+        "tonalRamp": ["oklch(18% 0.10 45)", "oklch(28% 0.15 45)", "oklch(38% 0.18 45)", "oklch(48% 0.19 45)", "oklch(58% 0.19 45)", "oklch(70.5% 0.19 45)", "oklch(82% 0.12 45)", "oklch(93% 0.05 45)"]
+      },
+      "bg-black": {
+        "role": "neutral",
+        "displayName": "Nero CRT",
+        "canonical": "oklch(15% 0 0)",
+        "tonalRamp": ["oklch(10% 0 0)", "oklch(15% 0 0)", "oklch(24% 0 0)", "oklch(34% 0 0)", "oklch(46% 0 0)", "oklch(60% 0 0)", "oklch(78% 0 0)", "oklch(95% 0 0)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Inchiostro",
+        "canonical": "oklch(96% 0.004 90)",
+        "tonalRamp": ["oklch(20% 0.004 90)", "oklch(32% 0.004 90)", "oklch(45% 0.004 90)", "oklch(58% 0.004 90)", "oklch(70% 0.004 90)", "oklch(82% 0.004 90)", "oklch(90% 0.004 90)", "oklch(96% 0.004 90)"]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Inchiostro Muto",
+        "canonical": "oklch(60% 0.006 110)",
+        "tonalRamp": ["oklch(22% 0.006 110)", "oklch(32% 0.006 110)", "oklch(42% 0.006 110)", "oklch(52% 0.006 110)", "oklch(60% 0.006 110)", "oklch(72% 0.006 110)", "oklch(84% 0.006 110)", "oklch(94% 0.006 110)"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Bordo",
+        "canonical": "oklch(22% 0.004 110)",
+        "tonalRamp": ["oklch(12% 0.004 110)", "oklch(18% 0.004 110)", "oklch(22% 0.004 110)", "oklch(28% 0.004 110)", "oklch(36% 0.004 110)", "oklch(48% 0.004 110)", "oklch(64% 0.004 110)", "oklch(82% 0.004 110)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Solo il titolo hero della homepage, con cursore ambra lampeggiante." },
+      "headline": { "displayName": "Headline / H1", "purpose": "Titolo di pagina, MAIUSCOLO." },
+      "title": { "displayName": "Title / H2", "purpose": "Sezioni, con prefisso 01. ambra auto-numerato e bordo inferiore." },
+      "body": { "displayName": "Body", "purpose": "Prosa di lettura, 14px su interlinea 1.65, riga 65–75ch." },
+      "label": { "displayName": "Label", "purpose": "Meta status-bar, pill, eyebrow //, sublabel paginazione." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "cursor-blink", "value": "1.1s steps(2, end) infinite", "purpose": "Cursore ambra lampeggiante nell'hero. Disattivare sotto prefers-reduced-motion." },
+      { "name": "arrow-nudge", "value": "transform: translateX(4px)", "purpose": "Scorrimento della freccia → in hover sulle card argomento." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "1100px" },
+      { "name": "sm", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Azione primaria. Ambra pieno su nero; in hover si inverte a contorno ambra su trasparente.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Vai alla documentazione →</a>",
+      "css": ".ds-btn-primary { display: inline-block; background: #ff6a1a; color: #0a0a0a; border: 1px solid #ff6a1a; border-radius: 0; padding: 12px 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: background 0.15s, color 0.15s; } .ds-btn-primary:hover { background: transparent; color: #ff6a1a; } .ds-btn-primary:focus-visible { outline: 2px solid #ff6a1a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Azione secondaria. Contorno grigio forte; in hover si riempie d'ambra con testo nero.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">GitHub ↗</a>",
+      "css": ".ds-btn-ghost { display: inline-block; background: transparent; color: #f5f5f0; border: 1px solid #3a3a34; border-radius: 0; padding: 12px 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: background 0.15s, color 0.15s, border-color 0.15s; } .ds-btn-ghost:hover { background: #ff6a1a; color: #0a0a0a; border-color: #ff6a1a; } .ds-btn-ghost:focus-visible { outline: 2px solid #ff6a1a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Topic Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Card argomento della homepage. Bordo netto che vira ad ambra in hover; solo indice e freccia si accendono, il testo resta.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card-top\"><span class=\"ds-card-idx\">02 /</span><span class=\"ds-card-arrow\">→</span></span><span class=\"ds-card-title\">Dominio e architettura</span><span class=\"ds-card-desc\">Modellazione del dominio, struttura delle solution, vincoli architetturali.</span><span class=\"ds-card-path\">/docs/regole/dominio</span></a>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 12px; background: #0a0a0a; border: 1px solid #262622; border-radius: 0; padding: 20px; color: #f5f5f0; text-decoration: none; font-family: 'JetBrains Mono', ui-monospace, monospace; transition: border-color 0.15s; } .ds-card:hover { border-color: #ff6a1a; } .ds-card-top { display: flex; justify-content: space-between; align-items: baseline; } .ds-card-idx { font-size: 0.78rem; color: #8a8a82; font-variant-numeric: tabular-nums; } .ds-card-arrow { color: #8a8a82; transition: transform 0.15s, color 0.15s; } .ds-card:hover .ds-card-idx, .ds-card:hover .ds-card-arrow { color: #ff6a1a; } .ds-card:hover .ds-card-arrow { transform: translateX(4px); } .ds-card-title { font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; } .ds-card-desc { color: #8a8a82; font-size: 0.85rem; line-height: 1.65; } .ds-card-path { font-size: 0.75rem; color: #8a8a82; margin-top: auto; padding-top: 12px; border-top: 1px dashed #262622; }"
+    },
+    {
+      "name": "Sidebar Link (active)",
+      "kind": "nav",
+      "refersTo": "card",
+      "description": "Voce di sidebar attiva: marker ◆ ambra, bordo sinistro funzionale 2px, velo ambra. Lo stato è ridondante rispetto al colore.",
+      "html": "<nav class=\"ds-menu\"><a class=\"ds-menu-link ds-active\" href=\"#\">Indicizzazione</a><a class=\"ds-menu-link\" href=\"#\">Chiavi e vincoli</a></nav>",
+      "css": ".ds-menu { display: flex; flex-direction: column; background: #0a0a0a; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.875rem; } .ds-menu-link { display: block; color: #8a8a82; padding: 8px 12px 8px 20px; border-left: 2px solid transparent; text-decoration: none; } .ds-menu-link::before { content: '·'; display: inline-block; width: 14px; margin-left: -4px; color: #8a8a82; } .ds-menu-link:hover { background: rgba(255,255,255,0.02); color: #f5f5f0; } .ds-menu-link.ds-active { color: #ff6a1a; border-left-color: #ff6a1a; background: rgba(255,106,26,0.06); font-weight: 500; } .ds-menu-link.ds-active::before { content: '◆'; color: #ff6a1a; }"
+    },
+    {
+      "name": "Inline Code",
+      "kind": "custom",
+      "refersTo": "code-inline",
+      "description": "Codice inline: bordo netto, testo ambra. L'unico testo abitualmente colorato d'accento.",
+      "html": "<p style=\"font-family:'JetBrains Mono',monospace;color:#f5f5f0;font-size:14px\">Si esegue <code class=\"ds-code\">pnpm start</code> dopo il clone.</p>",
+      "css": ".ds-code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 88%; color: #ff6a1a; background: rgba(255,255,255,0.06); border: 1px solid #262622; border-radius: 0; padding: 0.1em 0.3em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Il terminale a fosfori",
+    "overview": "Un manuale tecnico reso navigabile come un terminale a fosfori ambra degli anni '70: testo monospace su nero profondo, un solo accento — l'arancione-ambra — che brucia sui punti che contano, bordi netti da scheda tecnica e una griglia di sfondo appena percettibile. L'estetica è la stessa stringenza del contenuto resa visibile: niente raggi, niente ombre morbide, niente sfumature. Il sistema rifiuta il look enterprise SaaS docs, il tono blog/tutorial e il brutalismo costume: quando contrasto ed effetto confliggono, vince il contrasto. Serve due lettori alla pari, l'umano e l'agente IA, quindi la gerarchia è prevedibile e i marker sono ridondanti rispetto al colore.",
+    "keyCharacteristics": [
+      "Monospace ovunque (JetBrains Mono): una sola famiglia, contrasto solo per peso e dimensione.",
+      "Nero + ambra, un solo accento: l'arancione marca funzione, mai decorazione.",
+      "Zero raggi: bordi netti su bottoni, card, code block, alert, paginazione.",
+      "Griglia di fondo a 48px e status-bar simulata come firme dell'ambiente terminale.",
+      "Marker ASCII ridondanti (◆ · ▸ ▾ //) così lo stato non vive nel solo colore."
+    ],
+    "rules": [
+      { "name": "La Regola dell'Unico Accento", "body": "L'arancione-ambra è l'unico colore non-neutro: marca funzione (azione, stato attivo, prefisso), mai decorazione. Se compare per «dare colore», è un errore.", "section": "colors" },
+      { "name": "La Regola del Nero Stratificato", "body": "La profondità si fa con tre neri (#0a0a0a → #050505 → #000), non con le ombre. Una superficie più «dentro» è più scura, non più ombreggiata.", "section": "colors" },
+      { "name": "La Regola del Maiuscolo Strutturale", "body": "Il maiuscolo è riservato a titoli e label corte. Testo di lettura tutto-maiuscolo è vietato.", "section": "typography" },
+      { "name": "La Regola del Prefisso //", "body": "I marcatori minori usano il commento di codice (// index, // On this page) come voce del sistema. È un pattern firmato, non un eyebrow da ripetere su ogni sezione.", "section": "typography" },
+      { "name": "La Regola Niente Ombre", "body": "Le ombre sono vietate. Se una superficie deve staccarsi, le si dà un bordo o un nero diverso.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usare l'ambra #ff6a1a solo per funzione: azione primaria, stato attivo, prefisso numerato, link. Mai per decorare.",
+      "Do fare la profondità con i tre neri (#0a0a0a / #050505 / #000) e bordi da 1px #262622.",
+      "Do tenere tutto in JetBrains Mono; il contrasto si fa con peso (400/700), dimensione e MAIUSCOLO.",
+      "Do rendere lo stato ridondante rispetto al colore: marker ASCII (◆ · ▸ ▾), bordi, peso.",
+      "Do verificare il corpo testo a ≥4.5:1 sul nero; spingere #8a8a82 verso #f5f5f0 dove è testo di lettura.",
+      "Do dare a ogni animazione (cursore hero, nudge freccia) un'alternativa sotto prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't introdurre il look enterprise SaaS docs: sidebar grigia anonima, blu aziendale, superfici intercambiabili.",
+      "Don't scivolare nel tono blog/tutorial: niente emoji, hero motivazionali, CTA commerciali, «noi del team».",
+      "Don't lasciare che il brutalismo diventi costume: se contrasto ed effetto confliggono, vince il contrasto.",
+      "Don't produrre slop da IA: niente eyebrow MAIUSCOLO tracked come grammatica su ogni sezione, gradient text, griglie di card identiche ripetute, template hero-metric.",
+      "Don't usare ombre, raggi, glassmorphism decorativo o side-stripe border > 1px come accento decorativo.",
+      "Don't aggiungere una seconda famiglia tipografica o un secondo colore d'accento."
+    ]
+  }
+}
