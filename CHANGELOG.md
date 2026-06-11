@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.1](https://github.com/cagianx/my-docs/compare/v1.2.0...v1.2.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* **a11y:** il tema brutalist azzerava l'outline nativo, rendendo invisibile il focus da tastiera (WCAG 2.4.7); aggiunto `:focus-visible` con outline ambra su link, bottoni, card, navbar, sidebar, TOC, paginazione e footer. Aggiunto inoltre il rispetto di `prefers-reduced-motion`, che ferma il cursore lampeggiante dell'hero e rende istantanee le transizioni ([ee46326](https://github.com/cagianx/my-docs/commit/ee46326f114d42002e638ad406a7599459f694bb))
+
+
+### Documentation
+
+* **design:** documentato il sistema di design del progetto — `PRODUCT.md` (registro, utenti, principi, anti-references, accessibilità) e `DESIGN.md` con il sidecar `.impeccable/design.json` (token, North Star, componenti e regole in formato Stitch) ([f2a431f](https://github.com/cagianx/my-docs/commit/f2a431f08b5a38dd343f73c9d02de7304706cb26))
+
 ## [1.2.0](https://github.com/cagianx/my-docs/compare/v1.1.0...v1.2.0) (2026-06-11)
 
 
