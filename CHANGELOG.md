@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.1](https://github.com/cagianx/my-docs/compare/v1.4.0...v1.4.1) (2026-06-11)
+
+
+### Documentation
+
+* i grafi di relazione e dipendenza, finora disegnati in ASCII art dentro i code block (in proporzionale frecce e box si disallineano), sono ora diagrammi Mermaid già renderizzati dal sito: dipendenze tra progetti, integrazioni e Models, e i pattern adapter, builder (come `sequenceDiagram`), chain of responsibility, command, decorator, factory method, observer, strategy. Invariate la timeline testuale di `15-async` e gli alberi di directory, corretti in monospazio ([e726a14](https://github.com/cagianx/my-docs/commit/e726a14))
+
 ## [1.4.0](https://github.com/cagianx/my-docs/compare/v1.3.1...v1.4.0) (2026-06-11)
 
 
