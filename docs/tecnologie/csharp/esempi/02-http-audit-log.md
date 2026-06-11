@@ -1,94 +1,22 @@
 ---
 sidebar_position: 2
-description: Middleware ASP.NET Core con attributo per audit HTTP per-endpoint, configurabile su errori/all e full/headers.
+description: Middleware ASP.NET Core con attributo per audit HTTP per-endpoint, configurabile su errori/all e full/headers; persiste nella struttura unificata ChiamataHttp come lato inbound.
 ---
 
 # HTTP audit log (middleware + EF + attributo)
 
 Un middleware che intercetta le richieste HTTP solo quando l'endpoint ha un attributo di audit. L'attributo consente una configurazione capillare per controller/metodo: quando loggare (`All` o `ErrorsOnly`) e cosa salvare (`None`, `Headers`, `Full`) per request e response.
 
-## Modello dati
+## Modello dati: la struttura unificata
 
-```csharp
-// MyApp.Infrastructure/Audit/HttpAuditLog.cs
-public class HttpAuditLog
-{
-    public long Id { get; set; }
-    public DateTimeOffset Timestamp { get; set; }
+Questa pagina è il **lato inbound** del [Log integrale di chiamate HTTP](modellazioni/05-log-chiamate-http.md): non ha una tabella propria, scrive nella stessa `ChiamataHttp` valorizzando `Direzione.Entrata`. La struttura — metadati (`ChiamataHttp`) separati dal payload (`ChiamataHttpContenuto`), con headers e body di richiesta e risposta — è definita lì una volta sola.
 
-    public string Method { get; set; } = default!;
-    public string Path { get; set; } = default!;
-    public string? QueryString { get; set; }
+Quello che resta specifico dell'inbound è **come** lo si riempie:
 
-    public string? RequestContentType { get; set; }
-    public string? RequestHeaders { get; set; }
-    public string? RequestBody { get; set; }
-
-    public int StatusCode { get; set; }
-    public string? ResponseContentType { get; set; }
-    public string? ResponseHeaders { get; set; }
-    public string? ResponseBody { get; set; }
-
-    public long ElapsedMs { get; set; }
-
-    // Contesto della chiamata
-    public string? UserId { get; set; }
-    public string? RemoteIp { get; set; }
-}
-```
-
-### Configurazione EF
-
-```csharp
-// MyApp.Infrastructure/Audit/HttpAuditLogConfiguration.cs
-public class HttpAuditLogConfiguration : IEntityTypeConfiguration<HttpAuditLog>
-{
-    public void Configure(EntityTypeBuilder<HttpAuditLog> builder)
-    {
-        builder.ToTable(nameof(HttpAuditLog));
-
-        builder.HasKey(e => e.Id);
-
-        builder.Property(e => e.Method)
-            .HasMaxLength(10)
-            .IsRequired();
-
-        builder.Property(e => e.Path)
-            .HasMaxLength(2048)
-            .IsRequired();
-
-        builder.Property(e => e.RequestContentType)
-            .HasMaxLength(200);
-
-        builder.Property(e => e.RequestHeaders)
-            .HasColumnType("nvarchar(max)");
-
-        builder.Property(e => e.ResponseContentType)
-            .HasMaxLength(200);
-
-        builder.Property(e => e.ResponseHeaders)
-            .HasColumnType("nvarchar(max)");
-
-        builder.Property(e => e.RemoteIp)
-            .HasMaxLength(45); // IPv6 max length
-
-        builder.HasIndex(e => e.Timestamp);
-        builder.HasIndex(e => e.Path);
-        builder.HasIndex(e => e.StatusCode);
-        builder.HasIndex(e => e.UserId);
-    }
-}
-```
-
-Aggiungere il `DbSet` al contesto:
-
-```csharp
-public class AppDbContext : DbContext
-{
-    public DbSet<HttpAuditLog> HttpAuditLogs => Set<HttpAuditLog>();
-    // ... altri DbSet
-}
-```
+- `Categoria` = `"api"`, `Servizio` = nome dell'endpoint o route;
+- `Url` = path + query string della richiesta ricevuta;
+- `Utente` e `IpRemota` valorizzati dal contesto del chiamante (sull'outbound restano `null`);
+- e la **policy capillare per-endpoint** — quando loggare e cosa catturare — espressa con l'attributo qui sotto, che il middleware in uscita non ha.
 
 ## Attributo + enum di configurazione
 
@@ -226,6 +154,7 @@ public class HttpAuditMiddleware
             {
                 await SaveAsync(
                     context,
+                    thrownException,
                     requestHeaders,
                     requestBody,
                     responseHeaders,
@@ -237,6 +166,7 @@ public class HttpAuditMiddleware
 
     private async Task SaveAsync(
         HttpContext context,
+        Exception? thrownException,
         string? requestHeaders,
         string? requestBody,
         string? responseHeaders,
@@ -248,23 +178,34 @@ public class HttpAuditMiddleware
             using var scope = _scopeFactory.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            db.HttpAuditLogs.Add(new HttpAuditLog
+            var status = context.Response.StatusCode;
+            var esito = thrownException is not null ? EsitoChiamata.Eccezione
+                      : status >= 400 ? EsitoChiamata.ErroreHttp
+                      : EsitoChiamata.Ok;
+
+            // Stessa struttura del log in uscita, con Direzione.Entrata
+            db.ChiamateHttp.Add(new ChiamataHttp
             {
-                Timestamp           = DateTimeOffset.UtcNow,
-                Method              = context.Request.Method,
-                Path                = context.Request.Path.Value ?? string.Empty,
-                QueryString         = context.Request.QueryString.HasValue
-                                      ? context.Request.QueryString.Value : null,
-                RequestContentType  = context.Request.ContentType,
-                RequestHeaders      = requestHeaders,
-                RequestBody         = requestBody,
-                StatusCode          = context.Response.StatusCode,
-                ResponseContentType = context.Response.ContentType,
-                ResponseHeaders     = responseHeaders,
-                ResponseBody        = responseBody,
-                ElapsedMs           = elapsedMs,
-                UserId              = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
-                RemoteIp            = context.Connection.RemoteIpAddress?.ToString()
+                Timestamp     = DateTimeOffset.UtcNow,
+                Direzione     = DirezioneChiamata.Entrata,
+                Categoria     = "api",
+                Servizio      = context.GetEndpoint()?.DisplayName ?? context.Request.Path,
+                Metodo        = context.Request.Method,
+                Url           = context.Request.Path + context.Request.QueryString,
+                StatusCode    = status,
+                Esito         = esito,
+                Errore        = thrownException?.Message,
+                DurataMs      = elapsedMs,
+                CorrelationId = Activity.Current?.Id,
+                Utente        = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+                IpRemota      = context.Connection.RemoteIpAddress?.ToString(),
+                Contenuto     = new ChiamataHttpContenuto
+                {
+                    RequestHeaders  = requestHeaders,
+                    RequestBody     = requestBody,
+                    ResponseHeaders = responseHeaders,
+                    ResponseBody    = responseBody
+                }
             });
 
             await db.SaveChangesAsync();
@@ -349,14 +290,10 @@ app.UseHttpAudit();
 
 ## Migration
 
-```bash
-dotnet ef migrations add AddHttpAuditLog \
-    --project src/MyApp.Infrastructure \
-    --startup-project src/MyApp.Api
-```
+La tabella è quella condivisa `ChiamataHttp`: la migration che la crea sta con il [log integrale](modellazioni/05-log-chiamate-http.md), non qui. Questo middleware è solo un altro produttore della stessa struttura, non introduce tabelle nuove.
 
 ## Considerazioni operative
 
-- **Volume**: in produzione con traffico elevato la tabella cresce rapidamente. Pianificare una retention policy (es. `DELETE FROM HttpAuditLog WHERE Timestamp < now() - interval '90 days'`) o usare il partizionamento per mese.
 - **Dati sensibili**: il body delle chiamate di autenticazione (login, token refresh) non va mai salvato — aggiungere il path di login a `ExcludedPrefixes`.
 - **Performance**: la latenza aggiunta dipende dal tempo di scrittura su DB. Per sistemi ad alto carico si può usare un buffer in memoria o una coda in background invece del salvataggio sincrono per-request.
+- **Volume e retention**: valgono per l'inbound le stesse note del [log integrale](modellazioni/05-log-chiamate-http.md#considerazioni-operative) — retention e partizionamento sulla `Timestamp` sono condivisi, perché la tabella è una sola.
