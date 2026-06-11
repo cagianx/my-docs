@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.0](https://github.com/cagianx/my-docs/compare/v1.1.0...v1.2.0) (2026-06-11)
+
+
+### Features
+
+* **ia:** nuova sezione «// IA» con le skill operative commit e release, documentate come pagine (fonte di verità) ed eseguibili da Claude Code in `.claude/skills/` ([242f7ca](https://github.com/cagianx/my-docs/commit/242f7cad898f9178a98e24911d47bd3009628262))
+* **csharp:** raggruppa gli esempi di modellazione dati in `esempi/modellazioni/`, con i nuovi modelli per i prompt AI e per il log unificato delle chiamate HTTP ([c49c2c7](https://github.com/cagianx/my-docs/commit/c49c2c795892b6bad9afbc8088d66baee04b29e7))
+
 ## [1.1.0](https://github.com/cagianx/my-docs/compare/v1.0.12...v1.1.0) (2026-06-06)
 
 
