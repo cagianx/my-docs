@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2026-06-11",
+    "tag": "Nuovo",
+    "title": "Sistema di design del progetto documentato",
+    "path": "/docs/regole/documentazione"
+  },
+  {
+    "date": "2026-06-11",
+    "tag": "Nuovo",
+    "title": "Sezione IA con le skill commit e release",
+    "path": "/docs/ia/skills/"
+  },
+  {
+    "date": "2026-06-11",
+    "tag": "Aggiornato",
+    "title": "Modellazioni C# raggruppate in sottocartella, con prompt IA e log HTTP",
+    "path": "/docs/category/modellazioni"
+  },
+  {
+    "date": "2026-06-06",
+    "tag": "Nuovo",
+    "title": "Sezione sui database relazionali e le buone pratiche di indicizzazione",
+    "path": "/docs/tecnologie/database-relazionali/"
+  },
+  {
+    "date": "2026-06-04",
+    "tag": "Nuovo",
+    "title": "Esempio C#: archiviazione dei file su filesystem",
+    "path": "/docs/tecnologie/csharp/esempi/modellazioni/db-filesystem"
+  },
+  {
+    "date": "2026-06-03",
+    "tag": "Aggiornato",
+    "title": "Modello LogEntry: una riga per ogni eccezione nella catena",
+    "path": "/docs/tecnologie/csharp/esempi/modellazioni/log-chiamate-http"
+  }
+]

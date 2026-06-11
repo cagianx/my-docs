@@ -3,6 +3,9 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import {version} from '@site/package.json';
+import changelog from '@site/src/data/changelog.json';
+
+const RECENT = changelog.slice(0, 10);
 
 const CATEGORIES = [
   {
@@ -120,6 +123,37 @@ export default function Home(): ReactNode {
               </Link>
             ))}
           </div>
+        </section>
+
+        <section className="mydocs-section">
+          <div className="mydocs-section-head">
+            <div>
+              <div className="mydocs-section-lbl">// changelog</div>
+              <h2 className="mydocs-section-title">Ultime modifiche</h2>
+            </div>
+            <div className="mydocs-section-right">
+              {RECENT.length} voci recenti
+            </div>
+          </div>
+
+          <ul className="mydocs-log">
+            {RECENT.map((e, i) => (
+              <li key={i} className="mydocs-log-row">
+                <Link to={e.path} className="mydocs-log-link">
+                  <time className="mydocs-log-date" dateTime={e.date}>
+                    {e.date}
+                  </time>
+                  <span
+                    className="mydocs-log-tag"
+                    data-tag={e.tag.toLowerCase()}>
+                    {e.tag}
+                  </span>
+                  <span className="mydocs-log-title">{e.title}</span>
+                  <span className="mydocs-log-arrow">→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       </main>
     </Layout>

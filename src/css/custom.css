@@ -729,12 +729,73 @@ hr {
   border-top: 1px dashed var(--md-border);
 }
 
+/* changelog (ultime modifiche) */
+.mydocs-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--md-border);
+}
+.mydocs-log-row {
+  border-bottom: 1px solid var(--md-border);
+}
+.mydocs-log-link {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 8px;
+  text-decoration: none !important;
+  color: var(--ifm-color-content) !important;
+}
+.mydocs-log-link:hover {
+  background: var(--ifm-background-surface-color);
+}
+.mydocs-log-date {
+  font-size: 0.78rem;
+  color: var(--ifm-color-content-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.mydocs-log-tag {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  padding: 2px 8px;
+  border: 1px solid var(--md-border);
+  color: var(--ifm-color-content-secondary);
+  white-space: nowrap;
+}
+.mydocs-log-tag[data-tag='nuovo'] {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+.mydocs-log-title {
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.mydocs-log-arrow {
+  color: var(--ifm-color-content-secondary);
+  justify-self: end;
+}
+.mydocs-log-link:hover .mydocs-log-arrow {
+  color: var(--ifm-color-primary);
+  transform: translateX(4px);
+}
+
 @media (max-width: 1100px) {
   .mydocs-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 700px) {
   .mydocs-grid { grid-template-columns: 1fr; }
   .mydocs-hero, .mydocs-section { padding: 32px 20px; }
+  .mydocs-log-link {
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+  }
+  .mydocs-log-arrow { display: none; }
+  .mydocs-log-title { grid-column: 1 / -1; }
 }
 
 /* search (DocSearch) — sharp edges */
