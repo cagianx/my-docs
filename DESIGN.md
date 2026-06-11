@@ -118,6 +118,8 @@ Palette monocromatica fredda — nero e grigi tendenti al verde-oliva — incend
 ### Named Rules
 **La Regola dell'Unico Accento.** L'arancione-ambra è l'unico colore non-neutro del sistema (il verde stato è un puntino, non un colore). Marca *funzione* — azione, stato attivo, prefisso — mai decorazione. Se compare per «dare colore», è un errore: rimuoverlo.
 
+**L'Eccezione dei Loghi Tecnologici.** I loghi delle tecnologie (libreria [`developer-icons`](https://github.com/xandemon/developer-icons)) sono l'unica eccezione consentita alla regola dell'unico accento: mantengono i **colori brand originali**. La ragione è funzionale, non decorativa — un logo *è* il suo colore: il C# è viola, PostgreSQL è blu, Angular è rosso; desaturarlo lo rende generico e ne indebolisce il riconoscimento immediato, che è proprio il lavoro che il logo deve fare. L'eccezione è **strettamente confinata**: vale solo per i loghi-marchio accanto al nome di una tecnologia (badge sotto l'H1 di una pagina di tecnologia, strisce nelle schede home, hub `/tecnologie`), mai per testo, bordi, sfondi o icone d'interfaccia. Tutto il resto del sistema resta nero + ambra. Un colore brand che esce da questo confine è un errore.
+
 **La Regola del Nero Stratificato.** La profondità si fa con tre neri (`#0a0a0a` → `#050505` → `#000`), non con le ombre. Una superficie più «dentro» è più scura, non più ombreggiata.
 
 ## 3. Typography
@@ -191,4 +193,4 @@ Il sistema è **piatto per dottrina**: nessuna ombra, da nessuna parte (`box-sha
 - **Don't** lasciare che il **brutalismo diventi costume**: se contrasto ed effetto confliggono, vince il contrasto. Niente arancione su nero per testo di lettura lungo.
 - **Don't** produrre **slop da IA**: niente eyebrow MAIUSCOLO tracked come grammatica su *ogni* sezione (il `//` è un pattern firmato, non un riflesso), niente gradient text, niente griglie di card identiche e ripetute fuori dalla homepage, niente template hero-metric.
 - **Don't** usare ombre, raggi, glassmorphism decorativo o **side-stripe border** > 1px come accento (il bordo sinistro della sidebar attiva è 2px *funzionale*, non decorazione).
-- **Don't** aggiungere una seconda famiglia tipografica o un secondo colore d'accento: la disciplina mono + ambra è l'identità.
+- **Don't** aggiungere una seconda famiglia tipografica o un secondo colore d'accento: la disciplina mono + ambra è l'identità. **Unica eccezione**: i loghi tecnologici (`developer-icons`) tengono i colori brand originali — vedi *L'Eccezione dei Loghi Tecnologici* in §2. È un'eccezione confinata ai loghi-marchio, non un permesso ad aprire la palette.
