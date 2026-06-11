@@ -89,6 +89,10 @@ Indice che determina l'ordinamento fisico dei dati su disco. Ce ne può essere u
 
 Approccio Entity Framework in cui il codice C# è la fonte di verità del modello dati. Il database viene generato e aggiornato a partire dalle entity class e dalle migration. L'opposto (Database First) non si usa. Vedi [`regole/entity-framework`](regole/entity-framework.md).
 
+## Commit assistito dall'IA
+
+Skill che raggruppa le modifiche pendenti del working tree nel minor numero di commit Conventional Commits possibile, senza mescolare intenti con peso semver diverso (in particolare `feat` e `fix`, o `feat` e `docs`). Dove un file contiene modifiche di intenti diversi, le separa per hunk. Vedi [`ia/skills/commit-ia`](ia/skills/commit-ia.md).
+
 ## Command pattern
 
 Pattern comportamentale che reifica un'azione in un oggetto immutabile, separando chi la richiede da chi la esegue. È la base concettuale di `IUseCase` e dei command di MediatR. Abilita logging uniforme, validazione, coda di lavoro, audit e retry. Vedi [`pattern-di-sviluppo/command`](pattern-di-sviluppo/command.md) · [`tecnologie/csharp/pattern/command`](tecnologie/csharp/pattern/command.md).
@@ -245,6 +249,10 @@ Capacità di gestire errori transitori nelle chiamate a servizi esterni tramite 
 
 Pattern che incapsula l'esito di un'operazione in un oggetto `Result<T>`, distinguendo esplicitamente successo e fallimento senza usare eccezioni per il controllo del flusso. `Result<T>` vive in Models, prodotto da UseCases e consumato da Api. Vedi [`tecnologie/csharp/struttura-soluzione/07-models`](tecnologie/csharp/struttura-soluzione/07-models.md) · [`regole/gestione-errori`](regole/gestione-errori.md).
 
+## Rilascio assistito dall'IA
+
+Skill che esegue un rilascio completo — bump di versione, changelog, commit e tag — alla pari di `commit-and-tag-version`, ma con il changelog prodotto analizzando i commit (e i diff) rispetto al tag precedente, anziché parsando i prefissi dei commit. Il livello semver può essere inferito dalla natura reale delle modifiche. Vedi [`ia/skills/rilascio-ia`](ia/skills/rilascio-ia.md).
+
 ## Observer / Pub-Sub
 
 Pattern comportamentale che notifica un numero variabile di consumatori al verificarsi di un evento, senza che il produttore conosca chi ascolta. In C# si realizza in-process con MediatR `INotification` e cross-process con MassTransit su broker (RabbitMQ, Azure Service Bus). Vedi [`pattern-di-sviluppo/observer`](pattern-di-sviluppo/observer.md) · [`tecnologie/csharp/pattern/observer`](tecnologie/csharp/pattern/observer.md).
@@ -284,6 +292,10 @@ Schema di versioning `MAJOR.MINOR.PATCH`: MAJOR per breaking changes, MINOR per 
 ## Sink (Serilog)
 
 Destinazione di scrittura dei log in Serilog: console, file, database, Seq, Application Insights, ecc. Si possono configurare più sink contemporaneamente, con livelli minimi differenti per ciascuno. È possibile scrivere sink custom implementando `ILogEventSink`. Vedi [`tecnologie/csharp/osservabilita/logging`](tecnologie/csharp/osservabilita/05-logging.md).
+
+## Skill (IA)
+
+Procedura operativa ripetibile che un agente IA esegue sul progetto: una sequenza di passi con vincoli espliciti, descritta una sola volta e versionata insieme al codice. La pagina che la descrive ha doppia natura — documentazione e specifica operativa da cui l'agente esegue. Vedi [`ia/skills`](ia/skills/index.md).
 
 ## Soft delete
 

@@ -93,6 +93,19 @@ Gli esempi di **modellazione del dato** vivono in `docs/tecnologie/csharp/esempi
 - **Ogni modellazione deve avere un diagramma ER Mermaid** (` ```mermaid` + `erDiagram`), in apertura della descrizione del modello. È obbligatorio, non opzionale.
 - Mermaid non viene validato dal build (il rendering è lato client): dopo aver aggiunto o modificato un ER diagram, **verificarne il rendering** servendo il sito, non solo con `pnpm build`. Attenzione alle chiavi valide (`PK`, `FK`, `UK`, combinabili con la virgola: `PK,FK`).
 
+## Skill IA
+
+Le skill descritte in `docs/ia/skills/` hanno **doppia natura**: sono documentazione *e* specifica operativa. La versione **eseguibile** da Claude Code vive in `.claude/skills/<nome>/SKILL.md` e si invoca con `/<nome>`.
+
+| Skill | Documentazione (fonte di verità) | Eseguibile |
+|-------|----------------------------------|------------|
+| `/commit` | `docs/ia/skills/commit-ia.md` | `.claude/skills/commit/SKILL.md` |
+| `/release` | `docs/ia/skills/rilascio-ia.md` | `.claude/skills/release/SKILL.md` |
+
+- La pagina in `docs/` è la fonte di verità. Il `SKILL.md` è un **puntatore sottile**: frontmatter (`name` + `description`, necessari perché Claude Code attivi `/<nome>` senza leggere la pagina) e un rimando a leggere ed eseguire la pagina. La procedura **non si duplica** nel `SKILL.md`.
+- Aggiungendo una skill, creare la pagina in `docs/ia/skills/` e il `SKILL.md` puntatore, poi aggiornare questa tabella, l'elenco in `docs/ia/skills/index.md`, il glossario e l'indice analitico.
+- Le skill in `.claude/skills/` sono auto-rilevate: non serve registrarle altrove perché `/<nome>` funzioni.
+
 ## Key constraints
 
 - `onBrokenLinks: 'throw'` — any internal link pointing to a non-existent page breaks the build. Always verify links after adding/removing docs.

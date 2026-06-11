@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-description: Tecniche per integrare questa guida in un progetto come knowledge base per gli agenti IA — sottomodulo git, riferimenti da CLAUDE.md, glossario condiviso.
+description: Tecniche per integrare questa guida in un progetto come knowledge base per gli agenti IA — sottomodulo git, riferimenti da CLAUDE.md, skill operative, glossario condiviso.
 ---
 
 # Uso con IA
@@ -49,6 +49,34 @@ Per cercare altri concetti, partire da `my-docs/docs/indice-analitico.md`.
 ```
 
 Lo stesso vale per `AGENTS.md` o per i file equivalenti di altri agenti. Un progetto frontend Angular avrà riferimenti diversi rispetto a un'API .NET — il file di configurazione dell'IA è lo strato che adatta MyDocs al contesto.
+
+## Skill operative nel proprio repo
+
+MyDocs include alcune [skill](ia/skills/index.md) — procedure operative come [commit](ia/skills/commit-ia.md) e [release](ia/skills/rilascio-ia.md). La pagina che le descrive è la fonte di verità; la versione **eseguibile** da Claude Code vive in `.claude/skills/<nome>/SKILL.md` e si invoca con `/<nome>`.
+
+Claude Code cerca le skill nel `.claude/skills/` **alla radice del progetto**, non dentro un submodule. Quelle di MyDocs, annidate in `my-docs/.claude/skills/`, non vengono quindi rilevate da sole. Per renderle invocabili nel proprio repo si crea un `SKILL.md` **puntatore sottile** che rimanda alla pagina nel submodule — già pinnata a un tag preciso, quindi fonte di verità versionata.
+
+`.claude/skills/commit/SKILL.md` nel proprio progetto:
+
+```markdown
+---
+name: commit
+description: Crea i commit delle modifiche pendenti raggruppandole nel minor numero di commit Conventional Commits possibile, senza mescolare intenti con peso semver diverso. Usare quando l'utente chiede di committare.
+---
+
+# Commit assistito dall'IA
+
+Procedura completa in `my-docs/docs/ia/skills/commit-ia.md` — unica fonte di verità.
+Leggi quel file ed esegui ciò che descrive. Non duplicare qui le istruzioni.
+```
+
+Tre conseguenze:
+
+- **Versionata col submodule** — la skill segue il tag pinnato di MyDocs: cambiarne il comportamento è un bump esplicito, non una deriva silenziosa.
+- **Senza duplicazione** — nel proprio repo restano solo il frontmatter (necessario perché Claude Code attivi `/<nome>` senza aprire la pagina) e il rimando; la procedura vive in MyDocs.
+- **Selettiva** — un progetto abilita solo le skill che gli servono, creando il puntatore unicamente per quelle.
+
+Conviene citare le skill disponibili anche nel CLAUDE.md, tra i riferimenti, così l'agente sa che esistono e quando usarle.
 
 ## Glossario come ubiquitous language
 

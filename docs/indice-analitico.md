@@ -57,6 +57,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Codice difensivo (da evitare)** — [regole/dominio](regole/dominio.md) · [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/gestione-errori](regole/gestione-errori.md)
 - **Combinazioni inconsistenti** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md)
 - **Commit** — [tecnologie/git](tecnologie/git/index.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
+- **Commit assistito dall'IA** — [ia/skills/commit-ia](ia/skills/commit-ia.md) · [glossario](glossario#commit-assistito-dallia)
 - **Command pattern** — [pattern-di-sviluppo/command](pattern-di-sviluppo/command.md) · [csharp/pattern/command](tecnologie/csharp/pattern/command.md) · [glossario](glossario#command-pattern)
 - **Commands (livello)** — vedi [UseCases (livello)](#u)
 - **Compensazioni** — [analisi-tecnica/05](processi/analisi-tecnica/05-flussi.md)
@@ -133,6 +134,7 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Integrazioni (progetti)** — [csharp/struttura-soluzione/06](tecnologie/csharp/struttura-soluzione/06-integrazioni.md)
 
 - **IA (generazione test)** — [regole/testing](regole/testing.md) · [regole/entity-framework](regole/entity-framework.md)
+- **IA (sezione: skill operative)** — [ia](ia/index.md) · [ia/skills](ia/skills/index.md)
 - **IA (uso di MyDocs come knowledge base)** — [uso-con-ia](uso-con-ia.md)
 - **Idempotenza** — [glossario](glossario#idempotenza) · [analisi-tecnica/04](processi/analisi-tecnica/04-contratti.md) · [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 - **IHttpClientFactory**
@@ -221,12 +223,14 @@ Riferimento rapido per trovare dove ogni concetto è trattato nella documentazio
 - **Resilienza** — [analisi-tecnica/06](processi/analisi-tecnica/06-nfr.md)
 - **rowid (SQLite)** — [database-relazionali/sqlite](tecnologie/database-relazionali/sqlite.md) · [glossario](glossario#rowid-sqlite)
 - **Result pattern** — [glossario](glossario#result-pattern) · [regole/gestione-errori](regole/gestione-errori.md) · [csharp/struttura-soluzione/07](tecnologie/csharp/struttura-soluzione/07-models.md)
+- **Rilascio assistito dall'IA** — [ia/skills/rilascio-ia](ia/skills/rilascio-ia.md) · [glossario](glossario#rilascio-assistito-dallia)
 - **Retrocompatibilità** — [analisi-tecnica/03](processi/analisi-tecnica/03-modellazione.md) · [regole/entity-framework](regole/entity-framework.md)
 
 ## S
 
 - **SaveChanges** — [regole/entity-framework](regole/entity-framework.md) · [sviluppo/02](processi/sviluppo/02-business-logic.md)
 - **Sidecar** — [glossario](glossario#sidecar) · [tecnologie/desktop/tauri](tecnologie/desktop/tauri.md) · [tecnologie/desktop](tecnologie/desktop/index.md)
+- **Skill (IA)** — [ia/skills](ia/skills/index.md) · [uso-con-ia](uso-con-ia.md) · [glossario](glossario#skill-ia)
 - **Signals (Angular)** — [angular/signals](tecnologie/angular/pattern-consigliati/signals.md)
 - **Signal Forms (Angular)** — [angular/forms](tecnologie/angular/pattern-consigliati/forms.md)
 - **Standalone components (Angular)** — [angular/standalone-components](tecnologie/angular/pattern-consigliati/standalone-components.md)

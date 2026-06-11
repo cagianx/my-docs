@@ -1,0 +1,10 @@
+{
+  "label": "Skill",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "ia/skills/index"
+  }
+}
