@@ -78,6 +78,18 @@ Il file `docs/indice-analitico.md` è un indice alfabetico di tutti i concetti t
 
 Sia l'indice analitico che il glossario (`docs/glossario.md`) vanno tenuti aggiornati **in automatico** ogni volta che si aggiunge, rimuove o sposta un concetto nella documentazione. Non aspettare che venga chiesto: se una modifica introduce un termine nuovo o sposta un concetto, aggiornare indice e glossario fa parte della modifica stessa.
 
+## Changelog in home page
+
+La home page (`src/pages/index.tsx`) mostra, **sotto le schede degli argomenti**, le **ultime dieci modifiche** alla documentazione: una sezione "Ultime modifiche" che tiene viva la pagina con i contenuti più freschi. I widget (le schede/"rettangoloni") restano dove sono; il changelog va sempre sotto.
+
+Il changelog parla **solo dei contenuti del sito** — pagine e concetti che il lettore vede: cosa è stato aggiunto, aggiornato o rimosso nella documentazione. **Ignora ogni altra modifica ai sorgenti** che non cambia un contenuto: refactor, stile/CSS, componenti, configurazione, build, tooling e skill interne non producono voci.
+
+La fonte dati è `src/data/changelog.json` (array di voci `date` / `tag` / `title` / `path`); la home ne renderizza le prime dieci. La procedura per aggiornarlo è la skill **interna** `/changelog` (`.claude/skills/changelog/SKILL.md`, autosufficiente): inserire una voce in testa all'array — `date` odierna, `tag` tra `Nuovo`/`Aggiornato`/`Rimosso`, `title` impersonale, `path` valido — e troncare a dieci.
+
+**Ogni volta che si aggiunge, aggiorna o rimuove un contenuto della documentazione**, si aggiorna il changelog con la skill `/changelog`. Come per il glossario e l'indice analitico, fa parte della modifica stessa: non si aspetta che venga chiesto.
+
+Inoltre, **quando si invoca `/release` si invoca anche `/changelog`**: il rilascio aggiorna l'elenco delle ultime modifiche, e il commit `chore(release)` prodotto da `/release` deve includere anche le modifiche a `src/data/changelog.json` (oltre a `package.json` e `CHANGELOG`).
+
 ## SEO
 
 Il sito è pubblico e indicizzato. Quando si aggiungono nuove pagine o si modificano quelle esistenti, mantenere aggiornati:
@@ -101,6 +113,8 @@ Le skill descritte in `docs/ia/skills/` hanno **doppia natura**: sono documentaz
 |-------|----------------------------------|------------|
 | `/commit` | `docs/ia/skills/commit-ia.md` | `.claude/skills/commit/SKILL.md` |
 | `/release` | `docs/ia/skills/rilascio-ia.md` | `.claude/skills/release/SKILL.md` |
+
+Esistono anche skill **interne**, che restano tooling del repository e non vengono documentate in `docs/ia/skills/` (sono pensate per gli agenti, non per chi legge il sito): `/changelog` (`.claude/skills/changelog/SKILL.md`), autosufficiente. Aggiungendone una, **non** creare la pagina pubblica né registrarla in glossario/indice.
 
 - La pagina in `docs/` è la fonte di verità. Il `SKILL.md` è un **puntatore sottile**: frontmatter (`name` + `description`, necessari perché Claude Code attivi `/<nome>` senza leggere la pagina) e un rimando a leggere ed eseguire la pagina. La procedura **non si duplica** nel `SKILL.md`.
 - Aggiungendo una skill, creare la pagina in `docs/ia/skills/` e il `SKILL.md` puntatore, poi aggiornare questa tabella, l'elenco in `docs/ia/skills/index.md`, il glossario e l'indice analitico.
