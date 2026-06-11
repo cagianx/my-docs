@@ -807,3 +807,47 @@ a:hover { text-decoration: none; }
   .md-statusbar .sb-spacer { display: none; }
   .md-statusbar .sb-item:last-child { grid-column: 1 / -1; }
 }
+
+/* ───────── Focus visibile (a11y / keyboard) ─────────
+   Il tema brutalist azzera molti stati nativi: senza questa regola il focus
+   da tastiera è invisibile (WCAG 2.4.7 Focus Visible). Outline ambra netto,
+   coerente con l'estetica terminale. Lo stato non vive nel solo colore: è un
+   anello pieno, percepibile anche con daltonismo. */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible,
+.button:focus-visible,
+.navbar__link:focus-visible,
+.navbar__brand:focus-visible,
+.menu__link:focus-visible,
+.table-of-contents__link:focus-visible,
+.pagination-nav__link:focus-visible,
+.breadcrumbs__link:focus-visible,
+.footer__link-item:focus-visible,
+.DocSearch-Button:focus-visible,
+.md-statusbar a.sb-item:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+/* le card della homepage sono edge-to-edge (griglia senza gap): anello interno
+   così il focus non si sovrappone alle celle adiacenti */
+.mydocs-card:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: -2px;
+}
+
+/* ───────── Reduced motion (a11y) ─────────
+   prefers-reduced-motion non è opzionale. Il cursore lampeggiante dell'hero è
+   un'animazione infinita: va fermata su uno stato pieno e visibile. Le
+   transizioni (nudge della freccia, inversioni hover) diventano istantanee:
+   il cambio di stato resta, la choreography sparisce. */
+@media (prefers-reduced-motion: reduce) {
+  .mydocs-cursor { animation: none; }
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
