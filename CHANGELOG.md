@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/cagianx/my-docs/compare/v1.2.1...v1.3.0) (2026-06-11)
+
+
+### Features
+
+* **home:** nuova sezione «Ultime modifiche» in fondo alla home page, sotto le schede degli argomenti — mostra gli ultimi dieci aggiornamenti ai contenuti della documentazione, letti da `src/data/changelog.json`. Tiene viva la pagina con i contenuti più freschi ([9ee2565](https://github.com/cagianx/my-docs/commit/9ee2565466748d6bea6b307988ab424b5174ea5c))
+
+
+### Documentation
+
+* documentate le regole del changelog in home — parla solo dei contenuti del sito e ignora le altre modifiche ai sorgenti, si aggiorna a ogni modifica di contenuto come glossario e indice, e si integra con il rilascio: invocando `/release` si invoca anche `/changelog`, e il commit `chore(release)` include `src/data/changelog.json` ([cf9103f](https://github.com/cagianx/my-docs/commit/cf9103ff55c65821b04e13a76a573bf01ba63396))
+
+
+### Tooling
+
+* aggiunta la skill interna `/changelog`, che aggiorna `src/data/changelog.json` inserendo una voce in testa e troncando l'elenco a dieci. È tooling del repository, non documentata nel sito ([ee80967](https://github.com/cagianx/my-docs/commit/ee80967682d5f8a4c3e0cc5a15341f630b3d5321))
+
 ## [1.2.1](https://github.com/cagianx/my-docs/compare/v1.2.0...v1.2.1) (2026-06-11)
 
 
