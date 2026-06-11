@@ -739,32 +739,46 @@ hr {
 .mydocs-log-row {
   border-bottom: 1px solid var(--md-border);
 }
+/* desktop: data | tag | titolo | freccia, su una riga.
+   La colonna del tag è dimensionata sul contenuto (auto) e il chip è
+   ancorato a sinistra: i titoli partono tutti dallo stesso punto. */
 .mydocs-log-link {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   align-items: baseline;
-  gap: 16px;
-  padding: 14px 8px;
+  column-gap: 20px;
+  row-gap: 7px;
+  padding: 15px 8px;
   text-decoration: none !important;
   color: var(--ifm-color-content) !important;
+  transition: background-color 0.12s ease;
 }
 .mydocs-log-link:hover {
   background: var(--ifm-background-surface-color);
 }
 .mydocs-log-date {
+  grid-column: 1;
   font-size: 0.78rem;
   color: var(--ifm-color-content-secondary);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+/* chip a larghezza fissa e centrato: niente stretch nella cella,
+   tutti i tag della stessa misura (NUOVO / AGGIORNATO / RIMOSSO). */
 .mydocs-log-tag {
-  font-size: 0.66rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-  padding: 2px 8px;
+  grid-column: 2;
+  justify-self: start;
+  box-sizing: border-box;
+  min-width: 5.75rem;
+  padding: 3px 6px;
   border: 1px solid var(--md-border);
   color: var(--ifm-color-content-secondary);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 .mydocs-log-tag[data-tag='nuovo'] {
@@ -772,12 +786,15 @@ hr {
   border-color: var(--ifm-color-primary);
 }
 .mydocs-log-title {
+  grid-column: 3;
   font-size: 0.92rem;
-  line-height: 1.5;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 .mydocs-log-arrow {
-  color: var(--ifm-color-content-secondary);
+  grid-column: 4;
   justify-self: end;
+  color: var(--ifm-color-content-secondary);
 }
 .mydocs-log-link:hover .mydocs-log-arrow {
   color: var(--ifm-color-primary);
@@ -790,12 +807,19 @@ hr {
 @media (max-width: 700px) {
   .mydocs-grid { grid-template-columns: 1fr; }
   .mydocs-hero, .mydocs-section { padding: 32px 20px; }
+  /* mobile: meta (data + tag) sulla prima riga, titolo a piena larghezza
+     sotto. Niente freccia: tutta la riga è toccabile. */
   .mydocs-log-link {
     grid-template-columns: auto 1fr;
-    gap: 6px 12px;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 8px;
+    padding: 14px 4px;
   }
-  .mydocs-log-arrow { display: none; }
+  .mydocs-log-date { grid-column: 1; }
+  .mydocs-log-tag { grid-column: 2; }
   .mydocs-log-title { grid-column: 1 / -1; }
+  .mydocs-log-arrow { display: none; }
 }
 
 /* search (DocSearch) — sharp edges */
