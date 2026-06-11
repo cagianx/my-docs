@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.1](https://github.com/cagianx/my-docs/compare/v1.3.0...v1.3.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* **home:** corretta la resa grafica del changelog in home page, soprattutto su mobile. Il chip del tag, da grid item con `justify-self: stretch`, si allargava da bordo a bordo nella colonna fluida: ora ha larghezza fissa ed è ancorato a sinistra, i tag sono uniformi e i titoli si allineano. Su mobile data e tag stanno sulla prima riga, il titolo a piena larghezza sotto; nessun overflow orizzontale da 320px in su ([36cbdec](https://github.com/cagianx/my-docs/commit/36cbdec6ae78863a77bd153127dc8b826120bb5c))
+
 ## [1.3.0](https://github.com/cagianx/my-docs/compare/v1.2.1...v1.3.0) (2026-06-11)
 
 
