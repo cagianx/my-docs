@@ -1,9 +1,12 @@
 ---
 sidebar_position: 3
+title: Electron puro
 description: Integrare Electron con Angular e ASP.NET Core avviato come child process.
 ---
 
-# Electron puro
+import TechIcon from '@site/src/components/TechIcon';
+
+# Electron puro <TechIcon name="electron" size={30} className="tech-badge" />
 
 In questo approccio Electron gestisce direttamente la shell desktop. Il processo principale di Electron avvia il backend ASP.NET Core come child process, attende che sia pronto ad accettare richieste, poi apre la `BrowserWindow` con la build Angular.
 

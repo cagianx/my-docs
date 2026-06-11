@@ -1,0 +1,41 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--md-border, var(--ifm-toc-border-color));
+  border-left: 1px solid var(--md-border, var(--ifm-toc-border-color));
+  margin: 1.5rem 0;
+}
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-right: 1px solid var(--md-border, var(--ifm-toc-border-color));
+  border-bottom: 1px solid var(--md-border, var(--ifm-toc-border-color));
+  text-decoration: none !important;
+  color: var(--ifm-color-content) !important;
+}
+.card:hover {
+  border-color: var(--ifm-color-primary);
+}
+/* loghi a colori brand: eccezione documentata alla regola dell'unico
+   accento (vedi DESIGN.md §2). Un logo è il suo colore. */
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.label {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.note {
+  font-size: 0.8rem;
+  color: var(--ifm-color-content-secondary);
+  line-height: 1.4;
+}

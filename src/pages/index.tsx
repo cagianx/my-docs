@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import {version} from '@site/package.json';
 import changelog from '@site/src/data/changelog.json';
+import {TechIconRow} from '@site/src/components/TechIcon';
 
 const RECENT = changelog.slice(0, 10);
 
@@ -31,6 +32,7 @@ const CATEGORIES = [
     title: 'Git e versionamento',
     path: '/docs/tecnologie/git',
     desc: 'Convenzioni di commit e branch, Semantic Versioning, ciclo di rilascio tracciabile, niente pride versioning.',
+    tech: ['git'],
   },
   {
     idx: '05',
@@ -43,6 +45,7 @@ const CATEGORIES = [
     title: 'Tecnologie',
     path: '/docs/tecnologie/',
     desc: 'Convenzioni specifiche per stack: C# con Entity Framework e ASP.NET Core, Angular per il frontend, database relazionali (SQLite, SQL Server, PostgreSQL).',
+    tech: ['csharp', 'angular', 'postgres', 'sqlserver', 'electron'],
   },
   {
     idx: '07',
@@ -119,6 +122,13 @@ export default function Home(): ReactNode {
                 </div>
                 <div className="mydocs-card-title">{c.title}</div>
                 <div className="mydocs-card-desc">{c.desc}</div>
+                {c.tech && (
+                  <TechIconRow
+                    className="mydocs-card-tech"
+                    names={c.tech}
+                    size={20}
+                  />
+                )}
                 <div className="mydocs-card-path">{c.path}</div>
               </Link>
             ))}

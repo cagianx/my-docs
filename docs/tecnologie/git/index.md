@@ -1,9 +1,12 @@
 ---
 sidebar_position: 3
+title: Git
 description: Conventional Commits, trunk-based development, feature flag e regole su commit, branch e pull request.
 ---
 
-# Git
+import TechIcon from '@site/src/components/TechIcon';
+
+# Git <TechIcon name="git" size={30} className="tech-badge" />
 
 ## Commit
 

@@ -1,9 +1,12 @@
 ---
 sidebar_position: 2
+title: Electron.NET
 description: Usare Electron.NET in un progetto desktop separato che avvia il WebAPI come child process.
 ---
 
-# Electron.NET
+import TechIcon from '@site/src/components/TechIcon';
+
+# Electron.NET <TechIcon name="electron" size={30} className="tech-badge" />
 
 [Electron.NET](https://github.com/ElectronNET/Electron.NET) è una libreria che integra ASP.NET Core con Electron. Viene usata in un progetto `MyApp.Desktop` dedicato, separato dal WebAPI.
 

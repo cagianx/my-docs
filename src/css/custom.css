@@ -728,6 +728,28 @@ hr {
   padding-top: 12px;
   border-top: 1px dashed var(--md-border);
 }
+/* fila di loghi tecnologie nelle schede home.
+   Eccezione documentata alla regola dell'unico accento (vedi DESIGN.md §2):
+   i loghi-marchio tengono i colori brand originali. */
+.mydocs-card-tech {
+  margin-top: auto;
+}
+.mydocs-card-tech + .mydocs-card-path {
+  margin-top: 12px;
+}
+/* badge logo inline con l'H1 delle pagine di tecnologia: colori brand,
+   centrato verticalmente sul titolo. Il flex sull'H1 allinea il logo
+   all'altezza delle maiuscole invece che alla baseline del testo. */
+.markdown h1:has(.tech-badge) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.tech-badge {
+  flex: none;
+  order: -1;
+}
 
 /* changelog (ultime modifiche) */
 .mydocs-log {

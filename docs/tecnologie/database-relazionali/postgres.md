@@ -1,9 +1,12 @@
 ---
 sidebar_position: 4
+title: PostgreSQL
 description: Convenzioni per PostgreSQL — heap senza clustering persistente, comando CLUSTER, indici copertura, partizionamento e BRIN.
 ---
 
-# PostgreSQL
+import TechIcon from '@site/src/components/TechIcon';
+
+# PostgreSQL <TechIcon name="postgres" size={30} className="tech-badge" />
 
 PostgreSQL è il caso in cui le [best practice sugli indici](best-practice/indici.md) vanno **tradotte**, non applicate alla lettera: il motore **non ha un clustered index persistente**.
 

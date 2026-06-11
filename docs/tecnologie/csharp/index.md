@@ -1,9 +1,12 @@
 ---
 sidebar_position: 1
+title: "C# / ASP.NET Core"
 description: Regole e convenzioni per C# e ASP.NET Core.
 ---
 
-# C# / ASP.NET Core
+import TechIcon from '@site/src/components/TechIcon';
+
+# C# / ASP.NET Core <TechIcon name="csharp" size={30} className="tech-badge" />
 
 Convenzioni, pattern e riferimenti tecnici per lo sviluppo con C# e ASP.NET Core.
 
