@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/cagianx/my-docs/compare/v1.3.1...v1.4.0) (2026-06-11)
+
+
+### Features
+
+* **tecnologie:** i loghi delle tecnologie compaiono ora in tutto il sito tramite la libreria [`developer-icons`](https://github.com/xandemon/developer-icons). Una striscia di loghi nelle schede Git e Tecnologie in home, una griglia visiva degli stack nell'hub `/tecnologie`, e un badge col logo a fianco dell'H1 nelle pagine di C#, Angular, Git, PostgreSQL, SQL Server ed Electron. I loghi tengono i colori brand originali; le tecnologie prive di un logo noto degradano in silenzio, senza alterare il layout ([2e86ae3](https://github.com/cagianx/my-docs/commit/2e86ae3), [e22d1e9](https://github.com/cagianx/my-docs/commit/e22d1e9))
+
+
+### Documentation
+
+* **design:** documentata in `DESIGN.md` l'eccezione dei loghi tecnologici alla regola dell'unico accento — i loghi-marchio mantengono i colori brand, in modo confinato e giustificato dal riconoscimento immediato ([a98d360](https://github.com/cagianx/my-docs/commit/a98d360))
+
 ## [1.3.1](https://github.com/cagianx/my-docs/compare/v1.3.0...v1.3.1) (2026-06-11)
 
 
