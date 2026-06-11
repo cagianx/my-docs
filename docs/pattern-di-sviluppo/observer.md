@@ -27,18 +27,12 @@ Il componente nel cui dominio l'evento ha origine. Pubblica l'evento attraverso 
 
 Ciascuno si registra per ricevere uno o più tipi di evento e implementa la propria reazione. Sono indipendenti l'uno dall'altro: un errore in uno non blocca gli altri.
 
-```text
-                                   ┌──────────────┐
-                                   │ ConsumatoreA │
-                                   └──────────────┘
-                                          ▲
- ┌──────────┐    evento     ┌──────────┐  │
- │Produttore│──────────────▶│ Canale   │──┼──▶ ConsumatoreB
- └──────────┘               └──────────┘  │
-                                          ▼
-                                   ┌──────────────┐
-                                   │ ConsumatoreC │
-                                   └──────────────┘
+```mermaid
+graph LR
+    Produttore -- evento --> Canale
+    Canale --> ConsumatoreA
+    Canale --> ConsumatoreB
+    Canale --> ConsumatoreC
 ```
 
 ## In-process vs cross-process

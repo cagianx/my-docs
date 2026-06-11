@@ -31,19 +31,18 @@ Espone metodi per impostare le proprietà del prodotto, uno alla volta o a grupp
 
 Crea il builder, lo configura passo passo, chiama `Build()`. Riceve un'istanza pronta o un errore esplicito se la configurazione è incoerente.
 
-```text
- consumatore                builder                prodotto
-      │                        │                        │
-      │  new Builder()         │                        │
-      │───────────────────────▶│                        │
-      │  .WithA(x)             │                        │
-      │───────────────────────▶│                        │
-      │  .WithB(y)             │                        │
-      │───────────────────────▶│                        │
-      │  .Build()              │       new Product()    │
-      │───────────────────────▶│───────────────────────▶│
-      │◀───────────────────────│◀───────────────────────│
-      │       Product                                   │
+```mermaid
+sequenceDiagram
+    participant C as consumatore
+    participant B as builder
+    participant P as prodotto
+    C->>B: new Builder()
+    C->>B: .WithA(x)
+    C->>B: .WithB(y)
+    C->>B: .Build()
+    B->>P: new Product()
+    P-->>B: istanza
+    B-->>C: Product
 ```
 
 ## Quando usarlo

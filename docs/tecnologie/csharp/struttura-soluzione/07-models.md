@@ -44,9 +44,10 @@ src/models/
 
 Models non dipende da nessun altro progetto. È la base trasversale referenziata da Db (per gli enum nelle entità) e Core (per DTO ed enum nei domain service e validator). Api e UseCases ne ottengono i tipi transitivamente.
 
-```
-Db    ──▶  Models
-Core  ──▶  Models
+```mermaid
+graph LR
+    Db --> Models
+    Core --> Models
 ```
 
 ❌ Da evitare: aggiungere logica in Models (metodi di business, costruttori con validazione, factory di dominio). Se un DTO richiede logica di costruzione, quella logica vive nel domain service o nel validator. Models resta una raccolta di tipi puri.

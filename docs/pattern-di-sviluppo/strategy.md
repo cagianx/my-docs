@@ -33,17 +33,16 @@ Il codice che ha bisogno dell'operazione **dipende esclusivamente dall'interfacc
 
 Questo è il vantaggio fondamentale: il consumatore è **disaccoppiato** dalle implementazioni. Aggiungere, rimuovere o sostituire una strategy non tocca il codice che la utilizza.
 
-```text
-                  ┌─────────────────┐
- ┌──────────┐    │   IStrategy     │    ┌──────────────┐
- │ Selettore│───▶│  (interfaccia)  │◀───│ Consumatore  │
- └──────────┘    └─────────────────┘    └──────────────┘
-       │               ▲
-       │  ┌────────────┼────────────┐
-       ▼  │            │            │
-    ┌──────────┐ ┌──────────┐ ┌──────────┐
-    │StrategyA │ │StrategyB │ │StrategyC │
-    └──────────┘ └──────────┘ └──────────┘
+```mermaid
+graph TD
+    Selettore --> IStrategy["IStrategy (interfaccia)"]
+    Consumatore --> IStrategy
+    Selettore --> StrategyA
+    Selettore --> StrategyB
+    Selettore --> StrategyC
+    StrategyA -. implementa .-> IStrategy
+    StrategyB -. implementa .-> IStrategy
+    StrategyC -. implementa .-> IStrategy
 ```
 
 ## Quando usarlo

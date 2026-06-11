@@ -27,11 +27,9 @@ Riceve un command e produce un risultato. Conosce il dominio, le dipendenze, gli
 
 Riceve un command e individua l'handler giusto. Spesso è uno strato sottile sopra il container DI o sopra una libreria di mediator. Centralizza l'invocazione e permette di applicare comportamenti trasversali (logging, validazione, transazione) tramite [decorator](decorator.md) o [pipeline](chain-of-responsibility.md).
 
-```text
- ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
- │  Chiamante   │───▶│  Command     │───▶│  Dispatcher  │───▶│   Handler    │
- └──────────────┘    │  (dato)      │    └──────────────┘    │ (esecutore)  │
-                     └──────────────┘                        └──────────────┘
+```mermaid
+graph LR
+    Chiamante --> Command["Command (dato)"] --> Dispatcher --> Handler["Handler (esecutore)"]
 ```
 
 ## Quando usarlo

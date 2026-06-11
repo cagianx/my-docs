@@ -27,13 +27,12 @@ L'implementazione "vera": quella che fa effettivamente il lavoro di dominio. I d
 
 Ricevono in costruttore un'istanza dell'interfaccia (che può essere il componente o un altro decorator). Per ogni chiamata aggiungono il proprio comportamento e poi delegano. Sono componibili in catena.
 
-```text
- ┌──────────────┐        ┌──────────────┐        ┌──────────────┐        ┌──────────────┐
- │ Consumatore  │───────▶│  LoggingDec  │───────▶│  CachingDec  │───────▶│  RealService │
- └──────────────┘        └──────────────┘        └──────────────┘        └──────────────┘
-                          implementa              implementa              implementa
-                          IService                IService                IService
+```mermaid
+graph LR
+    Consumatore --> LoggingDec --> CachingDec --> RealService
 ```
+
+`LoggingDec`, `CachingDec` e `RealService` implementano tutti la stessa interfaccia `IService`: per questo sono componibili in catena.
 
 Il consumatore inietta `IService` e riceve la catena. Ogni nuovo decorator si aggiunge senza toccare gli altri.
 

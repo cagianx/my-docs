@@ -80,10 +80,12 @@ services.AddScoped<IEmailSender, FakeEmailSender>();
 
 Core dipende dai progetti di integrazione, non il contrario:
 
-```
-Api   ──▶  Core  ──▶  integrations/email
-                 ──▶  integrations/pdf
-Tests ──▶  Core
+```mermaid
+graph LR
+    Api --> Core
+    Core --> Email["integrations/email"]
+    Core --> Pdf["integrations/pdf"]
+    Tests --> Core
 ```
 
 Core usa le interfacce esposte dalle integrazioni. Non tocca mai MailKit, html2pdf o le altre librerie — quelle rimangono confinate nei rispettivi progetti.

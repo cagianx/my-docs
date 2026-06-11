@@ -14,11 +14,10 @@ Questa pagina mostra come applicare l'[Adapter](../../../pattern-di-sviluppo/ada
 
 Il Core esprime il dominio in termini propri. Librerie come `MailKit`, `Microsoft.Graph`, `Stripe.net`, `AWSSDK.S3` portano con sé un proprio vocabolario, modello di errore e tipi concreti. L'adapter è il livello che li tiene fuori dal Core.
 
-```text
-┌────────────┐    INotificationSender    ┌──────────────────┐    MailKit    ┌──────────┐
-│   Core     │ ──────────────────────────│ MailKitAdapter   │──────────────▶│   SMTP   │
-│            │                           │ (Integrazioni)   │               │  server  │
-└────────────┘                           └──────────────────┘               └──────────┘
+```mermaid
+graph LR
+    Core -- INotificationSender --> MailKitAdapter["MailKitAdapter<br/>(Integrazioni)"]
+    MailKitAdapter -- MailKit --> SMTP["SMTP server"]
 ```
 
 Il Core dipende solo da `INotificationSender`. L'adapter, che vive nel progetto di integrazione, è l'unico punto a importare `MailKit`.

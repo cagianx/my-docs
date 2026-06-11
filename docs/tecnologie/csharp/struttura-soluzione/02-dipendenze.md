@@ -5,11 +5,15 @@ description: Regole di dipendenza tra i progetti di una solution .NET — Models
 
 # Dipendenze tra progetti
 
-```
-Api   ──▶  UseCases  ──▶  Core  ──▶  Db  ──▶  Models
-                                ──▶  Models
-                                ──▶  integrations/*
-Tests ──▶  Core
+```mermaid
+graph LR
+    Api[Api] --> UseCases
+    UseCases --> Core
+    Core --> Db
+    Core --> Models
+    Core --> Integrations[integrations/*]
+    Db --> Models
+    Tests --> Core
 ```
 
 **Models** non dipende da nessuno. Raccoglie i tipi condivisi: DTO, enum di dominio, `Result<T>`. È la base trasversale referenziata da Db (per gli enum nelle entità) e Core (per DTO ed enum). Vedi [Models](07-models.md).

@@ -27,12 +27,10 @@ Il componente esistente — libreria, client SDK, vecchio modulo — con un'inte
 
 Implementa l'interfaccia attesa, riceve in costruttore l'adattato e traduce ogni chiamata: nomi, tipi, modello d'errore, semantica.
 
-```text
-                                  ┌──────────┐
- ┌──────────────┐    ITarget       │ Adapter  │     IAdaptee    ┌──────────┐
- │   Dominio    │─────────────────▶│ implements│───────────────▶│ Libreria │
- │  (Core)      │                  │  ITarget │                 │ esterna  │
- └──────────────┘                  └──────────┘                 └──────────┘
+```mermaid
+graph LR
+    Dominio["Dominio (Core)"] -- ITarget --> Adapter["Adapter<br/>(implementa ITarget)"]
+    Adapter -- IAdaptee --> Libreria["Libreria esterna"]
 ```
 
 ## Quando usarlo

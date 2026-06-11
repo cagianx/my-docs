@@ -31,15 +31,10 @@ Ciascuno è una unità autonoma con una responsabilità sola. Riceve il contesto
 
 Espone agli handler il modo per invocare il successivo (`next()`). Spesso è gestita da un framework (middleware HTTP, MVC filter, pipeline di MediatR) o costruita esplicitamente.
 
-```text
- ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
- │ Request  │──▶│ Logging  │──▶│  Auth    │──▶│Validation │──▶│ Handler  │
- └──────────┘    └──────────┘    └──────────┘    └──────────┘    │  finale  │
-                                                                 └──────────┘
-                                                                      │
- ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐         │
- │ Response │◀──│ Logging  │◀──│  Auth    │◀──│Validation │◀────────┘
- └──────────┘    └──────────┘    └──────────┘    └──────────┘
+```mermaid
+graph LR
+    Request --> L1[Logging] --> A1[Auth] --> V1[Validation] --> H["Handler finale"]
+    H --> V2[Validation] --> A2[Auth] --> L2[Logging] --> Response
 ```
 
 ## Quando usarlo

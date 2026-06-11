@@ -27,15 +27,11 @@ Una funzione, un metodo o un oggetto la cui responsabilità è restituire un'ist
 
 Chiama la factory e usa il prodotto restituito attraverso la sua interfaccia. Non sa quale tipo concreto sta usando e non dipende dai dettagli di costruzione.
 
-```text
- ┌──────────────┐         ┌──────────────┐         ┌──────────────┐
- │ Consumatore  │────────▶│   Factory    │────────▶│   Prodotto   │
- └──────────────┘         └──────────────┘         │ (interfaccia)│
-                                 │                 └──────────────┘
-                                 ▼                         ▲
-                         ┌──────────────┐                  │
-                         │ ProductImpl  │──────────────────┘
-                         └──────────────┘
+```mermaid
+graph LR
+    Consumatore --> Factory --> Prodotto["Prodotto (interfaccia)"]
+    Factory --> ProductImpl
+    ProductImpl -. implementa .-> Prodotto
 ```
 
 ## Differenza rispetto a Strategy
