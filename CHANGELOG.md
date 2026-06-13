@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.2](https://github.com/cagianx/my-docs/compare/v1.4.1...v1.4.2) (2026-06-13)
+
+
+### Documentation
+
+* tutta la documentazione è stata revisionata secondo le regole di scrittura anti-AI, nel rispetto del registro impersonale del progetto: eliminati circa 930 em-dash (sostituiti da due punti dopo le etichette, parentesi tonde per gli incisi, virgole per pause ed enumerazioni), convertite in caporali le ultime virgolette inglesi nella prosa e normalizzati alcuni titoli da title case a maiuscola iniziale italiana. Revisione puramente stilistica: nessun contenuto aggiunto, rimosso o rinominato ([2e996b9](https://github.com/cagianx/my-docs/commit/2e996b9))
+
+
+### Chores
+
+* aggiunta la skill interna `italiano-scrittura-anti-ai`, che fornisce regole, lessico e metodologie per scrivere in italiano evitando i tic della prosa generata da modelli linguistici; invocabile con `/italiano-scrittura-anti-ai` ([e7c98a9](https://github.com/cagianx/my-docs/commit/e7c98a9))
+
 ## [1.4.1](https://github.com/cagianx/my-docs/compare/v1.4.0...v1.4.1) (2026-06-11)
 
 
