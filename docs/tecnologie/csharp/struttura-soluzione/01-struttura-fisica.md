@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: Struttura fisica della solution .NET — cartelle, .sln, .csproj e convenzioni di naming per assembly e namespace.
+description: "Struttura fisica della solution .NET: cartelle, .sln, .csproj e convenzioni di naming per assembly e namespace."
 ---
 
 # Struttura fisica
@@ -21,12 +21,12 @@ NomeSoluzione/                           ← root del repository
 │   ├── core/
 │   │   └── core.csproj                  # domain service, validator, use case, DI per dominio
 │   └── api/
-│       └── api.csproj                   # ASP.NET Core — entry point HTTP
+│       └── api.csproj                   # ASP.NET Core: entry point HTTP
 ├── integrations/
 │   ├── email/
-│   │   └── email.csproj                 # client SMTP — implementa IEmailSender
+│   │   └── email.csproj                 # client SMTP: implementa IEmailSender
 │   └── pdf/
-│       └── pdf.csproj                   # generatore PDF — implementa IPdfGenerator
+│       └── pdf.csproj                   # generatore PDF: implementa IPdfGenerator
 └── tests/
     └── integration/
         └── integration.csproj           # test di integrazione
@@ -34,7 +34,7 @@ NomeSoluzione/                           ← root del repository
 
 La root del repository coincide con la cartella che contiene il `.sln`. È qui che va la cartella `.git` e tutti i file di configurazione del progetto: `README.md`, `CLAUDE.md`, `agents.md`, `.gitignore`, `.editorconfig` e simili. Tenerli in sotto-cartelle li rende invisibili agli strumenti che operano dalla root (editor, agenti IA, CI).
 
-Le cartelle e i `.csproj` usano nomi semplici e standard (`core`, `api`, `db`). Il nome della solution è già visibile nell'IDE — ripeterlo in ogni progetto è ridondante.
+Le cartelle e i `.csproj` usano nomi semplici e standard (`core`, `api`, `db`). Il nome della solution è già visibile nell'IDE: ripeterlo in ogni progetto è ridondante.
 
 Ogni progetto aggiuntivo (Worker, Console, Job) segue lo stesso schema: dipende da `Core`, non da `Db` direttamente salvo necessità.
 
@@ -67,6 +67,6 @@ Nomi di cartella/progetto standard: `core`, `api`, `db`, `webui`, `console`, `wo
 ❌ Da evitare:
 
 ```xml
-<!-- api/NomeSoluzione.Api.csproj — ripete il nome della solution nel file -->
-<!-- api/api.csproj senza AssemblyName/RootNamespace — namespace risultante: api.* -->
+<!-- api/NomeSoluzione.Api.csproj: ripete il nome della solution nel file -->
+<!-- api/api.csproj senza AssemblyName/RootNamespace: namespace risultante: api.* -->
 ```

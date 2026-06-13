@@ -105,7 +105,7 @@ static async Task WaitForApi(string healthUrl, int maxRetries = 30)
 Il WebAPI deve esporre un endpoint `/health` (consigliato comunque per qualsiasi servizio):
 
 ```csharp
-// MyApp.Api/Program.cs — nessuna modifica al resto
+// MyApp.Api/Program.cs: nessuna modifica al resto
 app.MapHealthChecks("/health");
 // oppure, minimo:
 app.MapGet("/health", () => Results.Ok());
@@ -152,4 +152,4 @@ dotnet publish MyApp.Launcher -c Release -r win-x64 --self-contained -o dist/
 
 - La barra degli indirizzi del browser è visibile
 - Nessun controllo sulla finestra (dimensioni, posizione, icona nella taskbar)
-- Se l'utente chiude il browser, il Launcher continua a girare — la gestione della chiusura va implementata (es. rilevare che il browser non ha più connessioni aperte, o usare un endpoint di shutdown)
+- Se l'utente chiude il browser, il Launcher continua a girare: la gestione della chiusura va implementata (es. rilevare che il browser non ha più connessioni aperte, o usare un endpoint di shutdown)

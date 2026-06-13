@@ -137,7 +137,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 ```
 
 ```javascript
-// electron/main.js — gestore IPC
+// electron/main.js: gestore IPC
 const { ipcMain, dialog } = require('electron');
 
 ipcMain.handle('dialog:openFile', async () => {
@@ -147,7 +147,7 @@ ipcMain.handle('dialog:openFile', async () => {
 ```
 
 ```typescript
-// Angular — accesso all'API esposta
+// Angular: accesso all'API esposta
 declare const window: Window & { electronAPI: { openFile: () => Promise<string | null> } };
 
 const filePath = await window.electronAPI.openFile();
@@ -181,5 +181,5 @@ electron-builder --linux # AppImage
 ## Limitazioni
 
 - Il backend C# deve essere pubblicato come self-contained prima di impacchettare con Electron
-- La sincronizzazione avvio backend / apertura finestra va gestita manualmente (il polling su `/health` è fragile — preferire un socket o un segnale via stdout)
+- La sincronizzazione avvio backend / apertura finestra va gestita manualmente (il polling su `/health` è fragile, preferire un socket o un segnale via stdout)
 - Il bundle rimane pesante (~150–200 MB) come per qualsiasi applicazione Electron

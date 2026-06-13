@@ -3,11 +3,11 @@ sidebar_position: 8
 description: Log strutturati con ILogger, livelli appropriati, troubleshooting e cosa non loggare mai.
 ---
 
-# Logging e Osservabilità
+# Logging e osservabilità
 
 ## Astrazione prima dell'implementazione
 
-Il codice dipende sempre da `Microsoft.Extensions.Logging.ILogger<T>`, mai da Serilog direttamente. Serilog è il backend — il sink che decide dove i log finiscono — ma il codice applicativo non lo conosce.
+Il codice dipende sempre da `Microsoft.Extensions.Logging.ILogger<T>`, mai da Serilog direttamente. Serilog è il backend (il sink che decide dove i log finiscono), ma il codice applicativo non lo conosce.
 
 ```csharp
 // Corretto: dipendenza sull'astrazione
@@ -31,7 +31,7 @@ Questo mantiene il Core libero da dipendenze infrastrutturali e rende possibile 
 
 ## Serilog
 
-Serilog si configura al livello più alto della solution — `Program.cs` del progetto Api o Console. È l'unico punto in cui appare il riferimento diretto a Serilog.
+Serilog si configura al livello più alto della solution: `Program.cs` del progetto Api o Console. È l'unico punto in cui appare il riferimento diretto a Serilog.
 
 Si configurano i sink in base all'ambiente: console in sviluppo, file o aggregatori strutturati (Seq, Elastic, Application Insights) in produzione.
 
@@ -41,8 +41,8 @@ Si configurano i sink in base all'ambiente: console in sviluppo, file o aggregat
 |---------|---------------|
 | `Trace` | dettagli granulari per diagnostica profonda, solo in sviluppo |
 | `Debug` | informazioni utili durante lo sviluppo, disabilitate in produzione |
-| `Information` | eventi significativi del flusso normale — avvio, operazioni completate |
-| `Warning` | situazioni anomale ma gestite — retry, fallback, dati inattesi |
+| `Information` | eventi significativi del flusso normale: avvio, operazioni completate |
+| `Warning` | situazioni anomale ma gestite: retry, fallback, dati inattesi |
 | `Error` | errori che impediscono un'operazione ma non abbattono il sistema |
 | `Critical` | errori che compromettono il funzionamento del sistema |
 
@@ -50,9 +50,9 @@ Si configurano i sink in base all'ambiente: console in sviluppo, file o aggregat
 
 **Obbligatorio:**
 - avvio e shutdown dell'applicazione
-- eccezioni non gestite — con stack trace completo
+- eccezioni non gestite, con stack trace completo
 - operazioni sul dominio rilevanti per audit o diagnostica
-- chiamate a servizi esterni — con esito e tempo di risposta
+- chiamate a servizi esterni, con esito e tempo di risposta
 
 **Regola fondamentale sugli errori:** l'ultimo log prima del fallimento deve contenere **tutte le informazioni necessarie per un rapido troubleshooting**: id delle entità coinvolte, chiavi semantiche, utente, stack trace. Chi legge quel log deve poter ricostruire il contesto senza dover cercare altrove.
 
@@ -72,7 +72,7 @@ catch (Exception ex)
 **Mai:**
 - dati personali, password, token, chiavi API
 - contenuto integrale di request/response senza sanitizzazione
-- log su database — usare sistemi di log centralizzato (.NET offre middleware dedicati per la cattura delle eccezioni)
+- log su database, usare sistemi di log centralizzato (.NET offre middleware dedicati per la cattura delle eccezioni)
 
 ## Log strutturati
 

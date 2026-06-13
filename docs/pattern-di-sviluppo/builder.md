@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-description: Builder — costruisce passo per passo oggetti complessi, separando la sequenza di costruzione dalla rappresentazione finale e producendo istanze valide solo al termine.
+description: "Builder: costruisce passo per passo oggetti complessi, separando la sequenza di costruzione dalla rappresentazione finale e producendo istanze valide solo al termine."
 ---
 
 # Builder
@@ -15,13 +15,13 @@ Un oggetto richiede molti parametri per essere costruito correttamente. Alcuni s
 
 ## Idea centrale
 
-La costruzione si svolge in più passi, su un oggetto intermedio (*builder*) che accumula la configurazione. Solo alla fine, con una chiamata esplicita (`Build()`, `Create()`), il builder produce l'istanza definitiva — già completa, validata, immutabile.
+La costruzione si svolge in più passi, su un oggetto intermedio (*builder*) che accumula la configurazione. Solo alla fine, con una chiamata esplicita (`Build()`, `Create()`), il builder produce l'istanza definitiva: già completa, validata, immutabile.
 
 ## I tre attori
 
 ### 1. Il prodotto
 
-L'oggetto finale che si vuole costruire. Una volta restituito dal builder è pronto all'uso e — quando possibile — immutabile.
+L'oggetto finale che si vuole costruire. Una volta restituito dal builder è pronto all'uso e (quando possibile) immutabile.
 
 ### 2. Il builder
 
@@ -73,4 +73,4 @@ Il builder è il complemento naturale degli oggetti immutabili: permette di cost
 
 ## Implementazioni specifiche
 
-- [C# — Builder fluente, step builder e test data builder](../tecnologie/csharp/pattern/builder.md)
+- [C#: Builder fluente, step builder e test data builder](../tecnologie/csharp/pattern/builder.md)

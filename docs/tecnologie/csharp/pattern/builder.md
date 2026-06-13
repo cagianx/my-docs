@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 sidebar_label: "Builder in C#"
-description: "Builder in C# — builder fluente con record immutabili, step builder con tipi, e test data builder per scenari di test."
+description: "Builder in C#: builder fluente con record immutabili, step builder con tipi, e test data builder per scenari di test."
 ---
 
 # Builder in C\#
@@ -10,7 +10,7 @@ Questa pagina mostra le forme idiomatiche del [Builder](../../../pattern-di-svil
 
 ---
 
-## 1. Object initializer e `record` — quando il builder non serve
+## 1. Object initializer e `record`: quando il builder non serve
 
 Per oggetti con molti campi opzionali, C# offre due meccanismi nativi che spesso rendono superfluo un builder dedicato:
 
@@ -139,7 +139,7 @@ Il costruttore di `ReportQuery` è `internal`: il builder è l'unica strada. Le 
 
 ### Idea
 
-Quando esiste un ordine logico di chiamate — alcuni passi sono obbligatori e devono precedere altri — si può forzare la sequenza a compile-time facendo tornare a ogni step un'**interfaccia diversa** che espone solo i passi consentiti successivi.
+Quando esiste un ordine logico di chiamate (alcuni passi sono obbligatori e devono precedere altri) si può forzare la sequenza a compile-time facendo tornare a ogni step un'**interfaccia diversa** che espone solo i passi consentiti successivi.
 
 ```csharp
 public interface IRecipientStep

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 sidebar_label: "Observer / Pub-Sub in C#"
-description: "Observer / Pub-Sub in C# — MediatR INotification per eventi in-process, MassTransit per eventi cross-process e considerazioni su idempotenza e ordinamento."
+description: "Observer / Pub-Sub in C#: MediatR INotification per eventi in-process, MassTransit per eventi cross-process e considerazioni su idempotenza e ordinamento."
 ---
 
 # Observer / Pub-Sub in C\#
@@ -107,7 +107,7 @@ Il default consigliato è pubblicare **dopo** `SaveChangesAsync`: l'evento descr
 
 ### Scenario
 
-Quando i consumatori sono in servizi diversi — o devono sopravvivere ai riavvii, o vanno scalati orizzontalmente — l'in-process non basta. Si pubblica su un broker (RabbitMQ, Azure Service Bus, Amazon SQS) e i consumatori leggono dalla coda.
+Quando i consumatori sono in servizi diversi (o devono sopravvivere ai riavvii, o vanno scalati orizzontalmente) l'in-process non basta. Si pubblica su un broker (RabbitMQ, Azure Service Bus, Amazon SQS) e i consumatori leggono dalla coda.
 
 ### Definizione del messaggio (contratto condiviso)
 

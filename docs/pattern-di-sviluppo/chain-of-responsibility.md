@@ -1,13 +1,13 @@
 ---
 sidebar_position: 7
-description: Chain of Responsibility — fa attraversare una richiesta a una sequenza di handler indipendenti, ciascuno libero di gestirla, trasformarla o passarla oltre.
+description: "Chain of Responsibility: fa attraversare una richiesta a una sequenza di handler indipendenti, ciascuno libero di gestirla, trasformarla o passarla oltre."
 ---
 
 # Chain of Responsibility
 
 ## Problema
 
-Una richiesta va elaborata da più passi indipendenti — validazione, autenticazione, autorizzazione, logging, gestione errori, esecuzione vera e propria — ognuno con la sua responsabilità. Annidare tutta la logica in un unico metodo produce codice fragile: ogni nuovo passo si paga modificando un punto centrale, l'ordine si nasconde nella struttura sintattica, ed è difficile riusare i singoli passi in contesti diversi.
+Una richiesta va elaborata da più passi indipendenti (validazione, autenticazione, autorizzazione, logging, gestione errori, esecuzione vera e propria), ognuno con la sua responsabilità. Annidare tutta la logica in un unico metodo produce codice fragile: ogni nuovo passo si paga modificando un punto centrale, l'ordine si nasconde nella struttura sintattica, ed è difficile riusare i singoli passi in contesti diversi.
 
 ## Idea centrale
 
@@ -17,7 +17,7 @@ Ciascun passo diventa un **handler** indipendente. Gli handler sono concatenati 
 
 ### 1. Il contesto (la richiesta che attraversa)
 
-L'oggetto che viaggia attraverso la catena. Contiene la richiesta in ingresso e — spesso — uno spazio per accumulare informazioni o per esporre la risposta in uscita.
+L'oggetto che viaggia attraverso la catena. Contiene la richiesta in ingresso e (spesso) uno spazio per accumulare informazioni o per esporre la risposta in uscita.
 
 ### 2. Gli handler
 
@@ -62,4 +62,4 @@ In pratica i framework moderni li unificano sotto il termine *middleware* / *pip
 
 ## Implementazioni specifiche
 
-- [C# — Middleware ASP.NET Core, MVC filter, MediatR pipeline behavior](../tecnologie/csharp/pattern/chain-of-responsibility.md)
+- [C#: Middleware ASP.NET Core, MVC filter, MediatR pipeline behavior](../tecnologie/csharp/pattern/chain-of-responsibility.md)

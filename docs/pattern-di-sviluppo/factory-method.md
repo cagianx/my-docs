@@ -1,13 +1,13 @@
 ---
 sidebar_position: 3
-description: Factory Method — incapsula la creazione di un oggetto dietro un metodo dedicato, separando chi richiede l'istanza da chi conosce il tipo concreto da costruire.
+description: "Factory Method: incapsula la creazione di un oggetto dietro un metodo dedicato, separando chi richiede l'istanza da chi conosce il tipo concreto da costruire."
 ---
 
 # Factory Method
 
 ## Problema
 
-Un componente deve ottenere un'istanza di un tipo che implementa una certa interfaccia, ma non vuole — o non può — conoscere il tipo concreto. Il `new` diretto accoppia il chiamante all'implementazione: cambiare implementazione significa toccare ogni punto di costruzione. La logica di scelta dell'implementazione, se non isolata, finisce duplicata o sparsa in catene di `if`/`switch`.
+Un componente deve ottenere un'istanza di un tipo che implementa una certa interfaccia, ma non vuole (o non può) conoscere il tipo concreto. Il `new` diretto accoppia il chiamante all'implementazione: cambiare implementazione significa toccare ogni punto di costruzione. La logica di scelta dell'implementazione, se non isolata, finisce duplicata o sparsa in catene di `if`/`switch`.
 
 ## Idea centrale
 
@@ -63,8 +63,8 @@ Una factory può restituire una strategy, ma può anche restituire qualsiasi alt
 | Factory function | Funzione (o metodo statico) che restituisce un'istanza. È la forma più leggera |
 | Factory class | Classe dedicata, registrata nel container DI. Adatta quando la factory ha sue dipendenze |
 | Abstract Factory | Una factory che restituisce famiglie di prodotti correlati (es. un set di componenti UI tematici) |
-| Parametric factory | La factory accetta un parametro (enum, stringa, payload) e sceglie il prodotto di conseguenza — è il selettore di Strategy |
+| Parametric factory | La factory accetta un parametro (enum, stringa, payload) e sceglie il prodotto di conseguenza: è il selettore di Strategy |
 
 ## Implementazioni specifiche
 
-- [C# — Factory Method con DI e funzioni delegate](../tecnologie/csharp/pattern/factory-method.md)
+- [C#: Factory Method con DI e funzioni delegate](../tecnologie/csharp/pattern/factory-method.md)

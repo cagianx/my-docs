@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Come scrivere test unitari — naming, AAA, test parametrici, indipendenza e cosa non testare.
+description: "Come scrivere test unitari: naming, AAA, test parametrici, indipendenza e cosa non testare."
 ---
 
 # Come scriverli
@@ -51,7 +51,7 @@ public void Applica_sconto_percentuale_riduce_il_totale()
 }
 ```
 
-Se l'arrange è lungo più di qualche riga, il test sta probabilmente testando troppo — o il codice produttivo è troppo difficile da costruire in isolamento, che è già un segnale.
+Se l'arrange è lungo più di qualche riga, il test sta probabilmente testando troppo, oppure il codice produttivo è troppo difficile da costruire in isolamento, che è già un segnale.
 
 Un test dovrebbe verificare **un concetto alla volta**. Non significa necessariamente una sola asserzione, ma un solo comportamento:
 
@@ -119,7 +119,7 @@ public void Sconto_percentuale_calcola_correttamente(decimal importo, int percen
 I test non devono dipendere dall'ordine di esecuzione né condividere stato mutabile. Ogni test crea ciò di cui ha bisogno e non lascia nulla a chi viene dopo.
 
 ```csharp
-// ❌ Stato condiviso — l'ordine di esecuzione influenza il risultato
+// ❌ Stato condiviso: l'ordine di esecuzione influenza il risultato
 [TestFixture]
 public class OrdineTests
 {
@@ -158,7 +158,7 @@ public class OrdineTests
 
 Non tutto va testato. Testare l'ovvio non aggiunge documentazione utile e aumenta il costo di manutenzione.
 
-**Getter e setter senza logica** — se una proprietà è un semplice assegnamento, il test non documenta nulla di interessante:
+**Getter e setter senza logica**: se una proprietà è un semplice assegnamento, il test non documenta nulla di interessante:
 
 ```csharp
 // ❌ Non serve: non c'è comportamento da documentare
@@ -171,8 +171,8 @@ public void Nome_viene_impostato_correttamente()
 }
 ```
 
-**Comportamento del framework** — EF Core, ASP.NET Core, NUnit stesso non vanno testati. Si assume che funzionino. Se un comportamento del framework è sorprendente o poco noto, va nel capitolo [coltellino svizzero](01-scopo.md#3-coltellino-svizzero-per-dubbi-puntuali) — ma come esplorazione documentata, non come verifica di correttezza.
+**Comportamento del framework**: EF Core, ASP.NET Core, NUnit stesso non vanno testati. Si assume che funzionino. Se un comportamento del framework è sorprendente o poco noto, va nel capitolo [coltellino svizzero](01-scopo.md#3-coltellino-svizzero-per-dubbi-puntuali), ma come esplorazione documentata, non come verifica di correttezza.
 
-**Logica già coperta dai test di integrazione** — se un caso d'uso è già testato end-to-end con il database reale, non serve duplicare il test unitario sullo stesso scenario. I due livelli si completano, non si sovrappongono. Il test di integrazione verifica che tutto funzioni insieme; il test unitario verifica le regole di dominio in isolamento.
+**Logica già coperta dai test di integrazione**: se un caso d'uso è già testato end-to-end con il database reale, non serve duplicare il test unitario sullo stesso scenario. I due livelli si completano, non si sovrappongono. Il test di integrazione verifica che tutto funzioni insieme; il test unitario verifica le regole di dominio in isolamento.
 
-**Metodi privati** — se la logica in un metodo privato è abbastanza complessa da meritare un test, probabilmente merita di essere estratta in una classe separata con interfaccia pubblica. Testare metodi privati via reflection è un segnale di design da rivedere.
+**Metodi privati**: se la logica in un metodo privato è abbastanza complessa da meritare un test, probabilmente merita di essere estratta in una classe separata con interfaccia pubblica. Testare metodi privati via reflection è un segnale di design da rivedere.

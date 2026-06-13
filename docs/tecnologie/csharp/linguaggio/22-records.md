@@ -1,6 +1,6 @@
 ---
 sidebar_position: 22
-description: Records in C# — immutabilità, with expression, DTO e value object.
+description: "Records in C#: immutabilità, with expression, DTO e value object."
 ---
 
 # Records e immutabilità
@@ -13,7 +13,7 @@ Un `record` è un tipo reference (come `class`) con semantica di valore: l'uguag
 var a = new Punto(1, 2);
 var b = new Punto(1, 2);
 
-Console.WriteLine(a == b); // true — stesse proprietà, istanze diverse
+Console.WriteLine(a == b); // true: stesse proprietà, istanze diverse
 ```
 
 Con una `class` normale lo stesso confronto restituisce `false`.
@@ -74,8 +74,8 @@ public record struct Coordinate(double Lat, double Lon);
 | Value object di dominio (Money, Email, Coordinate) | Sì |
 | Risultati di query (read model) | Sì |
 | Configurazione immutabile | Sì |
-| Entity di dominio con identità | No — usare `class` |
-| Oggetti con stato mutabile | No — usare `class` |
+| Entity di dominio con identità | No, usare `class` |
+| Oggetti con stato mutabile | No, usare `class` |
 
 ### DTO immutabili
 

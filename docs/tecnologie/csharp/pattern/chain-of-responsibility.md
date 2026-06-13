@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 sidebar_label: "Chain of Responsibility in C#"
-description: "Chain of Responsibility in C# — middleware ASP.NET Core, filter MVC e pipeline behavior di MediatR come incarnazioni del pattern."
+description: "Chain of Responsibility in C#: middleware ASP.NET Core, filter MVC e pipeline behavior di MediatR come incarnazioni del pattern."
 ---
 
 # Chain of Responsibility in C\#

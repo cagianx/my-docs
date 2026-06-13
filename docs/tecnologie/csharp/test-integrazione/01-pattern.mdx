@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: Pattern per i test di integrazione — database usa e getta, clone da template e scope DI per ogni test.
+description: "Pattern per i test di integrazione: database usa e getta, clone da template e scope DI per ogni test."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -56,7 +56,7 @@ Il template è nominato con il nome dell'ultima migration. Se le migration cambi
 flowchart TD
     A([OneTimeSetUp]) --> B[legge nome ultima migration]
     B --> C{template esiste?}
-    C -- sì --> D([riuso — nessuna operazione])
+    C -- sì --> D([riuso, nessuna operazione])
     C -- no --> E[crea DB vuoto]
     E --> F[applica migration]
     F --> G[svuota connection pool]
@@ -69,7 +69,7 @@ I template obsoleti (da migration precedenti) non vengono rimossi automaticament
 
 ## Scope DI per ogni test
 
-Ogni test ha il proprio `IServiceScope`. I servizi si risolvono dallo scope con `Get<T>()` — nessun `new` manuale. `Db` e tutti i servizi dello stesso scope condividono il `DbContext`, come avviene in produzione durante una richiesta HTTP.
+Ogni test ha il proprio `IServiceScope`. I servizi si risolvono dallo scope con `Get<T>()`, senza `new` manuale. `Db` e tutti i servizi dello stesso scope condividono il `DbContext`, come avviene in produzione durante una richiesta HTTP.
 
 ```mermaid
 flowchart LR
@@ -87,7 +87,7 @@ Il `ServiceProvider` viene costruito con la connection string del DB di test e s
 
 ## Implementazione della classe base
 
-La logica di creazione, clone ed eliminazione del database dipende dal motore. La classe base espone `MasterConnectionString` come proprietà virtuale per permettere alle sottoclassi di sostituire la fonte (es. Testcontainers — vedi [03-testcontainers](03-testcontainers.md)).
+La logica di creazione, clone ed eliminazione del database dipende dal motore. La classe base espone `MasterConnectionString` come proprietà virtuale per permettere alle sottoclassi di sostituire la fonte (es. Testcontainers, vedi [03-testcontainers](03-testcontainers.md)).
 
 <Tabs groupId="db-engine">
 <TabItem value="postgres" label="PostgreSQL" default>
@@ -312,7 +312,7 @@ public abstract class IntegrationTestBase
 </TabItem>
 <TabItem value="sqlite" label="SQLite">
 
-SQLite non ha un server: il template è un file `.db`. Il clone è una semplice copia di file — operazione istantanea su qualsiasi OS.
+SQLite non ha un server: il template è un file `.db`. Il clone è una semplice copia di file, operazione istantanea su qualsiasi OS.
 
 Utile per test rapidi in ambienti senza Docker o SQL Server. Non sostituisce i test su PostgreSQL o SQL Server per funzionalità specifiche del motore (tipi, funzioni window, full-text search).
 
@@ -381,7 +381,7 @@ public abstract class IntegrationTestBase
         _scope.Dispose();
         await _provider.DisposeAsync();
 
-        // EF tiene la connessione aperta — bisogna chiuderla prima di eliminare il file
+        // EF tiene la connessione aperta: bisogna chiuderla prima di eliminare il file
         SqliteConnection.ClearAllPools();
         File.Delete(_testDbPath);
     }

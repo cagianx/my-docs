@@ -1,11 +1,11 @@
 ---
 sidebar_position: 5
-description: Convenzioni per una solution .NET leggibile da sviluppatori e agenti IA — naming esplicito, un file per classe, record per comandi e DTO, interfacce solo dove necessario, Program.cs minimal.
+description: "Convenzioni per una solution .NET leggibile da sviluppatori e agenti IA: naming esplicito, un file per classe, record per comandi e DTO, interfacce solo dove necessario, Program.cs minimal."
 ---
 
 # Convenzioni
 
-Una solution ben strutturata è leggibile non solo dagli sviluppatori ma anche dall'IA che ci lavora. Le convenzioni che seguono massimizzano la comprensibilità contestuale senza richiedere spiegazioni aggiuntive.
+Una solution ben strutturata è leggibile dagli sviluppatori e dall'IA che ci lavora. Le convenzioni che seguono massimizzano la comprensibilità contestuale senza richiedere spiegazioni aggiuntive.
 
 ## Naming esplicito
 

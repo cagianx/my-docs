@@ -1,6 +1,6 @@
 ---
 sidebar_position: 20
-description: Caching in ASP.NET Core — IMemoryCache, IDistributedCache, output caching e strategie di invalidazione.
+description: "Caching in ASP.NET Core: IMemoryCache, IDistributedCache, output caching e strategie di invalidazione."
 ---
 
 # Caching
@@ -42,8 +42,8 @@ public class CategorieService
 }
 ```
 
-`AbsoluteExpiration` — scade comunque dopo N tempo, anche se usata di frequente.
-`SlidingExpiration` — ogni accesso rinnova il timer; scade solo se inutilizzata per N tempo.
+`AbsoluteExpiration`: scade comunque dopo N tempo, anche se usata di frequente.
+`SlidingExpiration`: ogni accesso rinnova il timer; scade solo se inutilizzata per N tempo.
 Si possono usare entrambe: la sliding evita cache calde inutili, l'absolute garantisce un refresh periodico.
 
 ### Size limit

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 7
 sidebar_label: "Command in C#"
-description: "Command in C# — implementazione con IUseCase nativa e con MediatR, scelta tra le due alternative e applicazione di pipeline behavior."
+description: "Command in C#: implementazione con IUseCase nativa e con MediatR, scelta tra le due alternative e applicazione di pipeline behavior."
 ---
 
 # Command in C\#
@@ -115,7 +115,7 @@ Il controller ora dipende solo da `ISender`. Aggiungere un nuovo command non ric
 
 ### Pipeline behavior
 
-I behavior MediatR sono decorator applicati a tutti i command. Vedi [Chain of Responsibility — MediatR pipeline behavior](chain-of-responsibility.md#3-mediatr-pipeline-behavior) per implementazione e registrazione di logging e validation behavior.
+I behavior MediatR sono decorator applicati a tutti i command. Vedi [Chain of Responsibility, MediatR pipeline behavior](chain-of-responsibility.md#3-mediatr-pipeline-behavior) per implementazione e registrazione di logging e validation behavior.
 
 ---
 
@@ -126,10 +126,10 @@ Coerentemente con il principio di [una sola forma consigliata](../../../regole/p
 | Criterio | `IUseCase` | MediatR |
 |---|---|---|
 | Dipendenze esplicite nel controller | Sì: ogni controller inietta gli use case che usa | No: si inietta solo `ISender` |
-| Navigabilità nell'IDE | "Vai alla definizione" porta direttamente all'handler | Richiede di cercare l'handler dell'`IRequest` |
+| Navigabilità nell'IDE | «Vai alla definizione» porta direttamente all'handler | Richiede di cercare l'handler dell'`IRequest` |
 | Dipendenza esterna | Nessuna | Pacchetto MediatR |
 | Comportamenti trasversali | Decorator manuali o filter MVC | Pipeline behavior, una sola registrazione |
-| Verbosità per command "puntuali" | Bassa | Bassa |
+| Verbosità per command «puntuali» | Bassa | Bassa |
 | Verbosità con molti behavior trasversali | Alta (decorator manuali) | Bassa |
 
 **Raccomandazione**:
@@ -168,4 +168,4 @@ Il command è un **dato**, non un servizio. Non ha metodi che eseguono lavoro, n
 
 ### Esiti via eccezione
 
-Un command che fallisce per regola di business deve restituire `Result.Failure`. Le eccezioni sono per errori imprevisti, non per esiti previsti — vedi [gestione errori](../../../regole/gestione-errori.md).
+Un command che fallisce per regola di business deve restituire `Result.Failure`. Le eccezioni sono per errori imprevisti, non per esiti previsti, vedi [gestione errori](../../../regole/gestione-errori.md).

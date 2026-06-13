@@ -1,26 +1,26 @@
 ---
 sidebar_position: 2
-description: Modellazione su database dei prompt per funzionalità AI — provider di default con override per caso d'uso, modello opzionale, system e user prompt editabili.
+description: "Modellazione su database dei prompt per funzionalità AI: provider di default con override per caso d'uso, modello opzionale, system e user prompt editabili."
 ---
 
 # Prompt AI su database (EF)
 
-Quando un'applicazione usa modelli linguistici per più funzionalità — riassumere un documento, classificare un ticket, estrarre dati da un testo — i prompt non vanno lasciati come stringhe sparse nel codice. Tenerli nel database permette di **cambiare prompt, parametri o modello senza ricompilare**.
+Quando un'applicazione usa modelli linguistici per più funzionalità (riassumere un documento, classificare un ticket, estrarre dati da un testo) i prompt non vanno lasciati come stringhe sparse nel codice. Tenerli nel database permette di **cambiare prompt, parametri o modello senza ricompilare**.
 
 L'idea è separare tre cose che cambiano con ritmi diversi:
 
-- **Cosa è disponibile** — il catalogo di `Provider` e `Modello`. Cambia raramente, lo governa chi gestisce l'infrastruttura. Un provider è marcato come **default**.
-- **A cosa serve** — il `CasoUso`, cioè la funzionalità AI. È la chiave logica stabile con cui il codice chiede un prompt, ed è qui che si decide **quale provider e quale modello** usare, per differenza rispetto al default.
-- **Come si fa** — la `ConfigurazionePrompt`: il system prompt, lo user prompt e i parametri di inferenza. È la parte volatile, ma si **modifica in place**: il registro di cosa è stato inviato all'AI vive in un log a parte, quindi questo modello non si porta dietro lo storico delle versioni.
+- **Cosa è disponibile**: il catalogo di `Provider` e `Modello`. Cambia raramente, lo governa chi gestisce l'infrastruttura. Un provider è marcato come **default**.
+- **A cosa serve**: il `CasoUso`, cioè la funzionalità AI. È la chiave logica stabile con cui il codice chiede un prompt, ed è qui che si decide **quale provider e quale modello** usare, per differenza rispetto al default.
+- **Come si fa**: la `ConfigurazionePrompt`, ovvero il system prompt, lo user prompt e i parametri di inferenza. È la parte volatile, ma si **modifica in place**: il registro di cosa è stato inviato all'AI vive in un log a parte, quindi questo modello non si porta dietro lo storico delle versioni.
 
-Niente storia speculativa: in linea con il principio di [modellazione](../../../../processi/analisi-tecnica/03-modellazione.md), il modello tiene solo lo stato corrente. Se servisse il rollback o legare un output a una versione, si reintrodurrebbe — ma solo a fronte di quel caso d'uso reale (vedi [considerazioni](#considerazioni-operative)).
+Niente storia speculativa: in linea con il principio di [modellazione](../../../../processi/analisi-tecnica/03-modellazione.md), il modello tiene solo lo stato corrente. Se servisse il rollback o legare un output a una versione, si reintrodurrebbe, ma solo a fronte di quel caso d'uso reale (vedi [considerazioni](#considerazioni-operative)).
 
 ## Provider e modello: default con override
 
 La scelta del modello a runtime segue una cascata a due livelli, così il caso comune resta a configurazione zero e i casi particolari si dichiarano solo dove servono:
 
-1. **Provider** — esiste un provider di sistema marcato come `Default`. Un caso d'uso può puntare a un **provider specifico che lo sovrascrive**; se non lo fa, vale il default.
-2. **Modello** — un caso d'uso può specificare il **modello**; se lo lascia nullo, si usa il **modello di default del provider** effettivo.
+1. **Provider**: esiste un provider di sistema marcato come `Default`. Un caso d'uso può puntare a un **provider specifico che lo sovrascrive**; se non lo fa, vale il default.
+2. **Modello**: un caso d'uso può specificare il **modello**; se lo lascia nullo, si usa il **modello di default del provider** effettivo.
 
 In pratica: un caso d'uso senza override gira sul provider di default con il suo modello di default; basta valorizzare un campo per spostarne uno solo dei due, o entrambi.
 
@@ -82,7 +82,7 @@ erDiagram
     }
 ```
 
-Il **catalogo**: quali provider e quali modelli sono utilizzabili. Un provider è il default di sistema e indica il proprio modello di default. Niente cancellazioni fisiche — un modello dismesso resta referenziabile, si marca solo come non più attivo.
+Il **catalogo**: quali provider e quali modelli sono utilizzabili. Un provider è il default di sistema e indica il proprio modello di default. Niente cancellazioni fisiche: un modello dismesso resta referenziabile, si marca solo come non più attivo.
 
 ```csharp
 // MyApp.Infrastructure/Ai/Provider.cs
@@ -163,7 +163,7 @@ public class CasoUso
 }
 ```
 
-La **configurazione del prompt**: una per caso d'uso. Tiene insieme i due prompt e i parametri di inferenza. La si modifica in place; `UpdatedAt`/`UpdatedBy` registrano l'ultima modifica. È tenuta in una tabella separata dal `CasoUso` per non trascinarsi dietro il testo dei prompt nelle query di catalogo — la stessa logica della separazione [`StoredFile` / `StoredFileContent`](03-db-filesystem.md).
+La **configurazione del prompt**: una per caso d'uso. Tiene insieme i due prompt e i parametri di inferenza. La si modifica in place; `UpdatedAt`/`UpdatedBy` registrano l'ultima modifica. È tenuta in una tabella separata dal `CasoUso` per non trascinarsi dietro il testo dei prompt nelle query di catalogo, la stessa logica della separazione [`StoredFile` / `StoredFileContent`](03-db-filesystem.md).
 
 ```csharp
 // MyApp.Infrastructure/Ai/ConfigurazionePrompt.cs
@@ -440,10 +440,10 @@ public sealed record PromptRisolto(
 
 ## Considerazioni operative
 
-- **Log a parte.** Il registro di cosa è stato inviato all'AI vive fuori da questo modello — nel [log integrale delle chiamate HTTP](05-log-chiamate-http.md), dove la chiamata al provider è una riga come le altre. Qui il prompt quindi **non si versiona**: si modifica in place e `UpdatedAt`/`UpdatedBy` bastano a sapere chi ha toccato cosa per ultimo. Se in futuro emerge un caso d'uso reale per il **rollback** o per legare un output a una versione specifica, si reintroduce una tabella di versioni con stato `Attiva` — non prima.
+- **Log a parte.** Il registro di cosa è stato inviato all'AI vive fuori da questo modello, nel [log integrale delle chiamate HTTP](05-log-chiamate-http.md), dove la chiamata al provider è una riga come le altre. Qui il prompt quindi **non si versiona**: si modifica in place e `UpdatedAt`/`UpdatedBy` bastano a sapere chi ha toccato cosa per ultimo. Se in futuro emerge un caso d'uso reale per il **rollback** o per legare un output a una versione specifica, si reintroduce una tabella di versioni con stato `Attiva`, non prima.
 - **Provider di default obbligatorio.** La cascata presuppone che esista sempre un provider con `Default = true`. L'indice filtrato garantisce che non ce ne sia più d'uno, ma non che ce ne sia almeno uno: lo si assicura con un seed e con un controllo in fase di disattivazione.
 - **Coerenza provider/modello.** Se un caso d'uso specifica un modello, questo deve appartenere al provider effettivo del caso d'uso. È un vincolo che attraversa due righe e non si esprime con una semplice `CHECK`: si valida nel caso d'uso che salva il `CasoUso`.
 - **API key cifrata, mai in chiaro.** L'`ApiKey` del provider sta sul DB ma **cifrata a riposo**, tramite un `ValueConverter` costruito sulla [Data Protection](../../07-configuration.md) di ASP.NET Core: cifra in scrittura, decifra in lettura, così una dump del database non espone le credenziali. In alternativa la colonna può contenere il *nome* di un segreto risolto a runtime da un secret manager (Key Vault, ecc.), tenendo fuori dal DB anche il cifrato. Quel che non va mai fatto è salvarla in chiaro.
-- **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne — non come JSON opaco — mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../../processi/analisi-tecnica/03-modellazione.md).
+- **Parametri espliciti.** Tenere `Temperature`, `MaxToken` e `TopP` come colonne (non come JSON opaco) mantiene il modello leggibile e interrogabile, in linea con il principio dei [dati duttili in lettura](../../../../processi/analisi-tecnica/03-modellazione.md).
 
 Per il quadro su come si imposta il lavoro con strumenti AI nel processo di sviluppo, vedi [uso con l'IA](../../../../uso-con-ia.md).

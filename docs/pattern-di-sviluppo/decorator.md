@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-description: Decorator — aggiunge comportamento a un oggetto avvolgendolo in un altro che condivide la stessa interfaccia, permettendo di comporre funzionalità trasversali senza modificare l'oggetto originale.
+description: "Decorator: aggiunge comportamento a un oggetto avvolgendolo in un altro che condivide la stessa interfaccia, permettendo di comporre funzionalità trasversali senza modificare l'oggetto originale."
 ---
 
 # Decorator
@@ -66,4 +66,4 @@ Il container DI è il punto naturale dove decidere la composizione: si configura
 
 ## Implementazioni specifiche
 
-- [C# — Decorator con DI nativa e con Scrutor](../tecnologie/csharp/pattern/decorator.md)
+- [C#: Decorator con DI nativa e con Scrutor](../tecnologie/csharp/pattern/decorator.md)

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: Middleware custom in ASP.NET Core — quando usarlo, come scriverlo e come registrarlo nella pipeline.
+description: "Middleware custom in ASP.NET Core: quando usarlo, come scriverlo e come registrarlo nella pipeline."
 ---
 
 # Middleware custom
@@ -64,7 +64,7 @@ Le dipendenze con ciclo di vita **singleton o transient** si iniettano nel costr
 ```csharp
 public async Task InvokeAsync(HttpContext context, AppDbContext db)
 {
-    // db è scoped — ricreato per ogni request
+    // db è scoped, ricreato per ogni request
     await _next(context);
 }
 ```
@@ -94,12 +94,12 @@ app.UseCorrelationId();
 L'ordine di registrazione è l'ordine di esecuzione. La pipeline di ASP.NET Core ha un ordine standard da rispettare:
 
 ```csharp
-app.UseExceptionHandler("/error");    // 1 — deve essere il primo per catturare tutto
+app.UseExceptionHandler("/error");    // 1: deve essere il primo per catturare tutto
 app.UseHttpsRedirection();            // 2
-app.UseCorrelationId();               // 3 — custom, prima dell'autenticazione
+app.UseCorrelationId();               // 3: custom, prima dell'autenticazione
 app.UseAuthentication();              // 4
 app.UseAuthorization();               // 5
-app.MapControllers();                 // 6 — endpoint
+app.MapControllers();                 // 6: endpoint
 ```
 
 Il middleware registrato prima vede la request per primo e la response per ultimo (struttura a cipolla).

@@ -104,7 +104,7 @@ builder.Services.AddFeatureManagement()
 
 ## Flag con filtri
 
-I flag possono essere condizionali — attivi solo per certi utenti, percentuali di traffico, orari.
+I flag possono essere condizionali: attivi solo per certi utenti, percentuali di traffico, orari.
 
 ### Percentuale di rollout
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 13
-description: Exception filter in ASP.NET Core MVC — IExceptionFilter e IAsyncExceptionFilter per la gestione centralizzata degli errori nei controller.
+description: "Exception filter in ASP.NET Core MVC: IExceptionFilter e IAsyncExceptionFilter per la gestione centralizzata degli errori nei controller."
 ---
 
 # Exception Filter

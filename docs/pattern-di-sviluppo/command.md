@@ -1,6 +1,6 @@
 ---
 sidebar_position: 8
-description: Command — reifica un'azione in un oggetto, separando chi la richiede da chi la esegue e abilitando coda, audit, retry e undo.
+description: "Command: reifica un'azione in un oggetto, separando chi la richiede da chi la esegue e abilitando coda, audit, retry e undo."
 ---
 
 # Command
@@ -11,7 +11,7 @@ Un'azione va invocata: spesso con parametri, talvolta in modo differito, talvolt
 
 ## Idea centrale
 
-L'azione diventa un **oggetto**: un dato che descrive *cosa* fare, separato dal codice che lo *esegue*. Si può quindi creare, passare, mettere in coda, serializzare, ispezionare, registrare e — quando il dominio lo permette — annullare.
+L'azione diventa un **oggetto**: un dato che descrive *cosa* fare, separato dal codice che lo *esegue*. Si può quindi creare, passare, mettere in coda, serializzare, ispezionare, registrare e (quando il dominio lo permette) annullare.
 
 ## I tre attori
 
@@ -35,7 +35,7 @@ graph LR
 ## Quando usarlo
 
 - L'azione è un'**operazione di dominio** completa, con un nome, dei parametri, un esito (caso d'uso, *use case*).
-- Si vuole un punto unico di ingresso per logging, audit, validazione, gestione errori — applicato a tutte le azioni.
+- Si vuole un punto unico di ingresso per logging, audit, validazione, gestione errori, applicato a tutte le azioni.
 - L'esecuzione va differita: il command finisce in una coda e viene processato in modo asincrono o in background.
 - Servono undo, retry o rieseguibilità: il command, essendo un dato, è naturalmente serializzabile e replicabile.
 - Si vuole rendere esplicito il vocabolario del dominio: `RegisterCustomer`, `ShipOrder`, `RefundPayment` sono più parlanti di una chiamata di metodo.
@@ -62,4 +62,4 @@ Nella documentazione il termine [caso d'uso](../glossario.md#caso-duso) coincide
 
 ## Implementazioni specifiche
 
-- [C# — Command e MediatR, IUseCase e pipeline behavior](../tecnologie/csharp/pattern/command.md)
+- [C#: Command e MediatR, IUseCase e pipeline behavior](../tecnologie/csharp/pattern/command.md)

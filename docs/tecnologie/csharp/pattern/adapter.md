@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: "Adapter in C#"
-description: "Adapter in C# — implementazione tramite progetti di integrazione, isolamento di librerie esterne dietro interfacce di dominio e gestione degli errori."
+description: "Adapter in C#: implementazione tramite progetti di integrazione, isolamento di librerie esterne dietro interfacce di dominio e gestione degli errori."
 ---
 
 # Adapter in C\#

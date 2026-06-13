@@ -17,7 +17,7 @@ Una soluzione C# WebAPI + Angular può essere distribuita come applicazione desk
 | [WebView2](./webview2.md) | Solo Windows | Leggero | In-process | Media |
 | [Tauri](./tauri.md) | Sì | ~10 MB | Sidecar esterno | Alta |
 
-Per la distribuzione su Windows — installer, percorsi dati, SQLite — vedere [Installer Windows con NSIS](./installer-windows.md).
+Per la distribuzione su Windows (installer, percorsi dati, SQLite) vedere [Installer Windows con NSIS](./installer-windows.md).
 
 ## Come scegliere
 

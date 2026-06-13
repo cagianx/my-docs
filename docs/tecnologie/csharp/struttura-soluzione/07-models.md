@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-description: Progetto Models in una solution .NET — DTO, enum di dominio e Result pattern condivisi tra Db, Core, UseCases e Api.
+description: "Progetto Models in una solution .NET: DTO, enum di dominio e Result pattern condivisi tra Db, Core, UseCases e Api."
 ---
 
 # Models
@@ -9,18 +9,18 @@ description: Progetto Models in una solution .NET — DTO, enum di dominio e Res
 
 Il progetto Models raccoglie i tipi condivisi tra più progetti della solution:
 
-- **DTO** — request, response, command, query — i tipi che Core, UseCases e Api si scambiano.
-- **Enum di dominio** — `OrdineStato`, `ClienteTipo`, `MetodoPagamento`. Sono elenchi di costanti, non comportamento, e vivono fuori dalle entità.
-- **Result\<T\>** — pattern di ritorno strutturato per successo/errore, prodotto da UseCases e consumato da Api.
+- **DTO** (request, response, command, query): i tipi che Core, UseCases e Api si scambiano.
+- **Enum di dominio**: `OrdineStato`, `ClienteTipo`, `MetodoPagamento`. Sono elenchi di costanti, non comportamento, e vivono fuori dalle entità.
+- **Result\<T\>**: pattern di ritorno strutturato per successo/errore, prodotto da UseCases e consumato da Api.
 
 Models contiene tipi, non comportamento. Niente logica di business, niente validazione, niente factory di dominio. I DTO si scrivono come `record` per immutabilità (vedi [Convenzioni](05-convenzioni.md)).
 
 ## Cosa NON contiene
 
-- **Entità di dominio** (`Ordine`, `Cliente`) — vivono in Db con il DbContext
-- **Domain service** (`GestoreScorte`) — vivono in Core
-- **Validator** — vivono in Core, accanto al dominio che validano
-- **Use case** — vivono in UseCases
+- **Entità di dominio** (`Ordine`, `Cliente`): vivono in Db con il DbContext
+- **Domain service** (`GestoreScorte`): vivono in Core
+- **Validator**: vivono in Core, accanto al dominio che validano
+- **Use case**: vivono in UseCases
 
 ## Struttura
 

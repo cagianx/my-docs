@@ -26,7 +26,7 @@ Nient'altro. Nessun parametro di business, nessuna soglia, nessuna feature flag,
 
 ## Configurazione nel database
 
-Tutto ciò che l'applicazione deve sapere per funzionare — al di là di come connettersi al database — è una riga o un set di righe nel database. Questo include:
+Tutto ciò che l'applicazione deve sapere per funzionare (al di là di come connettersi al database) è una riga o un set di righe nel database. Questo include:
 
 - parametri di business (soglie, limiti, valori di default)
 - feature flag (vedi [`tecnologie/git`](../tecnologie/git/index.md))
@@ -44,4 +44,4 @@ La stringa di connessione non va mai committata. In sviluppo si usa `dotnet user
 dotnet user-secrets set "ConnectionStrings:Default" "Host=localhost;..."
 ```
 
-Il file `appsettings.json` committato nel repository non contiene valori reali — solo placeholder o valori di sviluppo non sensibili.
+Il file `appsettings.json` committato nel repository non contiene valori reali, solo placeholder o valori di sviluppo non sensibili.

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-description: Progetti di integrazione in una solution .NET — isolamento di client HTTP, librerie esterne e integrazioni con sistemi terzi tramite interfacce esposte dai singoli progetti.
+description: "Progetti di integrazione in una solution .NET: isolamento di client HTTP, librerie esterne e integrazioni con sistemi terzi tramite interfacce esposte dai singoli progetti."
 ---
 
 # Progetti di integrazione
@@ -38,7 +38,7 @@ Ogni progetto segue le stesse [convenzioni di naming](01-struttura-fisica.md#nam
 Il progetto di integrazione espone l'interfaccia e la sua implementazione concreta:
 
 ```csharp
-// integrations/email — IEmailSender e SmtpEmailSender vivono qui
+// integrations/email: IEmailSender e SmtpEmailSender vivono qui
 public interface IEmailSender
 {
     Task SendAsync(Email email, CancellationToken ct = default);
@@ -48,7 +48,7 @@ public class SmtpEmailSender : IEmailSender
 {
     public async Task SendAsync(Email email, CancellationToken ct = default)
     {
-        // implementazione con MailKit — MailKit non esce da questo progetto
+        // implementazione con MailKit (MailKit non esce da questo progetto)
     }
 }
 ```
@@ -70,7 +70,7 @@ public class InviaConfermaOrdine
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
 ```
 
-Nei test si registra un'implementazione controllata — MailKit non viene mai istanziato:
+Nei test si registra un'implementazione controllata: MailKit non viene mai istanziato:
 
 ```csharp
 services.AddScoped<IEmailSender, FakeEmailSender>();
@@ -88,6 +88,6 @@ graph LR
     Tests --> Core
 ```
 
-Core usa le interfacce esposte dalle integrazioni. Non tocca mai MailKit, html2pdf o le altre librerie — quelle rimangono confinate nei rispettivi progetti.
+Core usa le interfacce esposte dalle integrazioni. Non tocca mai MailKit, html2pdf o le altre librerie: quelle rimangono confinate nei rispettivi progetti.
 
 ❌ Da evitare: aggiungere la libreria di integrazione direttamente a `Core` o `Api`. Se `MailKit` compare nel `.csproj` di Core, il confinamento è compromesso e la libreria si propaga a tutti i progetti che dipendono da Core.

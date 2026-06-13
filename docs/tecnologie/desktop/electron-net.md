@@ -31,7 +31,7 @@ dotnet tool install ElectronNET.CLI -g
 
 ## MyApp.Desktop
 
-Il progetto Desktop è una minimal ASP.NET Core app con Electron.NET. Serve solo i file statici di Angular — nessun controller, nessuna logica di business.
+Il progetto Desktop è una minimal ASP.NET Core app con Electron.NET. Serve solo i file statici di Angular: nessun controller, nessuna logica di business.
 
 ```xml
 <!-- MyApp.Desktop/MyApp.Desktop.csproj -->
@@ -55,7 +55,7 @@ builder.WebHost.UseElectron(args);
 
 var app = builder.Build();
 
-// Serve solo i file statici di Angular — nessuna API qui
+// Serve solo i file statici di Angular: nessuna API qui
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
@@ -194,4 +194,4 @@ L'output in `bin/Desktop/` include runtime .NET, Node.js, Chromium e il WebAPI p
 
 - Bundle pesante (~150–200 MB) per via di Chromium e Node.js
 - Electron.NET segue le release di Electron con un certo ritardo
-- Le API Electron più avanzate non sono sempre esposte lato C# — in quei casi occorre usare l'IPC con JavaScript
+- Le API Electron più avanzate non sono sempre esposte lato C#: in quei casi occorre usare l'IPC con JavaScript

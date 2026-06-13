@@ -1,13 +1,13 @@
 ---
 sidebar_position: 8
-description: Code di lavoro native in .NET — Queue, ConcurrentQueue e Channel per comunicazione produttore/consumatore.
+description: "Code di lavoro native in .NET: Queue, ConcurrentQueue e Channel per comunicazione produttore/consumatore."
 ---
 
 # Code native .NET
 
 .NET offre strutture dati native per la gestione di code in-process. Sono la scelta giusta quando la comunicazione avviene all'interno dello stesso processo, senza la complessità di un broker esterno.
 
-## Queue\<T\> — coda FIFO non thread-safe
+## Queue\<T\>: coda FIFO non thread-safe
 
 `Queue<T>` implementa una coda FIFO semplice. Non è thread-safe: va usata solo in scenari single-thread o protetta con lock espliciti.
 
@@ -26,7 +26,7 @@ while (queue.TryDequeue(out var item))
 
 `TryDequeue` è preferibile a `Dequeue` perché non lancia eccezione se la coda è vuota.
 
-## ConcurrentQueue\<T\> — coda thread-safe
+## ConcurrentQueue\<T\>: coda thread-safe
 
 `ConcurrentQueue<T>` è la variante thread-safe di `Queue<T>`. Più thread possono accodare e togliere elementi senza lock espliciti:
 
@@ -45,7 +45,7 @@ if (queue.TryDequeue(out var evt))
 
 `ConcurrentQueue<T>` è adatta per scenari semplici produttore/consumatore, ma non offre meccanismi di attesa bloccante (il consumatore deve fare polling). Per questo si preferisce `Channel<T>`.
 
-## Channel\<T\> — produttore/consumatore asincrono
+## Channel\<T\>: produttore/consumatore asincrono
 
 `System.Threading.Channels.Channel<T>` è la soluzione moderna per la comunicazione asincrona produttore/consumatore. Supporta backpressure, è completamente asincrona e integra nativamente con `async`/`await`.
 
@@ -126,7 +126,7 @@ public class OrdineEventProcessor : BackgroundService
 ```
 
 ```csharp
-// Program.cs — registrazione
+// Program.cs: registrazione
 var channel = Channel.CreateBounded<OrdineEvent>(100);
 
 builder.Services.AddSingleton(channel.Writer);

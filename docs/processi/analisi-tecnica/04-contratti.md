@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Step 4 — Contratti
+# Step 4: Contratti
 
 I [contratti](../../glossario#contratto) definiscono come i moduli comunicano tra loro e con il mondo esterno. Un contratto è un accordo: una volta pubblicato, cambiarlo ha un costo. Progettarlo bene fin dall'inizio riduce [breaking changes](../../glossario#breaking-change) futuri.
 
@@ -19,11 +19,11 @@ Per ogni endpoint, evento o integrazione:
 | **Autenticazione** | schema richiesto (API key, JWT, cookie…) |
 | **Autorizzazione** | ruoli o policy necessari |
 | **Versionamento** | come si gestisce l'evoluzione del contratto |
-| **[Idempotenza](../../glossario#idempotenza)** | obbligatoria per operazioni critiche — stessa request, stesso risultato |
+| **[Idempotenza](../../glossario#idempotenza)** | obbligatoria per operazioni critiche: stessa request, stesso risultato |
 
 ## Idempotenza
 
-Le operazioni critiche — pagamenti, invio di ordini, operazioni che producono effetti collaterali — devono essere [idempotenti](../../glossario#idempotenza). Il chiamante deve poter ripetere la stessa richiesta in caso di timeout o errore di rete senza produrre effetti duplicati.
+Le operazioni critiche (pagamenti, invio di ordini, operazioni che producono effetti collaterali) devono essere [idempotenti](../../glossario#idempotenza). Il chiamante deve poter ripetere la stessa richiesta in caso di timeout o errore di rete senza produrre effetti duplicati.
 
 La prima forma di protezione sono gli **indici univoci sul dominio**: se l'operazione produce un'entità con una chiave naturale univoca, il database stesso impedisce la duplicazione senza bisogno di logica applicativa aggiuntiva.
 
@@ -41,14 +41,14 @@ Il sistema memorizza la chiave e, se riceve la stessa richiesta una seconda volt
 I contratti si versionano esplicitamente. Un cambio che rompe la compatibilità non si fa in silenzio: si introduce una nuova versione e si mantiene la vecchia per un periodo di transizione concordato con i team dipendenti.
 
 Strategie comuni:
-- **versione nell'URL** — `/api/v2/ordini`
-- **versione nell'header** — `API-Version: 2`
+- **versione nell'URL**: `/api/v2/ordini`
+- **versione nell'header**: `API-Version: 2`
 
 La scelta dipende dal contesto, ma la coerenza all'interno dello stesso sistema è più importante della strategia scelta.
 
 ## Contratti interni vs esterni
 
-I [contratti](../../glossario#contratto) tra moduli interni allo stesso sistema hanno più flessibilità: possono evolvere con il sistema. I contratti esposti a sistemi esterni o a team separati sono impegni formali — vanno trattati con la stessa cura di un'API pubblica.
+I [contratti](../../glossario#contratto) tra moduli interni allo stesso sistema hanno più flessibilità: possono evolvere con il sistema. I contratti esposti a sistemi esterni o a team separati sono impegni formali: vanno trattati con la stessa cura di un'API pubblica.
 
 ## Criterio di completamento
 
@@ -56,4 +56,4 @@ I contratti sono consumabili da un team esterno senza necessità di interpretazi
 
 ---
 
-**Prossimo step:** [Step 5 — Flussi Critici](05-flussi.md)
+**Prossimo step:** [Step 5: Flussi Critici](05-flussi.md)

@@ -111,19 +111,19 @@ Progetto C# che contiene la logica di dominio: domain service, validator, use ca
 
 ## Composition root
 
-Punto centrale della solution dove si compone il grafo delle dipendenze: si registrano via DI le implementazioni concrete che soddisfano le interfacce usate dal codice. In ASP.NET Core è `Program.cs` del progetto Api; non contiene logica, solo registrazioni — tipicamente raggruppate in extension method per dominio (`AddOrdini()`, `AddClienti()`). Vedi [`tecnologie/csharp/struttura-soluzione/02-dipendenze`](tecnologie/csharp/struttura-soluzione/02-dipendenze.md).
+Punto centrale della solution dove si compone il grafo delle dipendenze: si registrano via DI le implementazioni concrete che soddisfano le interfacce usate dal codice. In ASP.NET Core è `Program.cs` del progetto Api; non contiene logica, solo registrazioni, tipicamente raggruppate in extension method per dominio (`AddOrdini()`, `AddClienti()`). Vedi [`tecnologie/csharp/struttura-soluzione/02-dipendenze`](tecnologie/csharp/struttura-soluzione/02-dipendenze.md).
 
 ## DbContext
 
-Classe EF che rappresenta la sessione con il database. Implementa il pattern Unit of Work: traccia le modifiche alle entity e le persiste atomicamente con `SaveChanges()`. Si inietta direttamente nei casi d'uso — non serve un layer repository aggiuntivo.
+Classe EF che rappresenta la sessione con il database. Implementa il pattern Unit of Work: traccia le modifiche alle entity e le persiste atomicamente con `SaveChanges()`. Si inietta direttamente nei casi d'uso, non serve un layer repository aggiuntivo.
 
 ## DelegatingHandler
 
-Handler inseribile nella pipeline di `HttpClient` che intercetta ogni chiamata in uscita prima e dopo l'invio. È il punto d'aggancio idiomatico per attraversare in modo trasversale le chiamate verso servizi esterni — log, resilienza, autenticazione — senza che il codice chiamante lo sappia. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md).
+Handler inseribile nella pipeline di `HttpClient` che intercetta ogni chiamata in uscita prima e dopo l'invio. È il punto d'aggancio idiomatico per attraversare in modo trasversale le chiamate verso servizi esterni (log, resilienza, autenticazione) senza che il codice chiamante lo sappia. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md).
 
 ## Log integrale di chiamate HTTP
 
-Registro che persiste l'intera chiamata HTTP — metodo, URL, headers e body di richiesta e risposta, esito e durata — in un'unica struttura con un campo `Direzione` che distingue inbound e outbound. Generico sul content-type: copre allo stesso modo le chiamate a servizi IA (JSON), REST e SOAP (XML). I metadati sono separati dal payload per non trascinare i body nelle query di log. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md).
+Registro che persiste l'intera chiamata HTTP (metodo, URL, headers e body di richiesta e risposta, esito e durata) in un'unica struttura con un campo `Direzione` che distingue inbound e outbound. Generico sul content-type: copre allo stesso modo le chiamate a servizi IA (JSON), REST e SOAP (XML). I metadati sono separati dal payload per non trascinare i body nelle query di log. Vedi [`tecnologie/csharp/esempi/log-chiamate-http`](tecnologie/csharp/esempi/modellazioni/05-log-chiamate-http.md).
 
 ## Definition of Done
 
@@ -251,7 +251,7 @@ Pattern che incapsula l'esito di un'operazione in un oggetto `Result<T>`, distin
 
 ## Rilascio assistito dall'IA
 
-Skill che esegue un rilascio completo — bump di versione, changelog, commit e tag — alla pari di `commit-and-tag-version`, ma con il changelog prodotto analizzando i commit (e i diff) rispetto al tag precedente, anziché parsando i prefissi dei commit. Il livello semver può essere inferito dalla natura reale delle modifiche. Vedi [`ia/skills/rilascio-ia`](ia/skills/rilascio-ia.md).
+Skill che esegue un rilascio completo (bump di versione, changelog, commit e tag) alla pari di `commit-and-tag-version`, ma con il changelog prodotto analizzando i commit (e i diff) rispetto al tag precedente, anziché parsando i prefissi dei commit. Il livello semver può essere inferito dalla natura reale delle modifiche. Vedi [`ia/skills/rilascio-ia`](ia/skills/rilascio-ia.md).
 
 ## Observer / Pub-Sub
 
@@ -295,11 +295,11 @@ Destinazione di scrittura dei log in Serilog: console, file, database, Seq, Appl
 
 ## Skill (IA)
 
-Procedura operativa ripetibile che un agente IA esegue sul progetto: una sequenza di passi con vincoli espliciti, descritta una sola volta e versionata insieme al codice. La pagina che la descrive ha doppia natura — documentazione e specifica operativa da cui l'agente esegue. Vedi [`ia/skills`](ia/skills/index.md).
+Procedura operativa ripetibile che un agente IA esegue sul progetto: una sequenza di passi con vincoli espliciti, descritta una sola volta e versionata insieme al codice. La pagina che la descrive ha doppia natura: documentazione e specifica operativa da cui l'agente esegue. Vedi [`ia/skills`](ia/skills/index.md).
 
 ## Soft delete
 
-Tecnica per non eliminare fisicamente un record, ma marcarlo come eliminato tramite un campo `DeletedAt` nullable. Se è `null` il record è attivo, se ha una data è eliminato. Un singolo campo, zero ambiguità — non si usano combinazioni di campi booleani e date (vedi il tip sulle [combinazioni inconsistenti](processi/analisi-tecnica/03-modellazione.md#principio-dati-duttili-in-fase-di-lettura)). Preserva la storia e la compatibilità con dati storici. Va progettato fin dall'inizio se richiesto.
+Tecnica per non eliminare fisicamente un record, ma marcarlo come eliminato tramite un campo `DeletedAt` nullable. Se è `null` il record è attivo, se ha una data è eliminato. Un singolo campo, zero ambiguità, non si usano combinazioni di campi booleani e date (vedi il tip sulle [combinazioni inconsistenti](processi/analisi-tecnica/03-modellazione.md#principio-dati-duttili-in-fase-di-lettura)). Preserva la storia e la compatibilità con dati storici. Va progettato fin dall'inizio se richiesto.
 
 ## Spike
 
@@ -335,7 +335,7 @@ Controllo browser Microsoft basato su Chromium Edge, disponibile solo su Windows
 
 ## Unit of Work
 
-Pattern che raggruppa più operazioni in una singola transazione. In EF, `DbContext` è già una Unit of Work. I servizi di dominio partecipano senza chiuderla — è il caso d'uso (in UseCases) che chiama `SaveChanges()`. Vedi [`tecnologie/csharp/struttura-soluzione/04-usecases`](tecnologie/csharp/struttura-soluzione/04-usecases.md) · [`regole/entity-framework`](regole/entity-framework.md).
+Pattern che raggruppa più operazioni in una singola transazione. In EF, `DbContext` è già una Unit of Work. I servizi di dominio partecipano senza chiuderla, è il caso d'uso (in UseCases) che chiama `SaveChanges()`. Vedi [`tecnologie/csharp/struttura-soluzione/04-usecases`](tecnologie/csharp/struttura-soluzione/04-usecases.md) · [`regole/entity-framework`](regole/entity-framework.md).
 
 ## UseCases (livello)
 

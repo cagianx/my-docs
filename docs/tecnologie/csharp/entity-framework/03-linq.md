@@ -1,13 +1,13 @@
 ---
 sidebar_position: 3
-description: LINQ con Entity Framework Core — pattern comuni, proiezioni, paginazione, relazioni e limiti della traduzione SQL.
+description: "LINQ con Entity Framework Core: pattern comuni, proiezioni, paginazione, relazioni e limiti della traduzione SQL."
 ---
 
 # LINQ con Entity Framework
 
 ## Traduzione in SQL
 
-EF traduce le espressioni LINQ in SQL tramite expression tree. Non tutte le operazioni LINQ hanno un equivalente SQL: le operazioni che EF non sa tradurre vengono valutate **lato client** — cioè EF carica i dati e applica il filtro in C#. Questo è silenzioso e può causare query che portano in memoria interi dataset.
+EF traduce le espressioni LINQ in SQL tramite expression tree. Non tutte le operazioni LINQ hanno un equivalente SQL: le operazioni che EF non sa tradurre vengono valutate **lato client**: cioè EF carica i dati e applica il filtro in C#. Questo è silenzioso e può causare query che portano in memoria interi dataset.
 
 Le query che si vogliono eseguire integralmente su database devono usare solo operazioni traducibili. In caso di dubbio, controllare il log SQL generato.
 
@@ -73,7 +73,7 @@ var ordini = await _db.Ordini
 
 ### Proiezione con dati da relazioni
 
-La proiezione può accedere alle navigation property senza `Include` esplicito — EF genera la JOIN automaticamente nella SELECT:
+La proiezione può accedere alle navigation property senza `Include` esplicito: EF genera la JOIN automaticamente nella SELECT:
 
 ```csharp
 var risultati = await _db.Ordini
@@ -110,7 +110,7 @@ Alcune operazioni LINQ non vengono tradotte e causano valutazione lato client (o
 
 ```csharp
 // ❌ Metodi personalizzati non traducibili
-.Where(o => IsOrdineValido(o))          // metodo C# — non traducibile
+.Where(o => IsOrdineValido(o))          // metodo C#: non traducibile
 
 // ❌ Funzioni .NET senza equivalente SQL
 .Where(o => o.Numero.IsNormalized())
@@ -122,7 +122,7 @@ Alcune operazioni LINQ non vengono tradotte e causano valutazione lato client (o
 
 ## SQL grezzo
 
-Quando LINQ non è sufficiente — query complesse, CTE, funzioni window — si usa `FromSqlRaw` o `FromSqlInterpolated`:
+Quando LINQ non è sufficiente (query complesse, CTE, funzioni window) si usa `FromSqlRaw` o `FromSqlInterpolated`:
 
 ```csharp
 // FromSqlInterpolated è sicuro da SQL injection (usa parametri)

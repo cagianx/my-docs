@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: PostgreSQL
-description: Convenzioni per PostgreSQL — heap senza clustering persistente, comando CLUSTER, indici copertura, partizionamento e BRIN.
+description: "Convenzioni per PostgreSQL: heap senza clustering persistente, comando CLUSTER, indici copertura, partizionamento e BRIN."
 ---
 
 import TechIcon from '@site/src/components/TechIcon';
@@ -12,11 +12,11 @@ PostgreSQL è il caso in cui le [best practice sugli indici](best-practice/indic
 
 ## Niente clustered index: la tabella è una heap
 
-In PostgreSQL i dati di una tabella vivono in una *heap*: le righe non hanno un ordine fisico garantito. La chiave primaria è semplicemente un **indice B-tree univoco** — non riordina la tabella e non è una chiave di clustering.
+In PostgreSQL i dati di una tabella vivono in una *heap*: le righe non hanno un ordine fisico garantito. La chiave primaria è semplicemente un **indice B-tree univoco**: non riordina la tabella e non è una chiave di clustering.
 
 > La PK in PostgreSQL **non** ordina fisicamente i dati. Chi arriva da SQL Server o SQLite deve disinnescare questa aspettativa.
 
-Di conseguenza l'errore «clustered index lasciato di default sull'ID» qui non esiste come tale: *nessun* indice ordina la tabella in modo permanente. Il problema che le best practice risolvono — far coincidere l'ordine fisico con il criterio di lettura — si affronta con strumenti diversi.
+Di conseguenza l'errore «clustered index lasciato di default sull'ID» qui non esiste come tale: *nessun* indice ordina la tabella in modo permanente. Il problema che le best practice risolvono (far coincidere l'ordine fisico con il criterio di lettura) si affronta con strumenti diversi.
 
 ## Avvicinarsi al clustering
 

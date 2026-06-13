@@ -1,6 +1,6 @@
 ---
 sidebar_position: 19
-description: Background service in ASP.NET Core — IHostedService, BackgroundService, worker pattern e graceful shutdown.
+description: "Background service in ASP.NET Core: IHostedService, BackgroundService, worker pattern e graceful shutdown."
 ---
 
 # Background services
@@ -134,7 +134,7 @@ public class EmailWorker : BackgroundService
 ASP.NET Core invia il `CancellationToken` di stop quando l'applicazione riceve il segnale di shutdown (SIGTERM, Ctrl+C). Il worker deve terminare il lavoro corrente entro il timeout di shutdown (default: 30 secondi) e uscire.
 
 ```csharp
-// Program.cs — aumentare il timeout se il worker ha operazioni lunghe
+// Program.cs: aumentare il timeout se il worker ha operazioni lunghe
 builder.Services.Configure<HostOptions>(options =>
 {
     options.ShutdownTimeout = TimeSpan.FromSeconds(60);

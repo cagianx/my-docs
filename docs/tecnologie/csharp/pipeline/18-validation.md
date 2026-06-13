@@ -1,11 +1,11 @@
 ---
 sidebar_position: 18
-description: Validazione dell'input in ASP.NET Core — DataAnnotations, FluentValidation e integrazione con ValidationProblemDetails.
+description: "Validazione dell'input in ASP.NET Core: DataAnnotations, FluentValidation e integrazione con ValidationProblemDetails."
 ---
 
 # Validazione
 
-La validazione avviene **al confine del sistema**: dove i dati entrano dall'esterno — il controller o il minimal API endpoint. All'interno del dominio i dati sono già considerati validi; ripetere le stesse validazioni nella business logic è codice difensivo da evitare.
+La validazione avviene **al confine del sistema**: dove i dati entrano dall'esterno, il controller o il minimal API endpoint. All'interno del dominio i dati sono già considerati validi; ripetere le stesse validazioni nella business logic è codice difensivo da evitare.
 
 ## DataAnnotations
 
@@ -86,7 +86,7 @@ Vedi [14-problem-details](14-problem-details.md) per la configurazione del forma
 
 ## Validazione manuale
 
-Quando si vuole controllare esplicitamente il flusso — ad esempio per restituire un errore di dominio anziché 400 — si inietta il validator e si chiama `ValidateAsync`:
+Quando si vuole controllare esplicitamente il flusso (ad esempio per restituire un errore di dominio anziché 400) si inietta il validator e si chiama `ValidateAsync`:
 
 ```csharp
 [HttpPost]

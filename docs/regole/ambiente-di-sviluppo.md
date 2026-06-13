@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Ambiente di Sviluppo
+# Ambiente di sviluppo
 
 ## Principio
 
@@ -17,7 +17,7 @@ Un buon progetto si avvia in pochi comandi. L'obiettivo è ridurre al minimo i p
 ```bash
 git clone <url-del-progetto>
 cd <nome-progetto>
-npm install && npm start   # esempio — i comandi variano per progetto
+npm install && npm start   # esempio: i comandi variano per progetto
 ```
 
 Meno passaggi ci sono, meglio è. Se servono più di tre comandi, probabilmente c'è margine per automatizzare.

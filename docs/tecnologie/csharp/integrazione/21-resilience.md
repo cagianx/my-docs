@@ -1,6 +1,6 @@
 ---
 sidebar_position: 21
-description: Resilienza delle chiamate HTTP in ASP.NET Core — retry, circuit breaker e timeout con Microsoft.Extensions.Http.Resilience e Polly.
+description: "Resilienza delle chiamate HTTP in ASP.NET Core: retry, circuit breaker e timeout con Microsoft.Extensions.Http.Resilience e Polly."
 ---
 
 # Resilienza
@@ -29,10 +29,10 @@ builder.Services
 ```
 
 Il pipeline standard include in ordine:
-1. **Retry totale** — timeout complessivo per tutti i tentativi
-2. **Retry** — fino a 3 tentativi con backoff esponenziale e jitter
-3. **Circuit breaker** — apre il circuito se il tasso di errori supera la soglia
-4. **Attempt timeout** — timeout per ogni singolo tentativo
+1. **Retry totale**: timeout complessivo per tutti i tentativi
+2. **Retry**: fino a 3 tentativi con backoff esponenziale e jitter
+3. **Circuit breaker**: apre il circuito se il tasso di errori supera la soglia
+4. **Attempt timeout**: timeout per ogni singolo tentativo
 
 ## Configurazione personalizzata
 
@@ -96,8 +96,8 @@ Protegge il servizio chiamato dal sovraccarico durante il recovery, e libera rap
 
 Imposta un limite alla durata di ogni chiamata. Senza timeout, un servizio lento tiene occupato un thread indefinitamente. Si distingue tra:
 
-- **Attempt timeout** — timeout per ogni singolo tentativo
-- **Total timeout** — timeout complessivo inclusi i retry
+- **Attempt timeout**: timeout per ogni singolo tentativo
+- **Total timeout**: timeout complessivo inclusi i retry
 
 Il total timeout deve essere maggiore di `attempt_timeout × max_tentativi`.
 

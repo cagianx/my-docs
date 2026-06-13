@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-description: Tecniche per integrare questa guida in un progetto come knowledge base per gli agenti IA — sottomodulo git, riferimenti da CLAUDE.md, skill operative, glossario condiviso.
+description: Tecniche per integrare questa guida in un progetto come knowledge base per gli agenti IA, con sottomodulo git, riferimenti da CLAUDE.md, skill operative, glossario condiviso.
 ---
 
 # Uso con IA
@@ -21,15 +21,15 @@ git add . && git commit -m "chore: add my-docs v0.1.19 as submodule"
 
 Il submodule offre tre garanzie:
 
-- **Versionato** — il commit del progetto registra esattamente quale revisione di MyDocs è in vigore in quel momento
-- **Riproducibile** — chiunque cloni il progetto con `--recurse-submodules` ottiene la stessa documentazione che aveva l'IA quando ha generato il codice
-- **Aggiornabile su richiesta** — il bump è un atto esplicito, non una deriva silenziosa
+- **Versionato**: il commit del progetto registra esattamente quale revisione di MyDocs è in vigore in quel momento
+- **Riproducibile**: chiunque cloni il progetto con `--recurse-submodules` ottiene la stessa documentazione che aveva l'IA quando ha generato il codice
+- **Aggiornabile su richiesta**: il bump è un atto esplicito, non una deriva silenziosa
 
 Si evitano alternative come copia manuale, fork senza tracciamento o link a sito esterno: tutte rendono opaca la versione effettiva in uso.
 
 ## Riferimenti puntuali da CLAUDE.md
 
-Un link generico a MyDocs è poco utile. L'agente IA va indirizzato alle sezioni rilevanti per il progetto specifico — quelle restanti rimangono disponibili ma non in primo piano.
+Un link generico a MyDocs è poco utile. L'agente IA va indirizzato alle sezioni rilevanti per il progetto specifico, quelle restanti rimangono disponibili ma non in primo piano.
 
 Esempio per un progetto C# / Entity Framework:
 
@@ -48,13 +48,13 @@ Questo progetto segue le convenzioni in `my-docs/`. Riferimenti principali:
 Per cercare altri concetti, partire da `my-docs/docs/indice-analitico.md`.
 ```
 
-Lo stesso vale per `AGENTS.md` o per i file equivalenti di altri agenti. Un progetto frontend Angular avrà riferimenti diversi rispetto a un'API .NET — il file di configurazione dell'IA è lo strato che adatta MyDocs al contesto.
+Lo stesso vale per `AGENTS.md` o per i file equivalenti di altri agenti. Un progetto frontend Angular avrà riferimenti diversi rispetto a un'API .NET: il file di configurazione dell'IA è lo strato che adatta MyDocs al contesto.
 
 ## Skill operative nel proprio repo
 
-MyDocs include alcune [skill](ia/skills/index.md) — procedure operative come [commit](ia/skills/commit-ia.md) e [release](ia/skills/rilascio-ia.md). La pagina che le descrive è la fonte di verità; la versione **eseguibile** da Claude Code vive in `.claude/skills/<nome>/SKILL.md` e si invoca con `/<nome>`.
+MyDocs include alcune [skill](ia/skills/index.md), procedure operative come [commit](ia/skills/commit-ia.md) e [release](ia/skills/rilascio-ia.md). La pagina che le descrive è la fonte di verità; la versione **eseguibile** da Claude Code vive in `.claude/skills/<nome>/SKILL.md` e si invoca con `/<nome>`.
 
-Claude Code cerca le skill nel `.claude/skills/` **alla radice del progetto**, non dentro un submodule. Quelle di MyDocs, annidate in `my-docs/.claude/skills/`, non vengono quindi rilevate da sole. Per renderle invocabili nel proprio repo si crea un `SKILL.md` **puntatore sottile** che rimanda alla pagina nel submodule — già pinnata a un tag preciso, quindi fonte di verità versionata.
+Claude Code cerca le skill nel `.claude/skills/` **alla radice del progetto**, non dentro un submodule. Quelle di MyDocs, annidate in `my-docs/.claude/skills/`, non vengono quindi rilevate da sole. Per renderle invocabili nel proprio repo si crea un `SKILL.md` **puntatore sottile** che rimanda alla pagina nel submodule, già pinnata a un tag preciso, quindi fonte di verità versionata.
 
 `.claude/skills/commit/SKILL.md` nel proprio progetto:
 
@@ -66,29 +66,29 @@ description: Crea i commit delle modifiche pendenti raggruppandole nel minor num
 
 # Commit assistito dall'IA
 
-Procedura completa in `my-docs/docs/ia/skills/commit-ia.md` — unica fonte di verità.
+Procedura completa in `my-docs/docs/ia/skills/commit-ia.md`, unica fonte di verità.
 Leggi quel file ed esegui ciò che descrive. Non duplicare qui le istruzioni.
 ```
 
 Tre conseguenze:
 
-- **Versionata col submodule** — la skill segue il tag pinnato di MyDocs: cambiarne il comportamento è un bump esplicito, non una deriva silenziosa.
-- **Senza duplicazione** — nel proprio repo restano solo il frontmatter (necessario perché Claude Code attivi `/<nome>` senza aprire la pagina) e il rimando; la procedura vive in MyDocs.
-- **Selettiva** — un progetto abilita solo le skill che gli servono, creando il puntatore unicamente per quelle.
+- **Versionata col submodule**: la skill segue il tag pinnato di MyDocs, cambiarne il comportamento è un bump esplicito, non una deriva silenziosa.
+- **Senza duplicazione**: nel proprio repo restano solo il frontmatter (necessario perché Claude Code attivi `/<nome>` senza aprire la pagina) e il rimando; la procedura vive in MyDocs.
+- **Selettiva**: un progetto abilita solo le skill che gli servono, creando il puntatore unicamente per quelle.
 
 Conviene citare le skill disponibili anche nel CLAUDE.md, tra i riferimenti, così l'agente sa che esistono e quando usarle.
 
 ## Glossario come ubiquitous language
 
-Il glossario (`my-docs/docs/glossario.md`) definisce i termini tecnici e di dominio. Adottarli nel progetto — nei nomi delle classi, nei commit, nelle PR, nel codice — produce coerenza tra documentazione e implementazione.
+Il glossario (`my-docs/docs/glossario.md`) definisce i termini tecnici e di dominio. Adottarli nel progetto (nei nomi delle classi, nei commit, nelle PR, nel codice) produce coerenza tra documentazione e implementazione.
 
-L'IA, leggendo gli stessi termini in entrambi i contesti, riconosce i concetti senza ambiguità: `IUseCase`, `Result<T>`, `DbContext`, `feature flag` significano la stessa cosa in MyDocs e nel progetto. Si evitano sinonimi, traduzioni casuali, abbreviazioni private.
+L'IA, leggendo gli stessi termini in entrambi i contesti, riconosce i concetti senza ambiguità: `IUseCase`, `Result<T>`, `DbContext` e `feature flag` significano la stessa cosa in MyDocs e nel progetto. Si evitano sinonimi, traduzioni casuali, abbreviazioni private.
 
 Quando il dominio del progetto introduce termini propri, vanno aggiunti al glossario del progetto (non di MyDocs) e referenziati con la stessa disciplina.
 
 ## Indice analitico come entry point per le ricerche
 
-Per cercare un concetto in MyDocs, l'IA dovrebbe partire da `my-docs/docs/indice-analitico.md` — non con un grep cieco. L'indice mappa ogni concetto alla pagina dove è trattato per esteso, riducendo i falsi positivi e accelerando la navigazione.
+Per cercare un concetto in MyDocs, l'IA dovrebbe partire da `my-docs/docs/indice-analitico.md`, non con un grep cieco. L'indice mappa ogni concetto alla pagina dove è trattato per esteso, riducendo i falsi positivi e accelerando la navigazione.
 
 Va istruito esplicitamente nel CLAUDE.md, altrimenti l'agente farà ricerche full-text inefficienti.
 
@@ -96,8 +96,8 @@ Va istruito esplicitamente nel CLAUDE.md, altrimenti l'agente farà ricerche ful
 
 Tutto il contenuto è testo:
 
-- **Markdown** per la prosa e la struttura — diff-abile, grep-abile, leggibile riga per riga
-- **Mermaid** per i diagrammi — è codice, non un'immagine
+- **Markdown** per la prosa e la struttura: diff-abile, grep-abile, leggibile riga per riga
+- **Mermaid** per i diagrammi: è codice, non un'immagine
 
 Si evitano: screenshot, PDF, wiki esterne, presentazioni, audio. Tutti formati che l'IA non può leggere o aggiornare nello stesso commit del codice.
 
@@ -125,4 +125,4 @@ feat(ordini): use Result<T> for command outcomes
 Vedi my-docs/docs/regole/gestione-errori.md.
 ```
 
-Per chi legge la storia del progetto, il riferimento è un puntatore al ragionamento — non si rincorrono motivazioni ricostruite a posteriori. Per l'IA, è un esempio in più di come collegare codice e documentazione.
+Per chi legge la storia del progetto, il riferimento è un puntatore al ragionamento, non si rincorrono motivazioni ricostruite a posteriori. Per l'IA, è un esempio in più di come collegare codice e documentazione.

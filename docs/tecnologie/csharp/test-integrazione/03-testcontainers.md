@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: Testcontainers — avviare PostgreSQL in Docker per i test di integrazione senza dipendenze locali.
+description: "Testcontainers: avviare PostgreSQL in Docker per i test di integrazione senza dipendenze locali."
 ---
 
 # Testcontainers
@@ -14,7 +14,7 @@ Vantaggi rispetto a un PostgreSQL locale:
 - versione di PostgreSQL dichiarata nel codice e riproducibile
 - nessun conflitto di porte o stato residuo tra sessioni
 
-Svantaggio: richiede Docker in esecuzione sulla macchina di sviluppo e in CI. Il primo avvio scarica l'immagine — le esecuzioni successive usano la cache locale.
+Svantaggio: richiede Docker in esecuzione sulla macchina di sviluppo e in CI. Il primo avvio scarica l'immagine; le esecuzioni successive usano la cache locale.
 
 ## Installazione
 
@@ -60,7 +60,7 @@ public class TestEnvironment
 
 ## Integrazione con la classe base
 
-La classe base descritta in [01-pattern](01-pattern.mdx) espone `MasterConnectionString` come proprietà virtuale. Per usare Testcontainers basta estenderla e sovrascrivere quella proprietà — tutto il resto (template, clone, scope DI) rimane invariato.
+La classe base descritta in [01-pattern](01-pattern.mdx) espone `MasterConnectionString` come proprietà virtuale. Per usare Testcontainers basta estenderla e sovrascrivere quella proprietà: tutto il resto (template, clone, scope DI) rimane invariato.
 
 ```csharp
 public abstract class ContainerIntegrationTestBase : IntegrationTestBase

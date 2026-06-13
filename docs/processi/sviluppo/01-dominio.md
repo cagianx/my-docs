@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Step 1 — Dominio
+# Step 1: Dominio
 
-Il dominio si tocca per primo. Le entity, le migration e i vincoli del database sono la fondamenta su cui poggia tutto il resto — business logic e UI dipendono da questa stabilità.
+Il dominio si tocca per primo. Le entity, le migration e i vincoli del database sono la fondamenta su cui poggia tutto il resto: business logic e UI dipendono da questa stabilità.
 
 ## Cosa fare
 
@@ -15,11 +15,11 @@ Implementare le entity e le configurazioni EF emerse dalla modellazione in anali
 - nomi dall'[Ubiquitous Language](../../glossario#ubiquitous-language), senza abbreviazioni né traduzioni
 - constraint e chiavi esterne dichiarati nel modello, non gestiti applicativamente
 - [migration](../../glossario#migration) con nome descrittivo che racconta la decisione di dominio
-- nessuna rinomina, nessuna rimozione — solo aggiunte e deprecazioni
+- nessuna rinomina, nessuna rimozione, solo aggiunte e deprecazioni
 
 ### 2. Scrivere il primo test di integrazione
 
-Appena il dominio è definito, si scrive almeno un test di integrazione che verifichi il funzionamento base. Non deve coprire tutta la business logic — quella viene nel passo successivo — ma deve garantire che il modello sia corretto: che le migration vengano applicate, che i constraint funzionino, che le relazioni siano navigabili.
+Appena il dominio è definito, si scrive almeno un test di integrazione che verifichi il funzionamento base. Non deve coprire tutta la business logic (quella viene nel passo successivo) ma deve garantire che il modello sia corretto: che le migration vengano applicate, che i constraint funzionino, che le relazioni siano navigabili.
 
 ```csharp
 [Fact]
@@ -45,7 +45,7 @@ public async Task CreaOrdine_PersistsCorrectly()
 
 ### 3. Verificare che i test esistenti non si rompano
 
-Le modifiche al dominio non devono rompere i test preesistenti. La CI lo verifica automaticamente, ma è buona pratica girare la suite localmente prima di aprire un commit — specialmente se si toccano entità con molte dipendenze.
+Le modifiche al dominio non devono rompere i test preesistenti. La CI lo verifica automaticamente, ma è buona pratica girare la suite localmente prima di aprire un commit, specialmente se si toccano entità con molte dipendenze.
 
 ## Quando il dominio è stabile
 
@@ -58,4 +58,4 @@ Da questo momento business logic e UI possono procedere in parallelo.
 
 ---
 
-**Prossimo step:** [Step 2 — Business Logic](02-business-logic.md)
+**Prossimo step:** [Step 2: Business Logic](02-business-logic.md)

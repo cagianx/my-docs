@@ -118,5 +118,5 @@ L'output contiene l'installer per la piattaforma corrente. Per build cross-platf
 
 - ASP.NET Core non è in-process: la sincronizzazione avvio sidecar / apertura webview va gestita (polling su `/health` o attesa su stdout del sidecar)
 - Il binding nativo Rust ↔ Angular è più verboso rispetto a Electron (IPC via comandi Tauri)
-- Il webview nativo può avere comportamenti diversi tra piattaforme (WebKit su macOS/Linux vs WebView2 su Windows) — testare su tutte le piattaforme target
+- Il webview nativo può avere comportamenti diversi tra piattaforme (WebKit su macOS/Linux vs WebView2 su Windows): testare su tutte le piattaforme target
 - Richiede una toolchain Rust installata in sviluppo

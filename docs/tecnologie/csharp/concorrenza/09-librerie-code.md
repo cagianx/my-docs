@@ -1,6 +1,6 @@
 ---
 sidebar_position: 9
-description: Librerie per la gestione di code e job in .NET — Hangfire e Quartz.NET a confronto.
+description: "Librerie per la gestione di code e job in .NET: Hangfire e Quartz.NET a confronto."
 ---
 
 # Librerie per code e job
@@ -43,21 +43,21 @@ app.UseHangfireDashboard("/hangfire");
 ### Tipi di job
 
 ```csharp
-// Fire-and-forget — eseguito una volta, subito
+// Fire-and-forget: eseguito una volta, subito
 BackgroundJob.Enqueue<InviaEmail>(x => x.ExecuteAsync(emailId));
 
-// Ritardato — eseguito dopo un intervallo
+// Ritardato: eseguito dopo un intervallo
 BackgroundJob.Schedule<InviaReminderEmail>(
     x => x.ExecuteAsync(ordineId),
     TimeSpan.FromHours(24));
 
-// Ricorrente — eseguito secondo uno schedule cron
+// Ricorrente: eseguito secondo uno schedule cron
 RecurringJob.AddOrUpdate<SincronizzaPrezzi>(
     "sincronizza-prezzi",
     x => x.ExecuteAsync(),
     Cron.Hourly);
 
-// Continuazione — eseguito al completamento di un altro job
+// Continuazione: eseguito al completamento di un altro job
 var jobId = BackgroundJob.Enqueue<GeneraFattura>(x => x.ExecuteAsync(ordineId));
 BackgroundJob.ContinueJobWith<InviaFattura>(jobId, x => x.ExecuteAsync(ordineId));
 ```

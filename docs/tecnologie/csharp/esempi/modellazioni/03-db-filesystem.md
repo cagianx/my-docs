@@ -5,11 +5,11 @@ description: File storage su database con Entity Framework per file piccoli, sep
 
 # Filesystem su database (EF)
 
-Quando i file sono piccoli e il requisito principale è avere tutto nel database — backup unico, transazioni, permessi centralizzati, niente dipendenza da filesystem condivisi — si può implementare uno storage su DB con Entity Framework.
+Quando i file sono piccoli e il requisito principale è avere tutto nel database (backup unico, transazioni, permessi centralizzati, niente dipendenza da filesystem condivisi) si può implementare uno storage su DB con Entity Framework.
 
 L'idea è separare:
 
-- **`StoredFile`**: metadati — nome, tipo di file, content-type, size, hash
+- **`StoredFile`**: metadati, ovvero nome, tipo di file, content-type, size, hash
 - **`StoredFileContent`**: contenuto binario (`byte[]`)
 
 ```mermaid
@@ -302,14 +302,14 @@ public sealed record StoredFileListItem(
 
 Il punto chiave è che `ListAsync` interroga solo `StoredFile`, mentre `GetAsync` va anche sul contenuto. Così l'indexing resta leggero e il blob si materializza solo quando serve davvero.
 
-Il servizio **non chiama `SaveChanges`**: aggiunge o marca entità sul `DbContext` e basta. La chiusura della unit of work è responsabilità del comando che orchestra l'operazione, secondo la convenzione del [livello UseCases](../../struttura-soluzione/04-usecases.md). Così lo stesso `DbFileStorage` può partecipare a una transazione più ampia — ad esempio salvare un allegato e l'entità che lo referenzia in un unico commit.
+Il servizio **non chiama `SaveChanges`**: aggiunge o marca entità sul `DbContext` e basta. La chiusura della unit of work è responsabilità del comando che orchestra l'operazione, secondo la convenzione del [livello UseCases](../../struttura-soluzione/04-usecases.md). Così lo stesso `DbFileStorage` può partecipare a una transazione più ampia, ad esempio salvare un allegato e l'entità che lo referenzia in un unico commit.
 
 ## Comando
 
 Il comando orchestra il servizio e chiude la transazione, restituendo un `Result`:
 
 ```csharp
-// usecases — orchestrazione + SaveChanges + Result
+// usecases: orchestrazione + SaveChanges + Result
 public class CaricaFile : IUseCase<CaricaFileDto, Result<Guid>>
 {
     private readonly AppDbContext _db;
@@ -399,7 +399,7 @@ dotnet ef migrations add AddStoredFiles \
 
 ## Considerazioni operative
 
-- **RAM**: il limite massimo va deciso in base ai picchi concorrenti. `100` upload simultanei da `512 KB` non sono più "piccoli".
+- **RAM**: il limite massimo va deciso in base ai picchi concorrenti. `100` upload simultanei da `512 KB` non sono più «piccoli».
 - **Query listing**: non usare `Include(x => x.Content)` nelle liste, altrimenti il database filesystem perde il vantaggio della separazione.
 - **Deduplica**: l'hash `SHA-256` permette di rilevare file identici. Se serve, si può introdurre una tabella contenuti condivisi.
 - **Backup**: il vantaggio principale è avere dati e file nello stesso backup; lo svantaggio è che il DB cresce più in fretta.

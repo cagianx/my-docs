@@ -5,7 +5,7 @@ description: Configurare Serilog per scrivere le eccezioni su database tramite u
 
 # Serilog su database (EF)
 
-Serilog include diversi sink per database relazionali (es. `Serilog.Sinks.MSSqlServer`), ma questi scrivono direttamente via ADO.NET, bypassando Entity Framework. Quando si vuole usare EF — per stare dentro le convenzioni del progetto, gestire la connessione in modo uniforme o avere le migration — si scrive un sink custom.
+Serilog include diversi sink per database relazionali (es. `Serilog.Sinks.MSSqlServer`), ma questi scrivono direttamente via ADO.NET, bypassando Entity Framework. Quando si vuole usare EF (per stare dentro le convenzioni del progetto, gestire la connessione in modo uniforme o avere le migration) si scrive un sink custom.
 
 Il sink salva solo i log di livello `Error` o superiore. Per ogni evento salva una riga in `LogEntry` e tante righe in `LogEntryException` quante le eccezioni nella catena (l'eccezione principale + ogni inner exception, in ordine di profondità). Questo permette di filtrare e aggregare per tipo di eccezione a qualunque livello della catena.
 
@@ -205,10 +205,10 @@ builder.Host.UseSerilog((context, services, configuration) =>
             restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error));
 ```
 
-L'overload `UseSerilog` con tre parametri riceve `IServiceProvider` già costruito, quindi `IServiceScopeFactory` è disponibile. Il sink EF si aggiunge sopra alla configurazione da `appsettings.json` — console e file continuano a ricevere tutti i livelli come configurato lì.
+L'overload `UseSerilog` con tre parametri riceve `IServiceProvider` già costruito, quindi `IServiceScopeFactory` è disponibile. Il sink EF si aggiunge sopra alla configurazione da `appsettings.json`: console e file continuano a ricevere tutti i livelli come configurato lì.
 
 ```json
-// appsettings.json — invariato, il DB riceve solo Error+ via codice
+// appsettings.json invariato, il DB riceve solo Error+ via codice
 {
   "Serilog": {
     "MinimumLevel": {

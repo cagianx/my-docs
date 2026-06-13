@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Step 6 — Requisiti Non Funzionali
+# Step 6: Requisiti Non Funzionali
 
 I requisiti non funzionali ([NFR](../../glossario#nfr)) sono i requisiti impliciti che nessuno scrive nell'[analisi funzionale](../../glossario#analisi-funzionale) ma che, se ignorati, mandano in produzione un sistema che non funziona nel mondo reale. Vanno resi espliciti qui, con metriche verificabili.
 
@@ -24,7 +24,7 @@ I requisiti non funzionali ([NFR](../../glossario#nfr)) sono i requisiti implici
 ### Tracciabilità e audit
 
 - Cosa deve essere loggato per compliance o diagnostica
-- Chi ha fatto cosa e quando — se richiesto, va progettato nel modello dati fin dall'inizio
+- Chi ha fatto cosa e quando: se richiesto, va progettato nel modello dati fin dall'inizio
 - Retention dei log
 
 ### Resilienza
@@ -42,8 +42,8 @@ I requisiti non funzionali ([NFR](../../glossario#nfr)) sono i requisiti implici
 
 ## Criterio di completamento
 
-Ogni NFR ha una metrica verificabile e un responsabile tecnico. Non esistono NFR vaghi come "deve essere veloce" o "deve essere sicuro" — ogni requisito ha un numero o un comportamento osservabile.
+Ogni NFR ha una metrica verificabile e un responsabile tecnico. Non esistono NFR vaghi come «deve essere veloce» o «deve essere sicuro»: ogni requisito ha un numero o un comportamento osservabile.
 
 ---
 
-**Prossimo step:** [Step 7 — Piano e Stime](07-piano.md)
+**Prossimo step:** [Step 7: Piano e Stime](07-piano.md)

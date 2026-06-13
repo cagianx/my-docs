@@ -1,13 +1,13 @@
 ---
 sidebar_position: 9
-description: Observer / Pub-Sub — notifica un numero variabile di consumatori al verificarsi di un evento, senza che il produttore conosca chi ascolta.
+description: "Observer / Pub-Sub: notifica un numero variabile di consumatori al verificarsi di un evento, senza che il produttore conosca chi ascolta."
 ---
 
 # Observer / Pub-Sub
 
 ## Problema
 
-Quando qualcosa accade in un componente — un ordine viene creato, un pagamento conferma, una soglia viene superata — altri componenti devono reagire: inviare un'email, aggiornare un indice di ricerca, scrivere un log di audit, invalidare una cache. Chiamare direttamente ciascun consumatore dal punto di origine accoppia il produttore a tutti i destinatari: aggiungere un consumatore significa modificare il produttore, e ogni reazione finisce mescolata con la logica principale.
+Quando qualcosa accade in un componente (un ordine viene creato, un pagamento conferma, una soglia viene superata), altri componenti devono reagire: inviare un'email, aggiornare un indice di ricerca, scrivere un log di audit, invalidare una cache. Chiamare direttamente ciascun consumatore dal punto di origine accoppia il produttore a tutti i destinatari: aggiungere un consumatore significa modificare il produttore, e ogni reazione finisce mescolata con la logica principale.
 
 ## Idea centrale
 
@@ -17,11 +17,11 @@ Il produttore **annuncia** che è successo qualcosa. Non sa chi ascolta. I consu
 
 ### 1. L'evento (cosa è successo)
 
-Un dato immutabile che descrive il fatto. Contiene tutte le informazioni necessarie ai consumatori per agire senza dover risalire al produttore. È nominato al passato — *PaymentConfirmed*, *OrderShipped* — perché descrive un fatto già avvenuto.
+Un dato immutabile che descrive il fatto. Contiene tutte le informazioni necessarie ai consumatori per agire senza dover risalire al produttore. È nominato al passato (*PaymentConfirmed*, *OrderShipped*) perché descrive un fatto già avvenuto.
 
 ### 2. Il produttore (il publisher)
 
-Il componente nel cui dominio l'evento ha origine. Pubblica l'evento attraverso un canale (in-process o esterno) e prosegue. Non aspetta i consumatori, non sa quanti sono, non sa se hanno avuto successo (a meno che non si voglia esplicitamente la conferma — ma allora non è più Pub-Sub puro).
+Il componente nel cui dominio l'evento ha origine. Pubblica l'evento attraverso un canale (in-process o esterno) e prosegue. Non aspetta i consumatori, non sa quanti sono, non sa se hanno avuto successo (a meno che non si voglia esplicitamente la conferma, ma allora non è più Pub-Sub puro).
 
 ### 3. I consumatori (i subscriber)
 
@@ -73,4 +73,4 @@ L'asincronia introduce nuove categorie di problemi che vanno affrontati esplicit
 
 ## Implementazioni specifiche
 
-- [C# — Eventi nativi, MediatR notifications, MassTransit](../tecnologie/csharp/pattern/observer.md)
+- [C#: Eventi nativi, MediatR notifications, MassTransit](../tecnologie/csharp/pattern/observer.md)

@@ -27,7 +27,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 ```
 
-Tutta la configurazione vive in `appsettings.json` — nessun hardcoding nel codice:
+Tutta la configurazione vive in `appsettings.json`, nessun hardcoding nel codice:
 
 ```json
 {
@@ -98,10 +98,10 @@ public class CreaOrdine
 I valori si passano come parametri, mai con interpolazione di stringa:
 
 ```csharp
-// ✅ Log strutturato — il valore è una proprietà ricercabile
+// ✅ Log strutturato: il valore è una proprietà ricercabile
 _logger.LogInformation("Ordine {OrdineId} confermato per {ClienteId}", ordineId, clienteId);
 
-// ❌ Interpolazione — perde la struttura, alloca inutilmente
+// ❌ Interpolazione: perde la struttura, alloca inutilmente
 _logger.LogInformation($"Ordine {ordineId} confermato per {clienteId}");
 ```
 

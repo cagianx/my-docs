@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-description: Osservabilità in ASP.NET Core con OpenTelemetry — trace, metriche e log.
+description: "Osservabilità in ASP.NET Core con OpenTelemetry: trace, metriche e log."
 ---
 
 # Osservabilità (OpenTelemetry)

@@ -1,15 +1,15 @@
 ---
 sidebar_position: 4
-description: Livello UseCases tra Core e i progetti di alto livello — comandi completi che chiudono la unit of work con SaveChanges e applicano il Result pattern.
+description: "Livello UseCases tra Core e i progetti di alto livello: comandi completi che chiudono la unit of work con SaveChanges e applicano il Result pattern."
 ---
 
-# UseCases (Comandi)
+# UseCases (comandi)
 
 ## Perché un livello tra Core e Api
 
 I servizi di Core (domain service, regole, validazioni) **non chiamano `SaveChanges`**. Modificano entità, eseguono logica di dominio, ma non chiudono la unit of work. La chiusura della transazione è una responsabilità di livello superiore.
 
-Senza un livello intermedio, `SaveChanges` finisce nelle action dei controller. Il controller diventa orchestratore di dominio, persistenza e HTTP nello stesso punto — tre responsabilità in una.
+Senza un livello intermedio, `SaveChanges` finisce nelle action dei controller. Il controller diventa orchestratore di dominio, persistenza e HTTP nello stesso punto: tre responsabilità in una.
 
 Il livello **UseCases** (o **Commands**) impacchetta i servizi di Core in comandi completi: ricevono un input, orchestrano la logica di Core, chiudono la transazione, restituiscono un `Result`. I progetti di alto livello (Api, Console, Worker) chiamano i comandi e basta.
 
@@ -65,7 +65,7 @@ UseCases dipende **solo** da Core. Non vede Api, Console o altri progetti di alt
 Il comando orchestra Core e chiude la transazione:
 
 ```csharp
-// usecases — comando completo: orchestrazione + SaveChanges + Result
+// usecases, comando completo: orchestrazione + SaveChanges + Result
 // CreaOrdineDto e Result<T> vengono da Models, Ordine viene da Db
 public class CreaOrdine : IUseCase<CreaOrdineDto, Result<Guid>>
 {
@@ -87,7 +87,7 @@ public class CreaOrdine : IUseCase<CreaOrdineDto, Result<Guid>>
 }
 ```
 
-Il controller chiama il comando e restituisce la risposta — niente `SaveChanges`, niente logica di dominio:
+Il controller chiama il comando e restituisce la risposta: niente `SaveChanges`, niente logica di dominio:
 
 ```csharp
 [HttpPost]
@@ -100,4 +100,4 @@ public async Task<IActionResult> Crea(CreaOrdineDto cmd, CreaOrdine useCase, Can
 }
 ```
 
-❌ Da evitare: chiamare `SaveChanges` nel controller o in un domain service di Core. Il controller orchestra HTTP, il domain service orchestra dominio — la transazione è del comando.
+❌ Da evitare: chiamare `SaveChanges` nel controller o in un domain service di Core. Il controller orchestra HTTP, il domain service orchestra dominio: la transazione è del comando.

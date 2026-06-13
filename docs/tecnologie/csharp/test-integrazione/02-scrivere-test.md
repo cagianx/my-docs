@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
-description: Come scrivere test di integrazione — Get<T>(), SeedAsync, FluentAssertions e parallelismo NUnit.
+description: "Come scrivere test di integrazione: Get<T>(), SeedAsync, FluentAssertions e parallelismo NUnit."
 ---
 
 # Scrivere un test
 
 ## Struttura di una classe di test
 
-Una classe di test estende `IntegrationTestBase` e dichiara i servizi che usa come proprietà risolte dallo scope. Nessun `new` — i servizi vengono dal container DI, con le stesse dipendenze di produzione.
+Una classe di test estende `IntegrationTestBase` e dichiara i servizi che usa come proprietà risolte dallo scope. Nessun `new`: i servizi vengono dal container DI, con le stesse dipendenze di produzione.
 
 ```csharp
 [TestFixture]
@@ -60,7 +60,7 @@ protected override async Task SeedAsync(AppDbContext db)
 }
 ```
 
-Poiché ogni test parte da un clone del template vuoto, il seed viene ricreato da zero per ogni test — non c'è mai stato residuo da test precedenti.
+Poiché ogni test parte da un clone del template vuoto, il seed viene ricreato da zero per ogni test: non c'è mai stato residuo da test precedenti.
 
 ## FluentAssertions
 
@@ -88,9 +88,9 @@ risposta.Should().BeEquivalentTo(atteso, options => options.Excluding(x => x.Id)
 
 ## Parallelismo
 
-I test all'interno della stessa fixture girano in sequenza — ogni test ha il suo scope e il suo DB, ma condividono il template.
+I test all'interno della stessa fixture girano in sequenza: ogni test ha il suo scope e il suo DB, ma condividono il template.
 
-Fixture diverse possono girare in parallelo: ciascuna ha il proprio DB e il proprio scope. Il template è condiviso in sola lettura — la creazione è idempotente grazie al check sull'esistenza.
+Fixture diverse possono girare in parallelo: ciascuna ha il proprio DB e il proprio scope. Il template è condiviso in sola lettura: la creazione è idempotente grazie al check sull'esistenza.
 
 ```csharp
 // AssemblyInfo.cs o in cima a qualsiasi file di test

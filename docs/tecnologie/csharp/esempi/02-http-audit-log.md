@@ -9,14 +9,14 @@ Un middleware che intercetta le richieste HTTP solo quando l'endpoint ha un attr
 
 ## Modello dati: la struttura unificata
 
-Questa pagina è il **lato inbound** del [Log integrale di chiamate HTTP](modellazioni/05-log-chiamate-http.md): non ha una tabella propria, scrive nella stessa `ChiamataHttp` valorizzando `Direzione.Entrata`. La struttura — metadati (`ChiamataHttp`) separati dal payload (`ChiamataHttpContenuto`), con headers e body di richiesta e risposta — è definita lì una volta sola.
+Questa pagina è il **lato inbound** del [Log integrale di chiamate HTTP](modellazioni/05-log-chiamate-http.md): non ha una tabella propria, scrive nella stessa `ChiamataHttp` valorizzando `Direzione.Entrata`. La struttura (metadati `ChiamataHttp` separati dal payload `ChiamataHttpContenuto`, con headers e body di richiesta e risposta) è definita lì una volta sola.
 
 Quello che resta specifico dell'inbound è **come** lo si riempie:
 
 - `Categoria` = `"api"`, `Servizio` = nome dell'endpoint o route;
 - `Url` = path + query string della richiesta ricevuta;
 - `Utente` e `IpRemota` valorizzati dal contesto del chiamante (sull'outbound restano `null`);
-- e la **policy capillare per-endpoint** — quando loggare e cosa catturare — espressa con l'attributo qui sotto, che il middleware in uscita non ha.
+- e la **policy capillare per-endpoint** (quando loggare e cosa catturare) espressa con l'attributo qui sotto, che il middleware in uscita non ha.
 
 ## Attributo + enum di configurazione
 
@@ -271,7 +271,7 @@ Nel middleware sopra è già usato prima di leggere request/response body.
 ## Registrazione
 
 ```csharp
-// Program.cs — dopo UseRouting (endpoint metadata disponibile)
+// Program.cs, dopo UseRouting (endpoint metadata disponibile)
 app.UseMiddleware<HttpAuditMiddleware>();
 ```
 
@@ -294,6 +294,6 @@ La tabella è quella condivisa `ChiamataHttp`: la migration che la crea sta con 
 
 ## Considerazioni operative
 
-- **Dati sensibili**: il body delle chiamate di autenticazione (login, token refresh) non va mai salvato — aggiungere il path di login a `ExcludedPrefixes`.
+- **Dati sensibili**: il body delle chiamate di autenticazione (login, token refresh) non va mai salvato: aggiungere il path di login a `ExcludedPrefixes`.
 - **Performance**: la latenza aggiunta dipende dal tempo di scrittura su DB. Per sistemi ad alto carico si può usare un buffer in memoria o una coda in background invece del salvataggio sincrono per-request.
-- **Volume e retention**: valgono per l'inbound le stesse note del [log integrale](modellazioni/05-log-chiamate-http.md#considerazioni-operative) — retention e partizionamento sulla `Timestamp` sono condivisi, perché la tabella è una sola.
+- **Volume e retention**: valgono per l'inbound le stesse note del [log integrale](modellazioni/05-log-chiamate-http.md#considerazioni-operative): retention e partizionamento sulla `Timestamp` sono condivisi, perché la tabella è una sola.

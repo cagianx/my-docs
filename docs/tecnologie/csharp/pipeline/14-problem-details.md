@@ -1,6 +1,6 @@
 ---
 sidebar_position: 14
-description: RFC 9457 Problem Details — standard per le risposte di errore strutturate nelle API HTTP.
+description: "RFC 9457 Problem Details: standard per le risposte di errore strutturate nelle API HTTP."
 ---
 
 # Problem Details (RFC 9457)
@@ -202,7 +202,7 @@ public class OrdiniController : ControllerBase
     [HttpPost]
     public IActionResult Crea([FromBody] CreaOrdineRequest request)
     {
-        // Validazione del modello — se non valido, ModelState contiene gli errori
+        // Validazione del modello: se non valido, ModelState contiene gli errori
         if (!ModelState.IsValid)
         {
             // BadRequest automaticamente restituisce 400 con ValidationProblemDetails
@@ -275,7 +275,7 @@ Con il filter, le action diventano più leggere:
 [HttpPost]
 public IActionResult Crea([FromBody] CreaOrdineRequest request)
 {
-    // ModelState è garantito valido qui — il filter ha già controllato
+    // ModelState è garantito valido qui: il filter ha già controllato
     // ... logica direttamente senza controlli di validazione
     return CreatedAtAction(nameof(GetById), new { id = ordine.Id }, ordine);
 }

@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
 title: SQL Server
-description: Convenzioni per SQL Server — clustered index esplicito sul caso d'uso, primary key non clustered e unicità in indici dedicati.
+description: "Convenzioni per SQL Server: clustered index esplicito sul caso d'uso, primary key non clustered e unicità in indici dedicati."
 ---
 
 import TechIcon from '@site/src/components/TechIcon';
 
 # SQL Server <TechIcon name="sqlserver" size={30} className="tech-badge" />
 
-SQL Server è il motore in cui le [best practice sugli indici](best-practice/indici.md) hanno l'impatto più diretto, perché il clustered index è un concetto di prima classe — e il suo default è proprio quello da evitare.
+SQL Server è il motore in cui le [best practice sugli indici](best-practice/indici.md) hanno l'impatto più diretto, perché il clustered index è un concetto di prima classe, e il suo default è proprio quello da evitare.
 
 ## Il default da non subire
 

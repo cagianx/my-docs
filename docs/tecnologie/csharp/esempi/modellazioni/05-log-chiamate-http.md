@@ -1,25 +1,25 @@
 ---
 sidebar_position: 3
-description: Log integrale delle chiamate HTTP (headers + body) in un'unica struttura con campo Direzione — outbound via DelegatingHandler, inbound via middleware; copre servizi IA, REST e SOAP.
+description: "Log integrale delle chiamate HTTP (headers + body) in un'unica struttura con campo Direzione: outbound via DelegatingHandler, inbound via middleware; copre servizi IA, REST e SOAP."
 ---
 
 # Log integrale di chiamate HTTP (DelegatingHandler + EF)
 
-Quando l'applicazione chiama servizi esterni — un provider IA, una API REST, un endpoint SOAP — spesso serve registrare **l'intera chiamata**: metodo, URL, headers e body sia di richiesta che di risposta, con esito e durata. È il caso del [log delle chiamate IA tenuto «a parte»](04-db-prompt-ai.md#considerazioni-operative): qui lo si modella in modo **generico**, così la stessa tabella copre la chiamata al modello, la REST di terze parti e — *per assurdo* — anche la busta SOAP, perché a questo livello una chiamata HTTP è sempre la stessa cosa: headers più un body, qualunque sia il content-type.
+Quando l'applicazione chiama servizi esterni (un provider IA, una API REST, un endpoint SOAP) spesso serve registrare **l'intera chiamata**: metodo, URL, headers e body sia di richiesta che di risposta, con esito e durata. È il caso del [log delle chiamate IA tenuto «a parte»](04-db-prompt-ai.md#considerazioni-operative): qui lo si modella in modo **generico**, così la stessa tabella copre la chiamata al modello, la REST di terze parti e, *per assurdo*, anche la busta SOAP, perché a questo livello una chiamata HTTP è sempre la stessa cosa: headers più un body, qualunque sia il content-type.
 
-La struttura è **una sola** per entrambi i versi della comunicazione: un campo `Direzione` distingue le chiamate che l'app *fa* (outbound) da quelle che *riceve* (inbound). L'outbound si cattura con un `DelegatingHandler` su `HttpClient`, l'inbound con un middleware — ma finiscono nella stessa tabella, con gli stessi indici. L'[HTTP audit log](../02-http-audit-log.md) inbound diventa così un produttore di questa struttura unificata, non un modello a parte (vedi [Inbound](#inbound-la-stessa-struttura-con-direzione--entrata)).
+La struttura è **una sola** per entrambi i versi della comunicazione: un campo `Direzione` distingue le chiamate che l'app *fa* (outbound) da quelle che *riceve* (inbound). L'outbound si cattura con un `DelegatingHandler` su `HttpClient`, l'inbound con un middleware, ma finiscono nella stessa tabella, con gli stessi indici. L'[HTTP audit log](../02-http-audit-log.md) inbound diventa così un produttore di questa struttura unificata, non un modello a parte (vedi [Inbound](#inbound-la-stessa-struttura-con-direzione--entrata)).
 
 ## Cosa cattura
 
 - **Metodo, URL, headers e body** di richiesta e risposta, in chiaro e per intero (entro un limite di dimensione).
-- **Esito**: risposta HTTP riuscita, errore HTTP, oppure eccezione di trasporto (timeout, DNS, connessione) — casi distinti, perché «nessuna risposta» non è uno status code.
+- **Esito**: risposta HTTP riuscita, errore HTTP, oppure eccezione di trasporto (timeout, DNS, connessione): casi distinti, perché «nessuna risposta» non è uno status code.
 - **Durata** e un **identificativo di correlazione** per legare più chiamate alla stessa operazione applicativa (utile coi retry: ogni tentativo è una riga, tutte con lo stesso `CorrelationId`).
 
 Generico sul content-type: il body JSON di un'API IA e l'envelope XML di un servizio SOAP finiscono nella stessa colonna di testo, senza che il modello sappia nulla del formato.
 
 ## Il modello dati
 
-I **metadati** — quello su cui si filtra e si fanno report — stanno separati dal **payload**, che è grosso e non serve quando si scorrono i log. È la stessa logica della separazione [`StoredFile` / `StoredFileContent`](03-db-filesystem.md): elencare le chiamate di un servizio in errore nelle ultime due ore non deve trascinare in memoria buste SOAP da centinaia di KB.
+I **metadati** (quello su cui si filtra e si fanno report) stanno separati dal **payload**, che è grosso e non serve quando si scorrono i log. È la stessa logica della separazione [`StoredFile` / `StoredFileContent`](03-db-filesystem.md): elencare le chiamate di un servizio in errore nelle ultime due ore non deve trascinare in memoria buste SOAP da centinaia di KB.
 
 ```mermaid
 erDiagram
@@ -143,7 +143,7 @@ public class ChiamataHttpConfiguration : IEntityTypeConfiguration<ChiamataHttp>
         builder.Property(x => x.Utente).HasMaxLength(200);
         builder.Property(x => x.IpRemota).HasMaxLength(45); // lunghezza max IPv6
 
-        // L'ordinamento per data — l'accesso dominante — si imposta a livello
+        // L'ordinamento per data (l'accesso dominante) si imposta a livello
         // di motore: vedi la sezione «Indici». Qui restano gli indici sui filtri.
         builder.HasIndex(x => new { x.Servizio, x.Timestamp });
         builder.HasIndex(x => new { x.Categoria, x.Timestamp });
@@ -192,11 +192,11 @@ public class AppDbContext : DbContext
 
 ## Indici
 
-`ChiamataHttp` è una tabella **in forte scrittura**: ogni chiamata è un insert e ogni indice in più è lavoro in più ad ogni insert. Vale qui più che altrove la regola di tenere [solo gli indici giustificati da un accesso reale](../../../database-relazionali/best-practice/indici.md) — meglio pochi indici sui pattern veri che una copertura difensiva.
+`ChiamataHttp` è una tabella **in forte scrittura**: ogni chiamata è un insert e ogni indice in più è lavoro in più ad ogni insert. Vale qui più che altrove la regola di tenere [solo gli indici giustificati da un accesso reale](../../../database-relazionali/best-practice/indici.md): meglio pochi indici sui pattern veri che una copertura difensiva.
 
 L'accesso dominante è **per intervallo di tempo** («le chiamate delle ultime due ore», «gli errori di stamattina»), e la **data governa anche la retention** (si elimina o si stacca ciò che è più vecchio di N giorni). Quindi la `Timestamp` non è solo l'indice più importante: è il criterio su cui conviene **ordinare fisicamente** la tabella, così una finestra temporale è contigua sul disco e la pulizia colpisce un blocco continuo. Il come cambia col motore:
 
-- **SQL Server** — clustered index su `(Timestamp, Id)` e chiave primaria su `Id` dichiarata `NONCLUSTERED`. Gli insert restano in coda (la data cresce nel tempo, niente page split) e le letture per intervallo sono sequenziali — il caso descritto in [SQL Server](../../../database-relazionali/sqlserver.md).
+- **SQL Server**: clustered index su `(Timestamp, Id)` e chiave primaria su `Id` dichiarata `NONCLUSTERED`. Gli insert restano in coda (la data cresce nel tempo, niente page split) e le letture per intervallo sono sequenziali, il caso descritto in [SQL Server](../../../database-relazionali/sqlserver.md).
 
   ```csharp
   // ordina la tabella per data; la PK su Id resta unica ma non clustered
@@ -204,21 +204,21 @@ L'accesso dominante è **per intervallo di tempo** («le chiamate delle ultime d
   builder.HasIndex(x => new { x.Timestamp, x.Id }).IsClustered();
   ```
 
-- **PostgreSQL** — la tabella è una heap: sulla `Timestamp` un indice **BRIN** è ideale per una tabella append-only ordinata nel tempo (minuscolo, perfetto per i range), tipicamente insieme al **partizionamento per mese**, che rende la retention un `DROP` di partizione. Vedi [PostgreSQL](../../../database-relazionali/postgres.md).
+- **PostgreSQL**: la tabella è una heap; sulla `Timestamp` un indice **BRIN** è ideale per una tabella append-only ordinata nel tempo (minuscolo, perfetto per i range), tipicamente insieme al **partizionamento per mese**, che rende la retention un `DROP` di partizione. Vedi [PostgreSQL](../../../database-relazionali/postgres.md).
 
-- **SQLite** — l'`INTEGER PRIMARY KEY` (alias del rowid) tiene gli insert in coda; un indice esplicito sulla `Timestamp` copre le letture per data. Vedi [SQLite](../../../database-relazionali/sqlite.md).
+- **SQLite**: l'`INTEGER PRIMARY KEY` (alias del rowid) tiene gli insert in coda; un indice esplicito sulla `Timestamp` copre le letture per data. Vedi [SQLite](../../../database-relazionali/sqlite.md).
 
 Sopra l'ordinamento temporale, gli indici composti servono i filtri ricorrenti, sempre con la `Timestamp` in coda alla chiave perché la domanda è «questo criterio, di recente»:
 
-- `(Servizio, Timestamp)` e `(Categoria, Timestamp)` — «le chiamate di un servizio o di una categoria, ultime X»;
-- un indice **parziale** sulla `Timestamp` con filtro `Esito <> 'Ok'` — «gli errori recenti»: resta piccolo perché il grosso del traffico è `Ok`, e non sporca gli insert delle chiamate riuscite;
+- `(Servizio, Timestamp)` e `(Categoria, Timestamp)`: «le chiamate di un servizio o di una categoria, ultime X»;
+- un indice **parziale** sulla `Timestamp` con filtro `Esito <> 'Ok'`: «gli errori recenti», resta piccolo perché il grosso del traffico è `Ok`, e non sporca gli insert delle chiamate riuscite;
 - `CorrelationId` e `(Utente, Timestamp)` **solo se** si interroga davvero per correlazione o per utente; altrimenti sono peso morto su ogni insert.
 
 `ChiamataHttpContenuto` non ha indici propri oltre alla chiave: vi si accede **solo per `ChiamataHttpId`**, quando si apre una singola chiamata per vederne il corpo. Su SQLite ha senso come tabella `WITHOUT ROWID`, dato che la si legge sempre per quella chiave.
 
 ## La cattura: un DelegatingHandler
 
-Per le chiamate in uscita il punto d'aggancio idiomatico è un `DelegatingHandler` inserito nella pipeline di `HttpClient`: intercetta **qualunque** chiamata passi da quel client — l'SDK del provider IA, un client REST tipizzato, un client SOAP basato su `HttpClient` — senza che il codice chiamante ne sappia nulla.
+Per le chiamate in uscita il punto d'aggancio idiomatico è un `DelegatingHandler` inserito nella pipeline di `HttpClient`: intercetta **qualunque** chiamata passi da quel client (l'SDK del provider IA, un client REST tipizzato, un client SOAP basato su `HttpClient`) senza che il codice chiamante ne sappia nulla.
 
 ```csharp
 // MyApp.Infrastructure/Logging/LogChiamateHandler.cs
@@ -421,7 +421,7 @@ db.ChiamateHttp.Add(new ChiamataHttp
 
 Così un'unica tabella risponde a «cosa è entrato e cosa è uscito», con `Direzione` come discriminante e gli stessi indici per servizio, esito e tempo.
 
-`Utente` e `IpRemota` sono l'unico punto in cui le due direzioni divergono: identificano il chiamante e hanno senso solo per l'inbound, quindi restano `null` sulle chiamate in uscita. Sono nullable apposta — una piccola asimmetria accettata per tenere un'unica struttura invece di due. L'implementazione completa del middleware inbound è in [HTTP audit log](../02-http-audit-log.md).
+`Utente` e `IpRemota` sono l'unico punto in cui le due direzioni divergono: identificano il chiamante e hanno senso solo per l'inbound, quindi restano `null` sulle chiamate in uscita. Sono nullable apposta: una piccola asimmetria accettata per tenere un'unica struttura invece di due. L'implementazione completa del middleware inbound è in [HTTP audit log](../02-http-audit-log.md).
 
 ## Considerazioni operative
 

@@ -129,7 +129,7 @@ IActionResult ToActionResult<T>(Result<T> result) => result switch
 
 ## Esaustività
 
-Il compilatore avvisa se un enum non è coperto completamente. Il pattern `_` come fallback su un enum è un segnale che si vuole gestire esplicitamente i casi futuri — usare `throw` come default, non un valore silenzioso:
+Il compilatore avvisa se un enum non è coperto completamente. Il pattern `_` come fallback su un enum è un segnale che si vuole gestire esplicitamente i casi futuri: usare `throw` come default, non un valore silenzioso:
 
 ```csharp
 // ❌ Silenzioso: nasconde il caso non gestito

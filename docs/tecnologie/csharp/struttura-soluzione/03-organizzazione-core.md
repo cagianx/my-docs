@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: Organizzazione interna del progetto Core secondo Screaming Architecture — cartelle per dominio, domain service, validator e DI extension per ogni dominio.
+description: "Organizzazione interna del progetto Core secondo Screaming Architecture: cartelle per dominio, domain service, validator e DI extension per ogni dominio."
 ---
 
 # Organizzazione di Core
@@ -16,7 +16,7 @@ NomeSoluzione.Core/
 ├── Clienti/
 │   ├── ClienteValidator.cs
 │   └── ClientiServiceCollectionExtensions.cs
-└── UseCases/                                  # comandi completi — vedi 04-usecases
+└── UseCases/                                  # comandi completi: vedi 04-usecases
     ├── Ordini/
     │   ├── CreaOrdine.cs
     │   └── ConfermaOrdine.cs
@@ -36,7 +36,7 @@ Core/
 └── Models/
 ```
 
-Aprire il progetto e vedere `Ordini/`, `Fatturazione/`, `Clienti/` dice immediatamente cosa fa il sistema. Vedere `Services/`, `Handlers/`, `Models/` non dice nulla sul dominio — descrive solo come è costruito tecnicamente.
+Aprire il progetto e vedere `Ordini/`, `Fatturazione/`, `Clienti/` dice immediatamente cosa fa il sistema. Vedere `Services/`, `Handlers/`, `Models/` non dice nulla sul dominio: descrive solo come è costruito tecnicamente.
 
 ## DI per dominio
 

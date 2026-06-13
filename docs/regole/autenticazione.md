@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# Autenticazione e Autorizzazione
+# Autenticazione e autorizzazione
 
 ## Principio
 
@@ -22,7 +22,7 @@ I meccanismi di autenticazione si scelgono in base al contesto. Tutti si configu
 | **Cookie** | applicazioni web con sessione lato server |
 | **SSO / OAuth2 / OIDC** | autenticazione delegata a identity provider esterno |
 
-È possibile configurare più schemi di autenticazione contemporaneamente — per esempio JWT per le API e cookie per il pannello di amministrazione.
+È possibile configurare più schemi di autenticazione contemporaneamente, per esempio JWT per le API e cookie per il pannello di amministrazione.
 
 ## Regole
 

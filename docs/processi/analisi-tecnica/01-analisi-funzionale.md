@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Step 1 — Analisi Funzionale
+# Step 1: Analisi Funzionale
 
 Il punto di partenza è sempre l'analisi funzionale. Prima di ragionare su come costruire qualcosa, bisogna capire con precisione **cosa cambia rispetto all'esistente** e perché.
 
@@ -12,7 +12,7 @@ Questo step non produce ancora scelte tecniche: produce chiarezza. Tutto ciò ch
 
 ### Collegare ogni [caso d'uso](../../glossario#caso-duso) a un obiettivo di business
 
-Ogni funzionalità deve avere una ragione esistenziale chiara. Se non si riesce a collegare un caso d'uso a un obiettivo concreto, è un segnale che non è ancora abbastanza compreso — o che non dovrebbe essere sviluppato.
+Ogni funzionalità deve avere una ragione esistenziale chiara. Se non si riesce a collegare un caso d'uso a un obiettivo concreto, è un segnale che non è ancora abbastanza compreso, o che non dovrebbe essere sviluppato.
 
 ### Costruire la matrice dei casi d'uso
 
@@ -38,7 +38,7 @@ Ogni sviluppo deve essere supportato da uno scenario concreto che giustifichi il
 
 ### Priorità
 
-Non tutto ciò che emerge dall'analisi ha la stessa importanza. L'implementazione deve essere guidata dal **caso d'uso principale** — quello più frequente e rappresentativo del valore che il sistema deve offrire.
+Non tutto ciò che emerge dall'analisi ha la stessa importanza. L'implementazione deve essere guidata dal **caso d'uso principale**: quello più frequente e rappresentativo del valore che il sistema deve offrire.
 
 I casi eccezionali vanno riconosciuti e documentati, ma non devono pilotare le scelte architetturali. Costruire il sistema attorno a uno scenario raro produce complessità sproporzionata e penalizza il percorso normale.
 
@@ -50,4 +50,4 @@ I casi d'uso sono comprensibili da un developer esterno senza chiedere chiarimen
 
 ---
 
-**Prossimo step:** [Step 2 — Perimetro](02-perimetro.md)
+**Prossimo step:** [Step 2: Perimetro](02-perimetro.md)

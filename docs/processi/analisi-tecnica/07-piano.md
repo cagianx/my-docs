@@ -2,7 +2,7 @@
 sidebar_position: 7
 ---
 
-# Step 7 — Piano e Stime
+# Step 7: Piano e Stime
 
 Il piano trasforma l'analisi in lavoro pianificabile: task concreti, dipendenze esplicite, stime separate per componente. L'obiettivo è che lo sprint possa partire senza blocchi nascosti.
 
@@ -26,18 +26,18 @@ Per ogni task, identificare:
 - quali task può sbloccare una volta completato
 - se ci sono dipendenze esterne al team
 
-Le dipendenze bloccanti vanno risolte o escalate prima che lo sprint inizi — non si scopre a metà sprint che un task è bloccato su qualcos'altro.
+Le dipendenze bloccanti vanno risolte o escalate prima che lo sprint inizi: non si scopre a metà sprint che un task è bloccato su qualcos'altro.
 
 ## Spike
 
-Se esiste un'incertezza tecnica significativa — una libreria mai usata, un'integrazione non documentata, un comportamento del sistema non chiaro — si pianifica uno **[spike](../../glossario#spike)**: un task a tempo fisso per esplorare e produrre una risposta, non un'implementazione. Uno spike ha una durata massima e un output atteso (documento, prototipo, decisione).
+Se esiste un'incertezza tecnica significativa (una libreria mai usata, un'integrazione non documentata, un comportamento del sistema non chiaro) si pianifica uno **[spike](../../glossario#spike)**: un task a tempo fisso per esplorare e produrre una risposta, non un'implementazione. Uno spike ha una durata massima e un output atteso (documento, prototipo, decisione).
 
 ## Rischi
 
 Per ogni rischio identificato:
-- **probabilità** — alta, media, bassa
-- **impatto** — cosa succede se si realizza
-- **mitigazione** — cosa si fa per ridurre probabilità o impatto
+- **probabilità**: alta, media, bassa
+- **impatto**: cosa succede se si realizza
+- **mitigazione**: cosa si fa per ridurre probabilità o impatto
 
 Un rischio non gestito è una sorpresa programmata.
 
@@ -47,4 +47,4 @@ Il piano è pianificabile in sprint senza blocchi nascosti. Le dipendenze sono e
 
 ---
 
-**Prossimo step:** [Step 8 — Handoff](08-handoff.md)
+**Prossimo step:** [Step 8: Handoff](08-handoff.md)

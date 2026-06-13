@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: "Factory Method in C#"
-description: "Factory Method in C# — implementazione con factory function, factory class registrata in DI e factory delegate via Func<T>."
+description: "Factory Method in C#: implementazione con factory function, factory class registrata in DI e factory delegate via Func<T>."
 ---
 
 # Factory Method in C\#
@@ -51,7 +51,7 @@ Il costruttore è privato: l'unico modo di ottenere un `Order` valido è passare
 
 ### Idea
 
-Quando la factory ha dipendenze proprie — configurazione, accesso al database, altri servizi — diventa una classe registrata nel container.
+Quando la factory ha dipendenze proprie (configurazione, accesso al database, altri servizi) diventa una classe registrata nel container.
 
 ```csharp
 public interface IInvoiceNumberFactory
@@ -97,7 +97,7 @@ Il consumatore inietta `IInvoiceNumberFactory` e ottiene un numero pronto, senza
 
 ### Idea
 
-Quando la scelta dell'implementazione concreta dipende da un parametro noto solo a runtime — il payload di un messaggio, un tipo letto da configurazione, l'esito di una validazione — si registra una factory delegate che il container risolve.
+Quando la scelta dell'implementazione concreta dipende da un parametro noto solo a runtime (il payload di un messaggio, un tipo letto da configurazione, l'esito di una validazione) si registra una factory delegate che il container risolve.
 
 ### Scenario: parser scelto in base al MIME type del file
 
@@ -160,7 +160,7 @@ La factory costruisce il dizionario una sola volta per richiesta (scope), poi se
 | Costruzione con dipendenze, ma chiamata sporadica | Factory class registrata in DI |
 | Oggetto di dominio con invarianti da proteggere | Factory statica sul tipo stesso, costruttore privato |
 
-In generale: il container DI è la prima opzione. Si introduce una factory esplicita solo quando il container non è sufficiente — tipicamente perché la scelta dipende da dati che il container non conosce.
+In generale: il container DI è la prima opzione. Si introduce una factory esplicita solo quando il container non è sufficiente, tipicamente perché la scelta dipende da dati che il container non conosce.
 
 ---
 
@@ -168,4 +168,4 @@ In generale: il container DI è la prima opzione. Si introduce una factory espli
 
 Una factory che restituisce sempre `new ConcreteType()` senza logica aggiuntiva è solo indirezione. Va eliminata: il container fa già lo stesso lavoro, meglio.
 
-Allo stesso modo, una "factory" il cui unico metodo accetta tutti i parametri del costruttore e li inoltra non sta costruendo nulla — sta solo aggiungendo un livello. Costruire direttamente è più chiaro.
+Allo stesso modo, una «factory» il cui unico metodo accetta tutti i parametri del costruttore e li inoltra non sta costruendo nulla, sta solo aggiungendo un livello. Costruire direttamente è più chiaro.

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: A cosa servono i test unitari — logica pura senza dipendenze, monitoraggio di librerie di terze parti e verifica di comportamenti puntuali.
+description: "A cosa servono i test unitari: logica pura senza dipendenze, monitoraggio di librerie di terze parti e verifica di comportamenti puntuali."
 ---
 
 # A cosa servono i test unitari
@@ -13,7 +13,7 @@ Questo li rende diversi dai test di integrazione per scopo, non solo per velocit
 
 ## 1. Testare logica pura senza dipendenze
 
-La business logic che non tocca infrastruttura — entity di dominio, value object, algoritmi, regole di validazione — si testa in isolamento. Non serve un database per verificare che un ordine confermato non possa essere annullato.
+La business logic che non tocca infrastruttura (entity di dominio, value object, algoritmi, regole di validazione) si testa in isolamento. Non serve un database per verificare che un ordine confermato non possa essere annullato.
 
 ```csharp
 [TestFixture]
@@ -57,7 +57,7 @@ Questi test sono anche la documentazione più precisa delle regole di dominio: c
 
 ## 2. Monitorare le librerie di terze parti
 
-Una libreria esterna ha un ciclo di vita indipendente dal progetto. Quando viene aggiornata — intenzionalmente o perché un tool di aggiornamento automatico lo fa — il suo comportamento può cambiare in modo sottile: una edge case gestita diversamente, un default modificato, una funzione deprecata che ora si comporta in modo diverso.
+Una libreria esterna ha un ciclo di vita indipendente dal progetto. Quando viene aggiornata (intenzionalmente o perché un tool di aggiornamento automatico lo fa) il suo comportamento può cambiare in modo sottile: una edge case gestita diversamente, un default modificato, una funzione deprecata che ora si comporta in modo diverso.
 
 I test che documentano il comportamento atteso di una libreria diventano il sensore che rileva questi cambiamenti.
 

@@ -1,13 +1,13 @@
 ---
 sidebar_position: 11
-description: Action filter in ASP.NET Core MVC — IActionFilter e IAsyncActionFilter per logica trasversale sui controller.
+description: "Action filter in ASP.NET Core MVC: IActionFilter e IAsyncActionFilter per logica trasversale sui controller."
 ---
 
 # Action Filter
 
 Gli action filter intercettano l'esecuzione di un'action MVC prima e dopo la sua chiamata. Sono il posto giusto per logica trasversale che riguarda specifici controller o action: validazione del modello, logging dell'azione, trasformazione del risultato.
 
-La differenza con il [middleware](10-middleware.md) è il contesto: i filter hanno accesso agli argomenti dell'action, al risultato, al controller — informazioni non disponibili nel middleware.
+La differenza con il [middleware](10-middleware.md) è il contesto: i filter hanno accesso agli argomenti dell'action, al risultato, al controller, informazioni non disponibili nel middleware.
 
 ## IActionFilter (sincrono)
 
@@ -148,7 +148,7 @@ builder.Services.AddControllers(options =>
 });
 ```
 
-Il filter con `Order` più basso esegue prima nella fase "before" e dopo nella fase "after".
+Il filter con `Order` più basso esegue prima nella fase «before» e dopo nella fase «after».
 
 ## Filter vs Middleware: quando scegliere
 

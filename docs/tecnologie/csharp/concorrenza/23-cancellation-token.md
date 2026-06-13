@@ -1,6 +1,6 @@
 ---
 sidebar_position: 23
-description: CancellationToken in C# — a cosa serve, come si propaga, linked token e anti-pattern da evitare.
+description: "CancellationToken in C#: a cosa serve, come si propaga, linked token e anti-pattern da evitare."
 ---
 
 # CancellationToken
@@ -24,9 +24,9 @@ Senza cancellation token, un'operazione continua a consumare CPU, memoria e conn
 
 Il pattern si compone di tre pezzi:
 
-1. **`CancellationTokenSource`** — il produttore: chi decide *quando* annullare.
-2. **`CancellationToken`** — il segnale passato ai consumatori.
-3. **Il codice che controlla il token** — il consumatore: chi decide *come* reagire.
+1. **`CancellationTokenSource`**: il produttore, chi decide *quando* annullare.
+2. **`CancellationToken`**: il segnale passato ai consumatori.
+3. **Il codice che controlla il token**: il consumatore, chi decide *come* reagire.
 
 ```csharp
 var cts = new CancellationTokenSource();
@@ -51,7 +51,7 @@ await ChiamaServizioEsternoAsync(cts.Token);
 Un'applicazione console che esegue un'elaborazione lunga deve interrompersi in modo pulito quando l'utente preme Ctrl+C o il sistema invia SIGTERM (es. Docker che ferma il container).
 
 ```csharp
-// Program.cs — applicazione console
+// Program.cs: applicazione console
 var cts = new CancellationTokenSource();
 
 // Ctrl+C e SIGTERM annullano il token
@@ -127,15 +127,15 @@ public class ReportController : ControllerBase
     [HttpGet("{anno}")]
     public async Task<IActionResult> GeneraReport(int anno, CancellationToken ct)
     {
-        // 1. Query al database — se il client è già andato, la query non parte
+        // 1. Query al database: se il client è già andato, la query non parte
         var transazioni = await _db.Transazioni
             .Where(t => t.Anno == anno)
             .ToListAsync(ct);
 
-        // 2. Elaborazione pesante — il token viene controllato ad ogni step
+        // 2. Elaborazione pesante: il token viene controllato ad ogni step
         var reportData = await CalcolaStatisticheAsync(transazioni, ct);
 
-        // 3. Generazione PDF — anche il servizio esterno rispetta il token
+        // 3. Generazione PDF: anche il servizio esterno rispetta il token
         var pdf = await _pdfService.GeneraAsync(reportData, ct);
 
         return File(pdf, "application/pdf", $"report-{anno}.pdf");
@@ -170,10 +170,10 @@ Timeline:
   350 ms  → Il client chiude la connessione (timeout, navigazione, abort)
   350 ms  → ASP.NET Core annulla il CancellationToken
   351 ms  → Il prossimo ThrowIfCancellationRequested() lancia OperationCanceledException
-  351 ms  → L'eccezione risale — nessun PDF viene generato, nessuna risposta inviata
+  351 ms  → L'eccezione risale: nessun PDF viene generato, nessuna risposta inviata
 ```
 
-Senza il token, il server continuerebbe a calcolare statistiche e generare un PDF che nessuno riceverà mai — consumando CPU, memoria e connessioni al database inutilmente.
+Senza il token, il server continuerebbe a calcolare statistiche e generare un PDF che nessuno riceverà mai, consumando CPU, memoria e connessioni al database inutilmente.
 
 ### Cosa fare e cosa non fare nel controller
 
@@ -186,7 +186,7 @@ public async Task<IActionResult> Get(CancellationToken ct)
     return Ok(dati);
 }
 
-// ❌ Il token c'è ma non viene propagato — inutile dichiararlo
+// ❌ Il token c'è ma non viene propagato: inutile dichiararlo
 [HttpGet]
 public async Task<IActionResult> Get(CancellationToken ct)
 {
@@ -194,7 +194,7 @@ public async Task<IActionResult> Get(CancellationToken ct)
     return Ok(dati);
 }
 
-// ❌ Nessun token dichiarato — impossibile interrompere l'operazione
+// ❌ Nessun token dichiarato: impossibile interrompere l'operazione
 [HttpGet]
 public async Task<IActionResult> Get()
 {
@@ -296,11 +296,11 @@ public async Task<ImportResult> ImportaClientiAsync(
 }
 ```
 
-Il chiamante riceve il risultato e sa quanti record sono stati processati. Nessuna eccezione — la cancellazione è un esito legittimo.
+Il chiamante riceve il risultato e sa quanti record sono stati processati. Nessuna eccezione: la cancellazione è un esito legittimo.
 
 ### Strategia 3: completare l'elemento corrente prima di uscire
 
-Se ogni iterazione è una transazione logica (es. invio email, elaborazione pagamento), si vuole **completare l'elemento in corso** e poi uscire — mai interrompere a metà.
+Se ogni iterazione è una transazione logica (es. invio email, elaborazione pagamento), si vuole **completare l'elemento in corso** e poi uscire, mai interrompere a metà.
 
 ```csharp
 public async Task InviaNotificheAsync(
@@ -319,7 +319,7 @@ public async Task InviaNotificheAsync(
         }
 
         // Da qui in poi, l'elemento viene completato anche se il token scatta
-        // durante l'esecuzione — non si passa ct alle operazioni interne
+        // durante l'esecuzione, non si passa ct alle operazioni interne
         await _emailService.InviaAsync(notifica.Destinatario, notifica.Corpo);
         await _db.SegnaInviataAsync(notifica.Id);
         await _db.SaveChangesAsync(CancellationToken.None); // commit garantito
@@ -355,7 +355,7 @@ protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
-            // Shutdown richiesto — uscita pulita, non è un errore
+            // Shutdown richiesto: uscita pulita, non è un errore
             break;
         }
         catch (Exception ex)
@@ -437,7 +437,7 @@ Il `when (!ct.IsCancellationRequested)` distingue un timeout locale da una cance
 
 Spesso servono **più motivi** per annullare un'operazione contemporaneamente. Esempio: si vuole rispettare sia il token della richiesta HTTP (client disconnesso) sia un timeout locale.
 
-Senza linked token si dovrebbe scegliere quale token passare — perdendo l'altro segnale.
+Senza linked token si dovrebbe scegliere quale token passare, perdendo l'altro segnale.
 
 ### La soluzione
 
@@ -487,7 +487,7 @@ var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
 ### Ignorare il token
 
 ```csharp
-// ❌ Il token c'è ma non viene passato — l'operazione prosegue anche se annullata
+// ❌ Il token c'è ma non viene passato: l'operazione prosegue anche se annullata
 public async Task<List<Ordine>> GetOrdiniAsync(CancellationToken ct)
 {
     return await _db.Ordini.ToListAsync(); // manca ct!
@@ -499,7 +499,7 @@ Se un metodo riceve un `CancellationToken`, deve propagarlo. Altrimenti il param
 ### Catturare e ingoiare OperationCanceledException
 
 ```csharp
-// ❌ Nasconde la cancellazione — il chiamante non sa che l'operazione è stata interrotta
+// ❌ Nasconde la cancellazione: il chiamante non sa che l'operazione è stata interrotta
 try
 {
     await _service.ElaboraAsync(ct);

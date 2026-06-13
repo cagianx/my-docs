@@ -1,13 +1,13 @@
 ---
 sidebar_position: 15
-description: Programmazione asincrona in C# — async/await, benefici sul throughput nelle Web API, CancellationToken e anti-pattern da evitare.
+description: "Programmazione asincrona in C#: async/await, benefici sul throughput nelle Web API, CancellationToken e anti-pattern da evitare."
 ---
 
 # Async / Await
 
 ## Il problema: thread bloccati
 
-ASP.NET Core gestisce le richieste HTTP usando un pool di thread. Quando un thread elabora una richiesta, se chiama un'operazione di I/O in modo sincrono — lettura da database, chiamata HTTP esterna, scrittura su disco — **resta bloccato ad aspettare** che l'operazione finisca. Non fa nulla di utile, eppure occupa una risorsa.
+ASP.NET Core gestisce le richieste HTTP usando un pool di thread. Quando un thread elabora una richiesta, se chiama un'operazione di I/O in modo sincrono (lettura da database, chiamata HTTP esterna, scrittura su disco) **resta bloccato ad aspettare** che l'operazione finisca. Non fa nulla di utile, eppure occupa una risorsa.
 
 Con un pool da 100 thread e richieste che attendono mediamente 200 ms di I/O, il server si satura velocemente anche con un carico moderato.
 
@@ -29,7 +29,7 @@ Il thread non aspetta: lavora. Il throughput aumenta perché lo stesso numero di
 ## Esempio in una Web API
 
 ```csharp
-// ❌ Sincrono — il thread è bloccato per tutta la durata della query
+// ❌ Sincrono: il thread è bloccato per tutta la durata della query
 [HttpGet("{id}")]
 public IActionResult GetOrdine(int id)
 {
@@ -39,7 +39,7 @@ public IActionResult GetOrdine(int id)
     return Ok(ordine);
 }
 
-// ✅ Asincrono — il thread è libero mentre il DB lavora
+// ✅ Asincrono: il thread è libero mentre il DB lavora
 [HttpGet("{id}")]
 public async Task<IActionResult> GetOrdine(int id, CancellationToken ct)
 {
@@ -52,7 +52,7 @@ public async Task<IActionResult> GetOrdine(int id, CancellationToken ct)
 
 ## I/O-bound vs CPU-bound
 
-`async`/`await` porta benefici reali solo per operazioni **I/O-bound**: database, HTTP, file system, code di messaggi. Il thread aspetta una risorsa esterna — liberarlo ha senso.
+`async`/`await` porta benefici reali solo per operazioni **I/O-bound**: database, HTTP, file system, code di messaggi. Il thread aspetta una risorsa esterna: liberarlo ha senso.
 
 Per operazioni **CPU-bound** (calcoli pesanti, elaborazione immagini) il thread è occupato a lavorare, non ad aspettare. In quel caso async non aumenta il throughput: si valuta `Task.Run` per spostare il lavoro su un thread in background, ma è una scelta separata.
 
@@ -81,7 +81,7 @@ public async Task<IActionResult> GetOrdini(CancellationToken ct)
 }
 ```
 
-Si passa il token a ogni chiamata asincrona lungo la catena: dal controller al use case, dal use case al repository o a `HttpClient`. Ignorarlo significa continuare a lavorare — e consumare risorse — anche quando la risposta non arriverà mai a nessuno.
+Si passa il token a ogni chiamata asincrona lungo la catena: dal controller al use case, dal use case al repository o a `HttpClient`. Ignorarlo significa continuare a lavorare (e consumare risorse) anche quando la risposta non arriverà mai a nessuno.
 
 ## Async all the way down
 
@@ -95,11 +95,11 @@ var ordine = _db.Ordini.FirstOrDefaultAsync(o => o.Id == id).Result;
 var ordine = await _db.Ordini.FirstOrDefaultAsync(o => o.Id == id, ct);
 ```
 
-La regola è semplice: se un metodo chiama `await`, deve essere `async`. Se il metodo che lo chiama usa `await`, deve essere `async`. E così via fino al punto di ingresso — che in ASP.NET Core è già asincrono per design.
+La regola è semplice: se un metodo chiama `await`, deve essere `async`. Se il metodo che lo chiama usa `await`, deve essere `async`. E così via fino al punto di ingresso, che in ASP.NET Core è già asincrono per design.
 
 ## Anti-pattern da evitare
 
-**`async void`** — i metodi `async void` non sono awaitable: le eccezioni non vengono catturate dal chiamante e possono far crashare il processo. Si usa esclusivamente per event handler dove la firma è imposta dal framework.
+**`async void`**: i metodi `async void` non sono awaitable, le eccezioni non vengono catturate dal chiamante e possono far crashare il processo. Si usa esclusivamente per event handler dove la firma è imposta dal framework.
 
 ```csharp
 // ❌ Eccezione ingestibile
@@ -109,7 +109,7 @@ private async void CaricaDati() { ... }
 private async Task CaricaDatiAsync() { ... }
 ```
 
-**Fire and forget senza supervisione** — avviare un `Task` senza await e senza gestione degli errori significa perdere eccezioni in silenzio.
+**Fire and forget senza supervisione**: avviare un `Task` senza await e senza gestione degli errori significa perdere eccezioni in silenzio.
 
 ```csharp
 // ❌ Eventuali eccezioni spariscono
@@ -119,7 +119,7 @@ _ = InviaEmailAsync(utente);
 // (vedi 08-code-native.md e 09-librerie-code.md)
 ```
 
-**`Task.Delay` come sleep sincrono** — `Thread.Sleep` blocca il thread; `await Task.Delay` lo rilascia. In contesti async si usa sempre il secondo.
+**`Task.Delay` come sleep sincrono**: `Thread.Sleep` blocca il thread; `await Task.Delay` lo rilascia. In contesti async si usa sempre il secondo.
 
 ```csharp
 // ❌ Blocca il thread
@@ -131,7 +131,7 @@ await Task.Delay(1000, ct);
 
 ## `ValueTask<T>`
 
-`ValueTask<T>` è un'alternativa a `Task<T>` ottimizzata per i casi in cui l'operazione **completa spesso in modo sincrono** — ad esempio una cache in memoria che quasi sempre risponde senza I/O. Evita l'allocazione heap di `Task` in quel caso frequente.
+`ValueTask<T>` è un'alternativa a `Task<T>` ottimizzata per i casi in cui l'operazione **completa spesso in modo sincrono**, ad esempio una cache in memoria che quasi sempre risponde senza I/O. Evita l'allocazione heap di `Task` in quel caso frequente.
 
 ```csharp
 public async ValueTask<Ordine?> GetDaCacheAsync(int id, CancellationToken ct)

@@ -35,7 +35,7 @@ public class EmailOptions
 ```
 
 ```csharp
-// Program.cs — registrazione
+// Program.cs: registrazione
 builder.Services.Configure<EmailOptions>(
     builder.Configuration.GetSection(EmailOptions.SectionName));
 ```
@@ -53,7 +53,7 @@ public class EmailSender
 }
 ```
 
-## IOptionsMonitor\<T\> — configurazione hot-reload
+## IOptionsMonitor\<T\>: configurazione hot-reload
 
 `IOptions<T>` legge la configurazione una sola volta all'avvio. `IOptionsMonitor<T>` ricarica il valore ogni volta che `appsettings.json` cambia su disco:
 
@@ -76,7 +76,7 @@ public class FeatureSwitchService
 
 | Interfaccia | Ciclo di vita | Quando ricaricare |
 |---|---|---|
-| `IOptions<T>` | Singleton | Mai — valore fisso all'avvio |
+| `IOptions<T>` | Singleton | Mai, valore fisso all'avvio |
 | `IOptionsSnapshot<T>` | Scoped | Ad ogni request |
 | `IOptionsMonitor<T>` | Singleton | Quando il file cambia su disco |
 
@@ -101,7 +101,7 @@ public class EmailOptions
 ```
 
 ```csharp
-// Program.cs — validazione attivata esplicitamente
+// Program.cs: validazione attivata esplicitamente
 builder.Services
     .AddOptions<EmailOptions>()
     .BindConfiguration(EmailOptions.SectionName)
@@ -109,7 +109,7 @@ builder.Services
     .ValidateOnStart();  // fallisce al boot se la configurazione non è valida
 ```
 
-`ValidateOnStart()` fa fallire l'avvio dell'applicazione se le opzioni non passano la validazione — invece di fallire alla prima request. È il comportamento preferito: meglio un avvio che fallisce subito che un errore silenzioso in produzione.
+`ValidateOnStart()` fa fallire l'avvio dell'applicazione se le opzioni non passano la validazione, invece di fallire alla prima request. È il comportamento preferito: meglio un avvio che fallisce subito che un errore silenzioso in produzione.
 
 ## Validazione custom con IValidateOptions
 

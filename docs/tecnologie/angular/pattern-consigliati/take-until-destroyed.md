@@ -43,7 +43,7 @@ export class DataComponent {
 }
 ```
 
-> `toSignal()` gestisce automaticamente l'unsubscribe — non serve `takeUntilDestroyed` in questo caso.
+> `toSignal()` gestisce automaticamente l'unsubscribe: non serve `takeUntilDestroyed` in questo caso.
 
 ## Quando serve ancora una subscription esplicita
 

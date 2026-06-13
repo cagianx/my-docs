@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Convenzioni per SQLite — rowid, INTEGER PRIMARY KEY come alias del rowid e tabelle WITHOUT ROWID per il clustering semantico.
+description: "Convenzioni per SQLite: rowid, INTEGER PRIMARY KEY come alias del rowid e tabelle WITHOUT ROWID per il clustering semantico."
 ---
 
 # SQLite
@@ -30,7 +30,7 @@ Questa è esattamente la situazione che le best practice sconsigliano di subire 
 
 ## Clustering semantico: tabelle WITHOUT ROWID
 
-Per ordinare fisicamente la tabella su un criterio scelto — il caso d'uso di lettura più comune — si usa una tabella `WITHOUT ROWID`. In questo caso non esiste più il rowid: la **chiave primaria diventa direttamente la chiave di clustering** del B-tree.
+Per ordinare fisicamente la tabella su un criterio scelto (il caso d'uso di lettura più comune) si usa una tabella `WITHOUT ROWID`. In questo caso non esiste più il rowid: la **chiave primaria diventa direttamente la chiave di clustering** del B-tree.
 
 ```sql
 CREATE TABLE movimenti (

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: "Strategy pattern in C#"
-description: "Strategy pattern in C# — implementazione tramite IEnumerable<T> per selezione a runtime e tramite Keyed Services per selezione dichiarativa via DI."
+description: "Strategy pattern in C#: implementazione tramite IEnumerable<T> per selezione a runtime e tramite Keyed Services per selezione dichiarativa via DI."
 ---
 
 # Strategy pattern in C\#
@@ -170,14 +170,14 @@ public class NotificationUseCase
 
 ### Vantaggi
 
-- **Risoluzione O(1)** — il container indicizza per chiave internamente.
-- **Interfaccia più pulita** — non serve un discriminante esposto dalla strategy.
-- **Integrazione nativa** — nessun codice custom di selezione.
+- **Risoluzione O(1)**: il container indicizza per chiave internamente.
+- **Interfaccia più pulita**: non serve un discriminante esposto dalla strategy.
+- **Integrazione nativa**: nessun codice custom di selezione.
 
 ### Limiti
 
 - Richiede .NET 8 o superiore.
-- L'uso di `IServiceProvider` direttamente è un *service locator* — accettabile nello use case ma da non propagare ovunque.
+- L'uso di `IServiceProvider` direttamente è un *service locator*, accettabile nello use case ma da non propagare ovunque.
 - La chiave è una stringa: refusi non vengono rilevati a compile-time. Si può mitigare usando costanti o un enum con `.ToString()`.
 
 ---

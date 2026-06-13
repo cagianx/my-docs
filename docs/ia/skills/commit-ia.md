@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: Skill di commit assistita dall'IA — raggruppa le modifiche pendenti nel minor numero di commit Conventional Commits possibile, senza mai mescolare intenti diversi (feat, fix, docs) che hanno implicazioni semver differenti.
+description: Skill di commit assistita dall'IA, raggruppa le modifiche pendenti nel minor numero di commit Conventional Commits possibile, senza mai mescolare intenti diversi (feat, fix, docs) che hanno implicazioni semver differenti.
 ---
 
 # Commit assistito dall'IA
@@ -13,8 +13,8 @@ Il formato dei commit non è una formalità: alimenta il [rilascio assistito dal
 
 Due forze in tensione, con una precedenza chiara:
 
-- **Accorpare** — meno commit, purché ognuno resti una sola unità logica. Tre file che realizzano insieme la stessa funzionalità sono un commit, non tre.
-- **Non mescolare** — l'accorpamento non vale mai a costo di unire intenti diversi.
+- **Accorpare**: meno commit, purché ognuno resti una sola unità logica. Tre file che realizzano insieme la stessa funzionalità sono un commit, non tre.
+- **Non mescolare**: l'accorpamento non vale mai a costo di unire intenti diversi.
 
 **La purezza dell'intento vince sempre sulla riduzione del numero.** Si accorpa il più possibile *entro* lo stesso intento; non si accorpa mai *attraverso* intenti diversi.
 
@@ -42,7 +42,7 @@ flowchart TD
 ```
 
 1. **Ispeziona il working tree**: file modificati, aggiunti, rimossi; differenze `staged` e non (`git status`, `git diff`, `git diff --staged`).
-2. **Classifica ogni modifica per intento**, non per file: cosa fa davvero quella riga — `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `perf`, `style`.
+2. **Classifica ogni modifica per intento**, non per file: cosa fa davvero quella riga, `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `perf`, `style`.
 3. **Separa gli intenti misti** all'interno dello stesso file, per hunk, dove necessario.
 4. **Raggruppa** le modifiche dello stesso intento (ed eventualmente dello stesso scope) nel minor numero di commit coerenti.
 5. **Ordina i commit** in modo che la storia resti leggibile e ogni commit sia di per sé consistente: tipicamente prima `chore`/`refactor` preparatori, poi `feat`, poi `fix` indipendenti.
@@ -80,7 +80,7 @@ docs: documenta l'annullamento ordine
 ## Vincoli
 
 - **Un commit, un intento.** Mai mescolare tipi con peso semver diverso, in particolare `feat` e `fix`, o `feat` e `docs`.
-- **Un commit, un'unità logica** — coerente e completa, non un salvataggio intermedio ([git](../../tecnologie/git/index.md#commit)).
+- **Un commit, un'unità logica**: coerente e completa, non un salvataggio intermedio ([git](../../tecnologie/git/index.md#commit)).
 - **Conventional Commits sempre**, perché la storia alimenta il changelog e il versioning.
 - **Minimizzare, non comprimere**: il numero di commit scende solo finché ogni commit resta puro.
 - **Nessun commit lasciato a metà**: ogni gruppo è messo in stage ed effettivamente committato, oppure la skill si ferma e segnala cosa non ha saputo classificare.

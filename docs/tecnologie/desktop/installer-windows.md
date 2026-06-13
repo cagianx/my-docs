@@ -160,7 +160,7 @@ Section "Uninstall"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
   DeleteRegKey HKLM "${REG_KEY}"
 
-  ; NON rimuovere $LOCALAPPDATA\MyApp — contiene i dati dell'utente.
+  ; NON rimuovere $LOCALAPPDATA\MyApp: contiene i dati dell'utente.
   ; Se si vuole offrire la pulizia dei dati, chiedere conferma con un MessageBox.
 
 SectionEnd
@@ -215,7 +215,7 @@ Per le strategie basate su Electron, `electron-builder` genera l'installer NSIS 
 Per aggiungere logica custom all'installer NSIS generato da electron-builder si usa un file `installer.nsh`:
 
 ```nsis
-; build/installer.nsh — eseguito durante l'installazione
+; build/installer.nsh: eseguito durante l'installazione
 !macro customInstall
   ; Crea la directory dati
   CreateDirectory "$LOCALAPPDATA\MyApp"

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 17
-description: HttpClient e IHttpClientFactory in ASP.NET Core — typed client, DelegatingHandler e gestione corretta del ciclo di vita.
+description: "HttpClient e IHttpClientFactory in ASP.NET Core: typed client, DelegatingHandler e gestione corretta del ciclo di vita."
 ---
 
 # HttpClient / IHttpClientFactory
@@ -9,9 +9,9 @@ description: HttpClient e IHttpClientFactory in ASP.NET Core — typed client, D
 
 Istanziare `HttpClient` direttamente con `new` causa due problemi:
 
-**Socket exhaustion** — `HttpClient` non chiude immediatamente i socket TCP alla dispose. Creare e distruggere istanze in rapida successione esaurisce le porte disponibili, causando errori `SocketException` sotto carico.
+**Socket exhaustion**: `HttpClient` non chiude immediatamente i socket TCP alla dispose. Creare e distruggere istanze in rapida successione esaurisce le porte disponibili, causando errori `SocketException` sotto carico.
 
-**DNS stale** — un'istanza singleton condivisa non aggiorna la risoluzione DNS: se l'IP del servizio esterno cambia, il client continua a usare quello vecchio fino al riavvio dell'applicazione.
+**DNS stale**: un'istanza singleton condivisa non aggiorna la risoluzione DNS, se l'IP del servizio esterno cambia, il client continua a usare quello vecchio fino al riavvio dell'applicazione.
 
 `IHttpClientFactory` risolve entrambi: gestisce un pool di handler HTTP con rotazione controllata del ciclo di vita, separando il ciclo di vita del client (breve) da quello dell'handler (più lungo, ma rinnovato periodicamente).
 

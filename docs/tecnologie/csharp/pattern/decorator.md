@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: "Decorator in C#"
-description: "Decorator in C# — implementazione manuale con DI nativa e tramite Scrutor per applicare logging, caching e altri cross-cutting concern."
+description: "Decorator in C#: implementazione manuale con DI nativa e tramite Scrutor per applicare logging, caching e altri cross-cutting concern."
 ---
 
 # Decorator in C\#
@@ -95,7 +95,7 @@ builder.Services.AddScoped<ICatalogService>(sp =>
 });
 ```
 
-L'ordine conta: `LoggingCatalogService` è all'esterno, quindi registra anche le chiamate servite dalla cache. Invertendo l'ordine, si loggherebbe solo ciò che arriva al servizio reale — utile in altri scenari.
+L'ordine conta: `LoggingCatalogService` è all'esterno, quindi registra anche le chiamate servite dalla cache. Invertendo l'ordine, si loggherebbe solo ciò che arriva al servizio reale, utile in altri scenari.
 
 ---
 
@@ -155,4 +155,4 @@ public class UselessDecorator : ICatalogService
 }
 ```
 
-Un decorator che si limita a inoltrare non aggiunge nulla. Se ne nasce uno così "in vista" di un comportamento futuro, va rimosso: si aggiungerà quando servirà davvero.
+Un decorator che si limita a inoltrare non aggiunge nulla. Se ne nasce uno così «in vista» di un comportamento futuro, va rimosso: si aggiungerà quando servirà davvero.

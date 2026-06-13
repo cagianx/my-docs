@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Dependency Injection in ASP.NET Core — lifetimes, registrazione, errori tipici e pattern avanzati.
+description: "Dependency Injection in ASP.NET Core: lifetimes, registrazione, errori tipici e pattern avanzati."
 ---
 
 # Dependency Injection
@@ -25,18 +25,18 @@ builder.Services.AddTransient<IPdfGenerator, PdfGenerator>();
 
 ### Quando usare quale lifetime
 
-**Singleton** — per servizi stateless, thread-safe, costosi da costruire: cache in memoria, client HTTP (tramite `IHttpClientFactory`), configurazione letta una volta.
+**Singleton**: per servizi stateless, thread-safe, costosi da costruire: cache in memoria, client HTTP (tramite `IHttpClientFactory`), configurazione letta una volta.
 
-**Scoped** — per tutto ciò che deve vivere per la durata di una richiesta: `DbContext`, use case, repository. È il lifetime più comune.
+**Scoped**: per tutto ciò che deve vivere per la durata di una richiesta: `DbContext`, use case, repository. È il lifetime più comune.
 
-**Transient** — per servizi leggeri e stateless che non devono essere condivisi: validator, helper di trasformazione.
+**Transient**: per servizi leggeri e stateless che non devono essere condivisi: validator, helper di trasformazione.
 
 ## Il bug del captive dependency
 
 Un singleton non può dipendere da un servizio scoped. Il container risolve le dipendenze del singleton **una volta sola** all'avvio: il servizio scoped viene creato e tenuto vivo per sempre, uscendo dal suo ciclo di vita previsto.
 
 ```csharp
-// ❌ Singleton che cattura uno scoped — bug sottile
+// ❌ Singleton che cattura uno scoped: bug sottile
 public class NotificationService
 {
     private readonly AppDbContext _db; // scoped, ma vive come singleton

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 12
-description: Authorization filter in ASP.NET Core MVC — IAuthorizationFilter per logica di autorizzazione custom sui controller.
+description: "Authorization filter in ASP.NET Core MVC: IAuthorizationFilter per logica di autorizzazione custom sui controller."
 ---
 
 # Authorization Filter
@@ -154,7 +154,7 @@ Questo significa che non si deve fare affidamento su valori prodotti da altri fi
 
 ## Quando non usare l'authorization filter
 
-- **Autenticazione** (chi sei) — va gestita nell'autenticazione di ASP.NET Core, non nel filter.
-- **Policy dichiarative semplici** — `[Authorize(Roles = "Admin")]` o `[Authorize(Policy = "RequireAdmin")]` sono più espressive e testabili.
-- **Logica che dipende dagli argomenti dell'action** — in quel caso è più adatto un action filter, che ha accesso agli argomenti.
+- **Autenticazione** (chi sei): va gestita nell'autenticazione di ASP.NET Core, non nel filter.
+- **Policy dichiarative semplici**: `[Authorize(Roles = "Admin")]` o `[Authorize(Policy = "RequireAdmin")]` sono più espressive e testabili.
+- **Logica che dipende dagli argomenti dell'action**: in quel caso è più adatto un action filter, che ha accesso agli argomenti.
 

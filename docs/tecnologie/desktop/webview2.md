@@ -7,10 +7,10 @@ description: Usare WebView2 su Windows in un progetto WPF separato che avvia il 
 
 WebView2 è il controllo browser di Microsoft basato su Chromium Edge. Permette di ospitare una webview all'interno di un'applicazione WPF, WinForms o WinUI, senza includere Chromium nel pacchetto: usa il runtime Edge già installato sul sistema.
 
-Il progetto WPF (`MyApp.Desktop`) è completamente separato dal WebAPI. Avvia il backend come child process e carica Angular direttamente dalla cartella locale tramite un host virtuale — senza bisogno di un server HTTP per i file statici.
+Il progetto WPF (`MyApp.Desktop`) è completamente separato dal WebAPI. Avvia il backend come child process e carica Angular direttamente dalla cartella locale tramite un host virtuale, senza bisogno di un server HTTP per i file statici.
 
 :::info Solo Windows
-WebView2 è disponibile solo su Windows. Su macOS e Linux non esiste un equivalente diretto — per cross-platform si usano Electron.NET o Electron puro.
+WebView2 è disponibile solo su Windows. Su macOS e Linux non esiste un equivalente diretto: per cross-platform si usano Electron.NET o Electron puro.
 :::
 
 ## Struttura della soluzione
@@ -151,7 +151,7 @@ export const appConfig: ApplicationConfig = {
 WebView2 permette di esporre oggetti .NET direttamente a JavaScript tramite `AddHostObjectToScript`:
 
 ```csharp
-// MainWindow.xaml.cs — dopo EnsureCoreWebView2Async
+// MainWindow.xaml.cs: dopo EnsureCoreWebView2Async
 WebView.CoreWebView2.AddHostObjectToScript("nativeApp", new NativeBridge());
 ```
 
@@ -199,5 +199,5 @@ dotnet publish MyApp.Desktop -c Release -r win-x64 --self-contained -o dist/
 ## Limitazioni
 
 - Solo Windows (richiede Windows 10 1803+ con Edge installato, oppure il runtime WebView2 ridistribuibile)
-- Il progetto Desktop deve essere `net10.0-windows` — non gira su Linux/macOS
+- Il progetto Desktop deve essere `net10.0-windows`: non gira su Linux/macOS
 - L'integrazione JavaScript ↔ .NET tramite `AddHostObjectToScript` usa COM interop, che richiede `[ComVisible(true)]` e `ClassInterfaceType.AutoDual`
